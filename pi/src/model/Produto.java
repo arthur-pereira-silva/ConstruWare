@@ -20,35 +20,35 @@ public class Produto {
 		this.preco = preco;
 	}
 
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	private String getNome() {
+	public String getNome() {
 		return nome;
 	}
 
-	private void setNome(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	private Double getQtd() {
+	public Double getQtd() {
 		return qtd;
 	}
 
-	private void setQtd(Double qtd) {
+	public void setQtd(Double qtd) {
 		this.qtd = qtd;
 	}
 
-	private Double getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	private void setPreco(Double preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 

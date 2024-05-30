@@ -122,7 +122,7 @@ public class FormVenda extends JFrame {
 			        Cliente cliente = null;
 
 			        try {
-			            cliente = dao.buscarClientePorCpf(cpf);
+			            cliente = dao.buscarCliente(cpf);
 			        } catch (SQLException e1) {
 			            e1.printStackTrace();
 			        }

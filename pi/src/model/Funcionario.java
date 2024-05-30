@@ -15,34 +15,34 @@ public class Funcionario extends Pessoa {
 			String rua, String bairro, int num) {
 		super(id, nome, telefone, email, cep, estado, cidade, rua, bairro, num);
 	}
-	private String getRg() {
+	public String getRg() {
 		return rg;
 	}
-	private void setRg(String rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
-	private String getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	private void setCpf(String cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	private String getCnh() {
+	public String getCnh() {
 		return cnh;
 	}
-	private void setCnh(String cnh) {
+	public void setCnh(String cnh) {
 		this.cnh = cnh;
 	}
-	private String getCargo() {
+	public String getCargo() {
 		return cargo;
 	}
-	private void setCargo(String cargo) {
+	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	private float getSalario() {
+	public float getSalario() {
 		return salario;
 	}
-	private void setSalario(float salario) {
+	public void setSalario(float salario) {
 		this.salario = salario;
 	}
 	@Override

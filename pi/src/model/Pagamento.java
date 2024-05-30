@@ -27,52 +27,52 @@ public class Pagamento {
 	}
 
 
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
 
-	private String getMetodo() {
+	public String getMetodo() {
 		return metodo;
 	}
 
 
-	private void setMetodo(String metodo) {
+	public void setMetodo(String metodo) {
 		this.metodo = metodo;
 	}
 
 
-	private Double getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
 
-	private void setValor(Double valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
 
-	private Date getData() {
+	public Date getData() {
 		return data;
 	}
 
 
-	private void setData(Date data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
 
-	private Date getHora() {
+	public Date getHora() {
 		return hora;
 	}
 
 
-	private void setHora(Date hora) {
+	public void setHora(Date hora) {
 		this.hora = hora;
 	}
 

@@ -22,18 +22,7 @@ public class FornDAO {
     public void inserirFornecedor(Fornecedores fornecedor) throws SQLException {
         String sql = "INSERT INTO Fornecedor (id, nome, cnpj, telefone, email, cep, endereco, num_casa, bairro, estado, cidade) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setInt(1, fornecedor.getId());
-			stmt.setString(2, fornecedor.getNome());
-			stmt.setString(3, fornecedor.getRg());
-			stmt.setString(4, fornecedor.getCpf());
-			stmt.setString(5, fornecedor.getTelefone());
-			stmt.setString(6, fornecedor.getEmail());
-			stmt.setString(7, fornecedor.getCep());
-			stmt.setString(8, fornecedor.getEstado());
-			stmt.setString(9, fornecedor.getCidade());
-			stmt.setString(10, fornecedor.getRua());
-			stmt.setString(11, fornecedor.getBairro()); 
-			stmt.setInt(12, fornecedor.getNumCasa());
+
         }
     }
 

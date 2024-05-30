@@ -13,11 +13,11 @@ public class Fornecedores extends Pessoa {
 		super(id, nome, telefone, email, cep, estado, cidade, rua, bairro, num);
 	}
 
-	private String getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	private void setCnpj(String cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 

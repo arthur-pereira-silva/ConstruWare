@@ -23,43 +23,43 @@ public class Pedido {
 		this.funcionario = funcionario;
 	}
 
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	private Date getData() {
+	public Date getData() {
 		return data;
 	}
 
-	private void setData(Date data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
-	private Double getTotal() {
+	public Double getTotal() {
 		return total;
 	}
 
-	private void setTotal(Double total) {
+	public void setTotal(Double total) {
 		this.total = total;
 	}
 
-	private Cliente getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	private void setCliente(Cliente cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	private Funcionario getFuncionario() {
+	public Funcionario getFuncionario() {
 		return funcionario;
 	}
 
-	private void setFuncionario(Funcionario funcionario) {
+	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
 

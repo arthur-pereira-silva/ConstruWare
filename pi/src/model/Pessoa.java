@@ -32,83 +32,83 @@ public class Pessoa {
 	public Pessoa() {
 	}
 	
-	private int getId() {
+	public int getId() {
 		return id;
 	}
 
-	private void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	private String getNome() {
+	public String getNome() {
 		return nome;
 	}
 
-	private void setNome(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	private String getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	private void setTelefone(String telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 
-	private String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	private void setEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	private String getCep() {
+	public String getCep() {
 		return cep;
 	}
 
-	private void setCep(String cep) {
+	public void setCep(String cep) {
 		this.cep = cep;
 	}
 
-	private String getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	private void setEstado(String estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
-	private String getCidade() {
+	public String getCidade() {
 		return cidade;
 	}
 
-	private void setCidade(String cidade) {
+	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
 
-	private String getRua() {
+	public String getRua() {
 		return rua;
 	}
 
-	private void setRua(String rua) {
+	public void setRua(String rua) {
 		this.rua = rua;
 	}
 
-	private String getBairro() {
+	public String getBairro() {
 		return bairro;
 	}
 
-	private void setBairro(String bairro) {
+	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
 
-	private int getNum() {
+	public int getNum() {
 		return num;
 	}
 
-	private void setNumCasa(int num) {
+	public void setNumCasa(int num) {
 		this.num = num;
 	}
 	

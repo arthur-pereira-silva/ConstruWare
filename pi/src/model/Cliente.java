@@ -1,8 +1,8 @@
 package model;
 
 public class Cliente extends Pessoa {
-	String rg;
-	String cpf;
+	private String rg;
+	private String cpf;
 
 
 	public Cliente() {
@@ -15,16 +15,16 @@ public class Cliente extends Pessoa {
 		this.rg = rg;
 		this.cpf = cpf;
 	}
-	private String getRg() {
+	public String getRg() {
 		return rg;
 	}
-	private void setRg(String rg) {
+	public void setRg(String rg) {
 		this.rg = rg;
 	}
-	private String getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
-	private void setCpf(String cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	
