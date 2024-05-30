@@ -10,26 +10,43 @@ public class Produto {
     public Produto() {
     }
 
-    private int cod_prod;
-    private String nome_prod;
-    private String descricao;
-    private Double qtd_prod;
-    private Double preco_prod;
+    private int id;
+    private String nome;
+    private Double qtd;
+    private Double preco;
     
-    @Override
-	public String toString() {
-		return "Produto [cod_prod=" + cod_prod + ", nome_prod=" + nome_prod + ", descricao=" + descricao + ", qtd_prod="
-				+ qtd_prod + ", preco_prod=" + preco_prod + "]";
+    public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public Double getQtd() {
+		return qtd;
+	}
+	public void setQtd(Double qtd) {
+		this.qtd = qtd;
+	}
+	public Double getPreco() {
+		return preco;
+	}
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+	public Fornecedores getFornecedores() {
+		return fornecedores;
+	}
+	public void setFornecedores(Fornecedores fornecedores) {
+		this.fornecedores = fornecedores;
 	}
 
-	public void cadastrarProduto() {
-    }
-
-    public void alteraProduto() {
-    }
-
-    public void removerProduto() {
-        return;
-    }
+	private Fornecedores fornecedores;
+    
 
 }

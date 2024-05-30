@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.util.List;
 
@@ -28,20 +30,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import dao.ClienteDAO;
-import model.Cliente;
+import dao.FornDAO;
+import model.Fornecedores;
 import utilitarios.Util;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class FormCliente extends JFrame {
+public class FormFornecedores extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final JPanel panel = new JPanel();
 	private JTextField txtNome;
-	private JTextField txtCPF;
-	private JTextField txtRG;
+	private JTextField txtCNPJ;
 	private JTextField txtTelefone;
 	private JTextField txtRua;
 	private JTextField txtEndCasa;
@@ -55,24 +54,23 @@ public class FormCliente extends JFrame {
 	private JTable tabela;
 	
 	private void atualizarTabela() {
-	    ClienteDAO dao = new ClienteDAO();
-	    List<Cliente> lista = dao.Listar();
+	    FornDAO dao = new FornDAO();
+	    List<Fornecedores> lista = dao.Listar();
 	    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
 	    modelo.setRowCount(0); 
-	    for (Cliente cliente : lista) {
+	    for (Fornecedores f : lista) {
 	        modelo.addRow(new Object[]{
-	            cliente.getId(),
-	            cliente.getNome(),
-	            cliente.getRg(),
-	            cliente.getCpf(),
-	            cliente.getEmail(),
-	            cliente.getCelular(),
-	            cliente.getCep(),
-	            cliente.getEndereco(),
-	            cliente.getNum_end(),
-	            cliente.getBairro(),
-	            cliente.getCidade(),
-	            cliente.getEstado()
+	            f.getId(),
+	            f.getNome(),
+	            f.getCnpj(),
+	            f.getEmail(),
+	            f.getCelular(),
+	            f.getCep(),
+	            f.getEndereco(),
+	            f.getNum_end(),
+	            f.getBairro(),
+	            f.getCidade(),
+	            f.getEstado()
 	        });
 	    }
 	}
@@ -84,7 +82,7 @@ public class FormCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormCliente frame = new FormCliente();
+					FormFornecedores frame = new FormFornecedores();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					frame.atualizarTabela();
@@ -100,11 +98,10 @@ public class FormCliente extends JFrame {
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
-	public FormCliente() throws ParseException {
-		setResizable(false);
-		setTitle("Formulário de Clientes");
+	public FormFornecedores() throws ParseException {
+		setTitle("Formulário de Fornecedores");
 		setBackground(new Color(127, 127, 127));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 725, 438);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(127, 127, 127));
@@ -121,7 +118,7 @@ public class FormCliente extends JFrame {
 		panel.setBounds(0, 0, 714, 40);
 		contentPane.add(panel);
 		
-		JLabel lblCadastroDeClientes = new JLabel("CADASTRO DE CLIENTES");
+		JLabel lblCadastroDeClientes = new JLabel("CADASTRO DE FORNECEDORES");
 		lblCadastroDeClientes.setBackground(new Color(0, 0, 0));
 		lblCadastroDeClientes.setFont(new Font("Liberation Sans", Font.BOLD, 25));
 		lblCadastroDeClientes.setForeground(new Color(0, 0, 0));
@@ -139,47 +136,40 @@ public class FormCliente extends JFrame {
 		JPanel dadosPessoais = new JPanel();
 		dadosPessoais.setBorder(null);
 		dadosPessoais.setBackground(new Color(119, 118, 123));
-		tabbedPane.addTab("Dados Pessoais", null, dadosPessoais, null);
+		tabbedPane.addTab("Dados Fornecedores", null, dadosPessoais, null);
 		tabbedPane.setEnabledAt(0, true);
 		dadosPessoais.setLayout(null);
 		
-		JLabel lblCpf = new JLabel("CPF: ");
+		JLabel lblCpf = new JLabel("CNPJ: ");
 		lblCpf.setForeground(new Color(0, 0, 0));
 		lblCpf.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		lblCpf.setBounds(57, 44, 41, 15);
+		lblCpf.setBounds(47, 44, 55, 15);
 		dadosPessoais.add(lblCpf);
-		
-		JLabel lblCpf_1 = new JLabel("RG: ");
-		lblCpf_1.setForeground(new Color(0, 0, 0));
-		lblCpf_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		lblCpf_1.setBounds(249, 44, 35, 15);
-		dadosPessoais.add(lblCpf_1);
 		
 		txtNome = new JTextField();
 		txtNome.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent evt) {
 				if(evt.getKeyCode()==KeyEvent.VK_ENTER) {
-						String nome = txtNome.getText();
-						Cliente obj = new Cliente();
-						ClienteDAO dao = new ClienteDAO();
-						
-						obj = dao.Pesquisar(nome);
-						if(obj.getNome() != null) {
-							txtId.setText(String.valueOf(obj.getId()));
-							txtNome.setText(obj.getNome());
-							txtCPF.setText(obj.getCpf());
-							txtRG.setText(obj.getRg());
-							txtEmail.setText(obj.getEmail());
-							txtTelefone.setText(obj.getCelular());
-							txtCEP.setText(obj.getCep());
-							txtRua.setText(obj.getEndereco());
-							txtEndCasa.setText(String.valueOf(obj.getNum_end()));
-							txtCidade.setText(obj.getBairro());
-							txtBairro.setText(obj.getCidade());
-							cbEstado.setSelectedItem(obj.getEstado());
+					String nome = txtNome.getText();
+					Fornecedores obj = new Fornecedores();
+					FornDAO dao = new FornDAO();
+					
+					obj = dao.PesquisarForn(nome);
+					if(obj.getNome() != null) {
+						txtId.setText(String.valueOf(obj.getId()));
+						txtNome.setText(obj.getNome());
+						txtCNPJ.setText(obj.getCnpj());
+						txtEmail.setText(obj.getEmail());
+						txtTelefone.setText(obj.getCelular());
+						txtCEP.setText(obj.getCep());
+						txtRua.setText(obj.getEndereco());
+						txtEndCasa.setText(String.valueOf(obj.getNum_end()));
+						txtCidade.setText(obj.getBairro());
+						txtBairro.setText(obj.getCidade());
+						cbEstado.setSelectedItem(obj.getEstado());
 						} else{
-							JOptionPane.showMessageDialog(null, "cliente não encontrado!");
+							JOptionPane.showMessageDialog(null, "Fornecedore não encontrado!");
 						}
 				}
 			}
@@ -278,7 +268,7 @@ public class FormCliente extends JFrame {
 		JButton btnNovo = new JButton("NOVO");
 		btnNovo.setForeground(new Color(0, 0, 0));
 		btnNovo.setBackground(new Color(47, 45, 98));
-		btnNovo.setIcon(new ImageIcon(FormCliente.class.getResource("/imagens/add.png")));
+		btnNovo.setIcon(new ImageIcon(FormFornecedores.class.getResource("/imagens/add.png")));
 		btnNovo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -294,15 +284,15 @@ public class FormCliente extends JFrame {
 		JButton btnSalvar = new JButton("SALVAR");
 		btnSalvar.setBackground(new Color(47, 45, 98));
 		btnSalvar.setForeground(new Color(0, 0, 0));
-		btnSalvar.setIcon(new ImageIcon(FormCliente.class.getResource("/imagens/salvar.png")));
+		btnSalvar.setIcon(new ImageIcon(FormFornecedores.class.getResource("/imagens/salvar.png")));
 		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-			 Cliente obj = new Cliente();
+			 Fornecedores obj = new Fornecedores();
+			 obj.setId(Integer.valueOf(txtId.getText()));
 			 obj.setNome(txtNome.getText());
-			 obj.setCpf(txtCPF.getText());
-			 obj.setRg(txtRG.getText());
+			 obj.setCnpj(txtCNPJ.getText());
 			 obj.setEmail(txtEmail.getText());
 			 obj.setCelular(txtTelefone.getText());
 			 obj.setCep(txtCEP.getText());
@@ -312,7 +302,7 @@ public class FormCliente extends JFrame {
 			 obj.setCidade(txtCidade.getText());
 			 obj.setEstado(cbEstado.getSelectedItem().toString());
 			 
-			 ClienteDAO dao = new ClienteDAO();
+			 FornDAO dao = new FornDAO();
 			 dao.Salvar(obj);
 			 Util util = new Util();
 			 util.LimpaTela(dadosPessoais);
@@ -325,9 +315,9 @@ public class FormCliente extends JFrame {
 		JButton btnExcluir = new JButton("EXCLUIR");
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Cliente obj = new Cliente();
+				Fornecedores obj = new Fornecedores();
 				obj.setId(Integer.valueOf(txtId.getText()));
-				ClienteDAO dao = new ClienteDAO();
+				FornDAO dao = new FornDAO();
 				dao.Excluir(obj);
 				Util util = new Util();
 				util.LimpaTela(dadosPessoais);
@@ -335,7 +325,7 @@ public class FormCliente extends JFrame {
 		});
 		btnExcluir.setForeground(new Color(0, 0, 0));
 		btnExcluir.setBackground(new Color(47, 45, 98));
-		btnExcluir.setIcon(new ImageIcon(FormCliente.class.getResource("/imagens/excluir.png")));
+		btnExcluir.setIcon(new ImageIcon(FormFornecedores.class.getResource("/imagens/excluir.png")));
 		btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		btnExcluir.setBounds(521, 215, 135, 36);
 		dadosPessoais.add(btnExcluir);
@@ -343,10 +333,9 @@ public class FormCliente extends JFrame {
 		JButton btnEditar = new JButton("EDITAR");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Cliente obj = new Cliente();
+				Fornecedores obj = new Fornecedores();
 				 obj.setNome(txtNome.getText());
-				 obj.setCpf(txtCPF.getText());
-				 obj.setRg(txtRG.getText());
+				 obj.setCnpj(txtCNPJ.getText());
 				 obj.setEmail(txtEmail.getText());
 				 obj.setCelular(txtTelefone.getText());
 				 obj.setCep(txtCEP.getText());
@@ -357,7 +346,7 @@ public class FormCliente extends JFrame {
 				 obj.setEstado(cbEstado.getSelectedItem().toString());
 				 obj.setId(Integer.valueOf(txtId.getText()));
 				 
-				 ClienteDAO dao = new ClienteDAO();
+				 FornDAO dao = new FornDAO();
 				 dao.Editar(obj);
 				 Util util = new Util();
 				 util.LimpaTela(dadosPessoais);
@@ -365,7 +354,7 @@ public class FormCliente extends JFrame {
 		});
 		btnEditar.setBackground(new Color(47, 45, 98));
 		btnEditar.setForeground(new Color(0, 0, 0));
-		btnEditar.setIcon(new ImageIcon(FormCliente.class.getResource("/imagens/editar.png")));
+		btnEditar.setIcon(new ImageIcon(FormFornecedores.class.getResource("/imagens/editar.png")));
 		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		btnEditar.setBounds(364, 215, 122, 36);
 		dadosPessoais.add(btnEditar);
@@ -384,15 +373,10 @@ public class FormCliente extends JFrame {
 		dadosPessoais.add(txtId);
 		txtId.setColumns(10);
 		
-		txtCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-		txtCPF.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtCPF.setBounds(100, 42, 114, 19);
-		dadosPessoais.add(txtCPF);
-		
-		txtRG = new JFormattedTextField(new MaskFormatter("##.###.###-##"));
-		txtRG.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtRG.setBounds(281, 42, 119, 19);
-		dadosPessoais.add(txtRG);
+		txtCNPJ = new JFormattedTextField(new MaskFormatter("##.###.###/####-##"));
+		txtCNPJ.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
+		txtCNPJ.setBounds(100, 42, 168, 19);
+		dadosPessoais.add(txtCNPJ);
 		
 		txtTelefone = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
 		txtTelefone.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
@@ -414,15 +398,14 @@ public class FormCliente extends JFrame {
 		btnPesquisar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String nome = txtNome.getText();
-				Cliente obj = new Cliente();
-				ClienteDAO dao = new ClienteDAO();
+				Fornecedores obj = new Fornecedores();
+				FornDAO dao = new FornDAO();
 				
-				obj = dao.Pesquisar(nome);
+				obj = dao.PesquisarForn(nome);
 				if(obj.getNome() != null) {
 					txtId.setText(String.valueOf(obj.getId()));
 					txtNome.setText(obj.getNome());
-					txtCPF.setText(obj.getCpf());
-					txtRG.setText(obj.getRg());
+					txtCNPJ.setText(obj.getCnpj());
 					txtEmail.setText(obj.getEmail());
 					txtTelefone.setText(obj.getCelular());
 					txtCEP.setText(obj.getCep());
@@ -432,11 +415,11 @@ public class FormCliente extends JFrame {
 					txtBairro.setText(obj.getCidade());
 					cbEstado.setSelectedItem(obj.getEstado());
 				} else{
-					JOptionPane.showMessageDialog(null, "cliente não encontrado!");
+					JOptionPane.showMessageDialog(null, "fornecedor não encontrado!");
 				}
 			}
 		});
-		btnPesquisar_1.setIcon(new ImageIcon(FormCliente.class.getResource("/imagens/pesquisar.png")));
+		btnPesquisar_1.setIcon(new ImageIcon(FormFornecedores.class.getResource("/imagens/pesquisar.png")));
 		btnPesquisar_1.setForeground(Color.BLACK);
 		btnPesquisar_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		btnPesquisar_1.setBackground(new Color(47, 45, 98));
@@ -447,7 +430,7 @@ public class FormCliente extends JFrame {
 		consultaClientes.setBorder(null);
 		consultaClientes.setForeground(new Color(0, 0, 0));
 		consultaClientes.setBackground(new Color(119, 118, 123));
-		tabbedPane.addTab("Consulta de Clientes", null, consultaClientes, null);
+		tabbedPane.addTab("Consulta de Fornecedores", null, consultaClientes, null);
 		consultaClientes.setLayout(null);
 		
 		JLabel lblCpf_1_1_2 = new JLabel("NOME: ");
@@ -461,24 +444,23 @@ public class FormCliente extends JFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				String nome = "%"+txtPesquisaNome.getText()+"%";
-			    ClienteDAO dao = new ClienteDAO();
-			    List<Cliente> lista = dao.Filtrar(nome);
+			    FornDAO dao = new FornDAO();
+			    List<Fornecedores> lista = dao.Filtrar(nome);
 			    DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
 			    modelo.setRowCount(0); 
-			    for (Cliente cliente : lista) {
+			    for (Fornecedores f : lista) {
 			        modelo.addRow(new Object[]{
-			            cliente.getId(),
-			            cliente.getNome(),
-			            cliente.getRg(),
-			            cliente.getCpf(),
-			            cliente.getEmail(),
-			            cliente.getCelular(),
-			            cliente.getCep(),
-			            cliente.getEndereco(),
-			            cliente.getNum_end(),
-			            cliente.getBairro(),
-			            cliente.getCidade(),
-			            cliente.getEstado()
+			            f.getId(),
+			            f.getNome(),
+			            f.getCnpj(),
+			            f.getEmail(),
+			            f.getCelular(),
+			            f.getCep(),
+			            f.getEndereco(),
+			            f.getNum_end(),
+			            f.getBairro(),
+			            f.getCidade(),
+			            f.getEstado()
 			        });
 			    }
 				
@@ -497,25 +479,25 @@ public class FormCliente extends JFrame {
 					int selectedRow = tabela.getSelectedRow();
 		            txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
 		            txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
-		            txtRG.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
-		            txtCPF.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
-		            txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
-		            txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
-		            txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
-		            txtRua.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
-		            txtEndCasa.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
-		            txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
-		            txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
-		            cbEstado.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 11).toString());
+		            txtCNPJ.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
+		            txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
+		            txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
+		            txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
+		            txtRua.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
+		            txtEndCasa.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
+		            txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
+		            txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
+		            cbEstado.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
 		            tabbedPane.setSelectedIndex(1);
 		        }
 		});		
 		tabela.setFont(new Font("Liberation Sans", Font.PLAIN, 12));
 		tabela.setBorder(null);
 		tabela.setModel(new DefaultTableModel(
-			new Object[][] {},
+			new Object[][] {
+			},
 			new String[] {
-				"ID", "Nome", "RG", "CPF", "Email", "Telefone", "CEP", "Endereço", "Número", "Bairro", "Cidade", "Estado"
+				"ID", "Nome", "CNPJ", "Email", "Telefone", "CEP", "Endere\u00E7o", "N\u00FAmero", "Bairro", "Cidade", "Estado"
 			}
 		));
 		painelDados.setViewportView(tabela);
