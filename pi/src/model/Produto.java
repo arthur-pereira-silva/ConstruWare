@@ -6,6 +6,7 @@ public class Produto {
     private String nome;
     private Double qtd;
     private Double preco;
+    private Fornecedores fornecedor;
     
     
 	public Produto() {
@@ -18,6 +19,7 @@ public class Produto {
 		this.nome = nome;
 		this.qtd = qtd;
 		this.preco = preco;
+
 	}
 
 	public int getId() {
@@ -56,4 +58,12 @@ public class Produto {
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", qtd=" + qtd + ", preco=" + preco + "]";
 	}
+	public Fornecedores getFornecedores() {
+        return fornecedores;
+    }
+    public void setFornecedores(Fornecedores fornecedores) {
+        this.fornecedores = fornecedores;
+    }
+
+    private Fornecedores fornecedores;
 }

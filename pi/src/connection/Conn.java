@@ -17,10 +17,11 @@ public class Conn {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(url, user, password);
-                System.out.println("Banco de Dados Conectado");
+                JOptionPane.showMessageDialog(null, "Banco de Dados Conectado!!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "ERRO ao tentar conectar com Banco de Dados!");
         }
         return connection;
     }
@@ -29,6 +30,7 @@ public class Conn {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
+                JOptionPane.showMessageDialog(null, "Banco de Dados Desconectado!!");
             }
         } catch (SQLException e) {
             e.printStackTrace();

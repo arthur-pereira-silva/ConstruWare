@@ -6,14 +6,23 @@ public class Funcionario extends Pessoa {
 	private String cpf;
 	private String cnh;
 	private String cargo;
-	private float salario;
+	private double salario;
+	private String senha;
 	
+
 	public Funcionario() {
 		super();
 	}
-	public Funcionario(int id, String nome, String telefone, String email, String cep, String estado, String cidade,
+	public Funcionario(int id, String nome, String rg,String cpf,String cargo,double salario, String cnh, String telefone, String email, String cep, String estado, String cidade,
 			String rua, String bairro, int num) {
 		super(id, nome, telefone, email, cep, estado, cidade, rua, bairro, num);
+		
+		this.rg = rg;
+		this.cpf = cpf;
+		this.cargo = cargo;
+		this.salario = salario;
+		this.cnh = cnh;
+		
 	}
 	public String getRg() {
 		return rg;
@@ -39,11 +48,17 @@ public class Funcionario extends Pessoa {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
-	public float getSalario() {
+	public double getSalario() {
 		return salario;
 	}
-	public void setSalario(float salario) {
+	public void setSalario(double salario) {
 		this.salario = salario;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 	@Override
 	public String toString() {

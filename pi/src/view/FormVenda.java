@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -9,12 +8,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
-import java.awt.Panel;
-import java.awt.Label;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -22,22 +19,31 @@ import javax.swing.text.MaskFormatter;
 
 import connection.Conn;
 import dao.ClienteDAO;
+import dao.ProdutoDAO;
 import model.Cliente;
+import model.Produto;
 
 import javax.swing.border.TitledBorder;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FormVenda extends JFrame {
 
@@ -48,16 +54,29 @@ public class FormVenda extends JFrame {
 	private JTextField textPesquisaProduto;
 	private JTable tableCarrinho;
 	private JTextField textTotal;
-	private JTextField textCodigo;
-	private JTextField textProduto;
-	private JTextField textPreco;
-	private JTextField textEstoque;
-	private JTextField textQuantidade;
+	private JTextField txtCodigo;
+	private JTextField txtProduto;
+	private JTextField txtPreco;
+	private JTextField txtEstoque;
+	private JTextField txtQuantidade;
+	private JFormattedTextField txtData;
 	private Cliente cliente;
-
-	/**
-	 * Launch the application.
-	 */
+	
+	public void listarProdutos() throws SQLException {
+        Connection conn = Conn.pegarConexao();
+        ProdutoDAO dao = new ProdutoDAO(conn);
+        List<Produto> lista = dao.listarProdutos();
+        DefaultTableModel dados = (DefaultTableModel) tableProduto.getModel();
+        dados.setNumRows(0);
+        for (Produto p : lista) {
+            dados.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getPreco(),
+                p.getQtd(),
+            });
+        }
+    }
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -75,11 +94,23 @@ public class FormVenda extends JFrame {
 	 * Create the frame.
 	 */
 	public FormVenda() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				try {
+					listarProdutos();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				Date now = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				txtData.setText(sdf.format(now));
+			}
+		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 833, 565);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -114,25 +145,21 @@ public class FormVenda extends JFrame {
 		}
 		JFormattedTextField txtCpf = new JFormattedTextField(formatter);
 		txtCpf.addKeyListener(new KeyAdapter() {
-			public void  keyPressed(KeyEvent e) {
-			    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			        String cpf = txtCpf.getText();
-			        Connection conn = Conn.pegarConexao();
-			        ClienteDAO dao = new ClienteDAO(conn);
-			        Cliente cliente = null;
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					String cpf = txtCpf.getText();
+					Connection conn = Conn.pegarConexao();
+					ClienteDAO dao = new ClienteDAO();
+					Cliente cliente = null;
 
-			        try {
-			            cliente = dao.buscarCliente(cpf);
-			        } catch (SQLException e1) {
-			            e1.printStackTrace();
-			        }
-
-			        if (cliente != null && cliente.getCpf() != null) {
-			            txtNome.setText(cliente.getNome());
-			        } else {
-			            JOptionPane.showMessageDialog(null, "CPF Inválido");
-			        }
-			    }
+					cliente = dao.pesquisarCPF(cpf);
+					
+					if (cliente != null && cliente.getCpf() != null) {
+						txtNome.setText(cliente.getNome());
+					} else {
+						JOptionPane.showMessageDialog(null, "CPF Inválido");
+					}
+				}
 			}
 		});
 		txtCpf.setText("");
@@ -152,11 +179,26 @@ public class FormVenda extends JFrame {
 		lblNewLabel_1_3_1.setBounds(281, 18, 46, 14);
 		panel_3.add(lblNewLabel_1_3_1);
 
-		JFormattedTextField txtData = new JFormattedTextField();
+		txtData = new JFormattedTextField();
 		txtData.setBounds(322, 15, 112, 20);
 		panel_3.add(txtData);
 
 		JButton btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cpf = txtCpf.getText();
+				Connection conn = Conn.pegarConexao();
+				ClienteDAO dao = new ClienteDAO();
+				Cliente cliente = null;
+				cliente = dao.pesquisarCPF(cpf);
+
+				if (cliente != null && cliente.getCpf() != null) {
+					txtNome.setText(cliente.getNome());
+				} else {
+					JOptionPane.showMessageDialog(null, "CPF Inválido");
+				}
+			}
+		});
 		btnPesquisar.setBounds(199, 42, 89, 23);
 		panel_3.add(btnPesquisar);
 
@@ -165,13 +207,40 @@ public class FormVenda extends JFrame {
 		panel_3.add(scrollPane);
 
 		tableProduto = new JTable();
+		tableProduto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			    int selectedRow = tableProduto.getSelectedRow();
+			    if (selectedRow != -1) { // Verifica se alguma linha está selecionada
+			        Object codigo = tableProduto.getValueAt(selectedRow, 0);
+			        Object produto = tableProduto.getValueAt(selectedRow, 1);
+			        Object preco = tableProduto.getValueAt(selectedRow, 2);
+			        Object estoque = tableProduto.getValueAt(selectedRow, 3);
+
+			        // Verifica se os valores não são nulos antes de convertê-los para String
+			        if (codigo != null) {
+			            txtCodigo.setText(codigo.toString());
+			        }
+			        if (produto != null) {
+			            txtProduto.setText(produto.toString());
+			        }
+			        if (preco != null) {
+			            txtPreco.setText(preco.toString());
+			        }
+			        if (estoque != null) {
+			            txtEstoque.setText(estoque.toString());
+			        }
+			    }
+			}
+
+		});
 		tableProduto.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-						"C\u00F3digo", "Nome", "Pre\u00E7o", "Estoque", "Fornecedor"
-				}
-				));
+			new Object[][] {
+			},
+			new String[] {
+				"C\u00F3digo", "Nome", "Pre\u00E7o", "QTD Estoque", "Fornecedor"
+			}
+		));
 		scrollPane.setViewportView(tableProduto);
 
 		JLabel lblNewLabel_1_2_2_1 = new JLabel("Pesquise o Produto aqui:");
@@ -193,37 +262,37 @@ public class FormVenda extends JFrame {
 		lblNewLabel_1.setBounds(10, 32, 52, 14);
 		panel_2.add(lblNewLabel_1);
 
-		textCodigo = new JTextField();
-		textCodigo.setColumns(10);
-		textCodigo.setBounds(61, 29, 46, 20);
-		panel_2.add(textCodigo);
+		txtCodigo = new JTextField();
+		txtCodigo.setColumns(10);
+		txtCodigo.setBounds(61, 29, 46, 20);
+		panel_2.add(txtCodigo);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Produto:");
 		lblNewLabel_1_1.setBounds(10, 76, 52, 14);
 		panel_2.add(lblNewLabel_1_1);
 
-		textProduto = new JTextField();
-		textProduto.setColumns(10);
-		textProduto.setBounds(61, 73, 80, 20);
-		panel_2.add(textProduto);
+		txtProduto = new JTextField();
+		txtProduto.setColumns(10);
+		txtProduto.setBounds(61, 73, 80, 20);
+		panel_2.add(txtProduto);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Preço:");
 		lblNewLabel_1_2.setBounds(10, 121, 52, 14);
 		panel_2.add(lblNewLabel_1_2);
 
-		textPreco = new JTextField();
-		textPreco.setColumns(10);
-		textPreco.setBounds(61, 118, 80, 20);
-		panel_2.add(textPreco);
+		txtPreco = new JTextField();
+		txtPreco.setColumns(10);
+		txtPreco.setBounds(61, 118, 80, 20);
+		panel_2.add(txtPreco);
 
 		JLabel lblNewLabel_1_4 = new JLabel("Estoque:");
 		lblNewLabel_1_4.setBounds(10, 167, 52, 14);
 		panel_2.add(lblNewLabel_1_4);
 
-		textEstoque = new JTextField();
-		textEstoque.setColumns(10);
-		textEstoque.setBounds(61, 164, 80, 20);
-		panel_2.add(textEstoque);
+		txtEstoque = new JTextField();
+		txtEstoque.setColumns(10);
+		txtEstoque.setBounds(61, 164, 80, 20);
+		panel_2.add(txtEstoque);
 
 		JButton btnAdicionar = new JButton("Adicionar Item");
 		btnAdicionar.setBounds(151, 163, 119, 23);
@@ -233,10 +302,10 @@ public class FormVenda extends JFrame {
 		lblNewLabel_1_5.setBounds(277, 118, 37, 14);
 		panel_2.add(lblNewLabel_1_5);
 
-		textQuantidade = new JTextField();
-		textQuantidade.setColumns(10);
-		textQuantidade.setBounds(311, 115, 60, 20);
-		panel_2.add(textQuantidade);
+		txtQuantidade = new JTextField();
+		txtQuantidade.setColumns(10);
+		txtQuantidade.setBounds(311, 115, 60, 20);
+		panel_2.add(txtQuantidade);
 
 		JButton btnProcurar = new JButton("Pesquisar");
 		btnProcurar.setBounds(352, 72, 89, 23);
@@ -249,10 +318,6 @@ public class FormVenda extends JFrame {
 		JLabel lblNewLabel_1_4_1 = new JLabel("Desconto:");
 		lblNewLabel_1_4_1.setBounds(330, 28, 60, 14);
 		panel_2.add(lblNewLabel_1_4_1);
-
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(85, 18, 7, 20);
-		panel_3.add(formattedTextField);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Carrinho de Compras", TitledBorder.LEADING, TitledBorder.TOP, null, null));

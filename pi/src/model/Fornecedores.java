@@ -8,9 +8,11 @@ public class Fornecedores extends Pessoa {
 		super();
 	}
 
-	public Fornecedores(int id, String nome, String telefone, String email, String cep, String estado, String cidade,
+	public Fornecedores(int id, String nome, String cnpj, String telefone, String email, String cep, String estado, String cidade,
 			String rua, String bairro, int num) {
 		super(id, nome, telefone, email, cep, estado, cidade, rua, bairro, num);
+		
+		this.cnpj = cnpj;
 	}
 
 	public String getCnpj() {
