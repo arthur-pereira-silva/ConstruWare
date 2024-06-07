@@ -318,7 +318,7 @@ public class FormCliente extends JFrame {
 
 
 
-				ClienteDAO dao = new ClienteDAO();
+				ClienteDAO dao = new ClienteDAO();	
 				dao.Salvar(obj);
 				Util util = new Util();
 				util.LimpaTela(dadosPessoais);

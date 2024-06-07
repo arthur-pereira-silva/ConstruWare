@@ -55,7 +55,7 @@ public class FuncDAO {
     
     public void Editar(Funcionario obj) {
         try {
-            String sql = "UPDATE Funcionario SET Nome=?, RG=?, CPF=?, Cargo=?, Salario=?, CNH=?, Telefone=?, Email=?, CEP=?, Estado=?, Cidade=?, Rua=?, Bairro=?, NumCasa=?, Senha=? WHERE IdFuncioanrio=?";
+            String sql = "UPDATE Funcionario SET Nome=?, RG=?, CPF=?, Cargo=?, Salario=?, CNH=?, Telefone=?, Email=?, CEP=?, Estado=?, Cidade=?, Rua=?, Bairro=?, NumCasa=?, Senha=? WHERE IdFuncionario=?";
             
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, obj.getNome());
@@ -86,16 +86,22 @@ public class FuncDAO {
     }
     
     public void Excluir(Funcionario obj) {
-    	try {
-    		String sql = "delete from Funcionario where id=?";
-    		PreparedStatement stmt = conn.prepareStatement(sql);
-    		stmt.setInt(1, obj.getId());
-    		stmt.execute();
-    		stmt.close();
-    		JOptionPane.showMessageDialog(null, "Funcionario Excluido");
-    	}catch (SQLException e) {
-    		JOptionPane.showMessageDialog(null, "Erro ao Excluir");
-    	}
+        try {
+            String sql = "DELETE FROM Funcionario WHERE IdFuncionario=?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, obj.getId());
+            int affectedRows = stmt.executeUpdate();
+            stmt.close();
+
+            if (affectedRows > 0) {
+                JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Nenhum funcionário encontrado com o ID fornecido.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
     
     public Funcionario PesquisarFunc(String nome) {

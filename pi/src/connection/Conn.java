@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
 public class Conn {
 	
 	private static String url = "jdbc:sqlserver://localhost:1433;databaseName=BD_PI;integratedSecurity=true;encrypt=true;trustServerCertificate=true";	
-    private static String user = "sa"; // Substitua pelo seu usuário do banco de dados
-    private static String password = "03052004"; // Substitua pela sua senha do banco de dados
+    private static String user = "sa";
+    private static String password = "03052004";
     private static Connection connection;
 
     public static Connection pegarConexao() {

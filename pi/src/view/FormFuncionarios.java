@@ -54,13 +54,13 @@ public class FormFuncionarios extends JFrame {
 	private JTextField txtCEP;
 	private JTextField txtCidade;
 	private JTextField txtEmail;
-	private JTextField txtId;
 	private JComboBox<String> cbEstado;
 	private JTextField txtPesquisaNome;
 	private JTable tabela;
 	private JPasswordField passwordFieldSenha;
 	private JTextField txtSalario;
 	private JTextField txtCNH;
+	private JTextField txtId;
 	private void atualizarTabela() throws SQLException {
 		FuncDAO dao = new FuncDAO();
 		List<Funcionario> lista = null;
@@ -144,6 +144,8 @@ public class FormFuncionarios extends JFrame {
 		tabbedPane.setBackground(new Color(47, 45, 98));
 		tabbedPane.setBounds(-2, 51, 800, 350);
 		contentPane.add(tabbedPane);
+
+		JLabel Salario = new JLabel("SALÁRIO:");
 
 		JPanel dadosPessoais = new JPanel();
 		dadosPessoais.setBorder(null);
@@ -321,14 +323,6 @@ public class FormFuncionarios extends JFrame {
 		cbEstado.setBounds(693, 197, 60, 22);
 		dadosPessoais.add(cbEstado);
 
-		txtId = new JTextField();
-		txtId.setEnabled(false);
-		txtId.setEditable(false);
-		txtId.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtId.setBounds(100, 12, 70, 19);
-		dadosPessoais.add(txtId);
-		txtId.setColumns(10);
-		
 		cbCargo = new JComboBox();
 		cbCargo.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		cbCargo.setForeground(new Color(0, 0, 0));
@@ -351,8 +345,6 @@ public class FormFuncionarios extends JFrame {
 		passwordFieldSenha = new JPasswordField();
 		passwordFieldSenha.setBounds(121, 239, 122, 20);
 		dadosPessoais.add(passwordFieldSenha);
-
-		JLabel Salario = new JLabel("SALÁRIO:");
 		lblSalario.setForeground(Color.BLACK);
 		lblSalario.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblSalario.setBounds(552, 241, 78, 15);
@@ -375,18 +367,27 @@ public class FormFuncionarios extends JFrame {
 		txtCNH.setColumns(10);
 		txtCNH.setBounds(608, 102, 145, 19);
 		dadosPessoais.add(txtCNH);
-		
+
 		JLabel lblCargo = new JLabel("CARGO:");
 		lblCargo.setForeground(Color.BLACK);
 		lblCargo.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblCargo.setBounds(298, 243, 78, 15);
 		dadosPessoais.add(lblCargo);
-		
+
 		JLabel lblCpf_2 = new JLabel("CPF: ");
 		lblCpf_2.setForeground(Color.BLACK);
 		lblCpf_2.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblCpf_2.setBounds(77, 74, 41, 15);
 		dadosPessoais.add(lblCpf_2);
+
+		txtId = new JTextField();
+		txtId.setEnabled(false);
+		txtId.setEditable(false);
+		txtId.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
+		txtId.setBounds(121, 37, 70, 19);
+		dadosPessoais.add(txtId);
+		txtId.setColumns(10);
+
 
 		JPanel panelPesquisa = new JPanel();
 		panelPesquisa.setBackground(new Color(119, 118, 123));
@@ -427,33 +428,33 @@ public class FormFuncionarios extends JFrame {
 				FuncDAO dao = new FuncDAO();
 				Funcionario obj = dao.PesquisarFuncionario(Integer.parseInt(id));
 				if (obj != null) {
-					txtId.setText(tabela.getValueAt(tabela.getSelectedRow(), 0).toString());
-					txtNome.setText(tabela.getValueAt(tabela.getSelectedRow(), 1).toString());
-					txtRG.setText(tabela.getValueAt(tabela.getSelectedRow(), 2).toString());
-					txtCPF.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
-					cbCargo.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
-					txtSalario.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
-					txtCNH.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
-					txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
-					txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
-					txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
-					cbEstado.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
-					txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 11).toString());
-					txtRua.setText(tabela.getValueAt(tabela.getSelectedRow(), 12).toString());
-					txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 13).toString());
-					txtNumCasa.setText(tabela.getValueAt(tabela.getSelectedRow(), 14).toString());
-					passwordFieldSenha.setText(tabela.getValueAt(tabela.getSelectedRow(), 15).toString());
+					txtId.setText(tabela.getValueAt(row, 0) != null ? tabela.getValueAt(row, 0).toString() : "");
+					txtNome.setText(tabela.getValueAt(row, 1) != null ? tabela.getValueAt(row, 1).toString() : "");
+					txtRG.setText(tabela.getValueAt(row, 2) != null ? tabela.getValueAt(row, 2).toString() : "");
+					txtCPF.setText(tabela.getValueAt(row, 3) != null ? tabela.getValueAt(row, 3).toString() : "");
+					cbCargo.setSelectedItem(tabela.getValueAt(row, 4) != null ? tabela.getValueAt(row, 4).toString() : "");
+					txtSalario.setText(tabela.getValueAt(row, 5) != null ? tabela.getValueAt(row, 5).toString() : "");
+					txtCNH.setText(tabela.getValueAt(row, 6) != null ? tabela.getValueAt(row, 6).toString() : "");
+					txtTelefone.setText(tabela.getValueAt(row, 7) != null ? tabela.getValueAt(row, 7).toString() : "");
+					txtEmail.setText(tabela.getValueAt(row, 8) != null ? tabela.getValueAt(row, 8).toString() : "");
+					txtCEP.setText(tabela.getValueAt(row, 9) != null ? tabela.getValueAt(row, 9).toString() : "");
+					cbEstado.setSelectedItem(tabela.getValueAt(row, 10) != null ? tabela.getValueAt(row, 10).toString() : "");
+					txtCidade.setText(tabela.getValueAt(row, 11) != null ? tabela.getValueAt(row, 11).toString() : "");
+					txtRua.setText(tabela.getValueAt(row, 12) != null ? tabela.getValueAt(row, 12).toString() : "");
+					txtBairro.setText(tabela.getValueAt(row, 13) != null ? tabela.getValueAt(row, 13).toString() : "");
+					txtNumCasa.setText(tabela.getValueAt(row, 14) != null ? tabela.getValueAt(row, 14).toString() : "");
+					passwordFieldSenha.setText(tabela.getValueAt(row, 15) != null ? tabela.getValueAt(row, 15).toString() : "");
 					tabbedPane.setSelectedIndex(0);
 				}
 			}
 		});
 		tabela.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"IdFuncionario", "Nome", "RG", "CPF", "Cargo", "Salario", "CNH", "Telefone", "Email", "CEP", "Estado", "Cidade", "Rua", "Bairro", "NumCasa", "Senha"
-			}
-		));
+				new Object[][] {
+				},
+				new String[] {
+						"IdFuncionario", "Nome", "RG", "CPF", "Cargo", "Salario", "CNH", "Telefone", "Email", "CEP", "Estado", "Cidade", "Rua", "Bairro", "NumCasa", "Senha"
+				}
+				));
 		tabela.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		tabela.setBackground(Color.LIGHT_GRAY);
 		scrollPane.setViewportView(tabela);
@@ -465,7 +466,6 @@ public class FormFuncionarios extends JFrame {
 				AtualizarTabela(list);
 			}
 		});
-		txtId.setVisible(false);
 
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/excluir.png")));
@@ -475,21 +475,8 @@ public class FormFuncionarios extends JFrame {
 		contentPane.add(btnExcluir);
 
 		JButton btnSalvar = new JButton("Salvar");
-		btnSalvar.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/salvar.png")));
-		btnSalvar.setForeground(Color.BLACK);
-		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnSalvar.setBounds(333, 412, 141, 43);
-		contentPane.add(btnSalvar);
-
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/editar.png")));
-		btnEditar.setForeground(Color.BLACK);
-		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnEditar.setBounds(96, 412, 141, 43);
-		contentPane.add(btnEditar);
-
 		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+			public void actionPerformed(ActionEvent e) {
 				Funcionario obj = new Funcionario();
 				obj.setNome(txtNome.getText());
 				obj.setRg(txtRG.getText());
@@ -508,18 +495,28 @@ public class FormFuncionarios extends JFrame {
 				obj.setSalario(salario);
 				obj.setSenha(new String(passwordFieldSenha.getPassword()));
 
-				FuncDAO dao = new FuncDAO();
-				if (txtId.getText().isEmpty()) {
-					dao.Salvar(obj);
-				} else {
-					obj.setId(Integer.parseInt(txtId.getText()));
-					dao.Editar(obj);
-				}
-				LimparCampos();
-				AtualizarTabela();
+
+
+			FuncDAO dao = new FuncDAO();
+			dao.Salvar(obj);
+			Util util = new Util();
+			util.LimpaTela(dadosPessoais);
 			}
 		});
+		btnSalvar.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/salvar.png")));
+		btnSalvar.setForeground(Color.BLACK);
+		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+		btnSalvar.setBounds(333, 412, 141, 43);
+		contentPane.add(btnSalvar);
 
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/editar.png")));
+		btnEditar.setForeground(Color.BLACK);
+		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+		btnEditar.setBounds(96, 412, 141, 43);
+		contentPane.add(btnEditar);
+
+		
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Funcionario obj = new Funcionario();
@@ -580,20 +577,6 @@ public class FormFuncionarios extends JFrame {
 	}
 
 	private void LimparCampos() {
-		txtId.setText("");
-		txtNome.setText("");
-		txtRG.setText("");
-		txtCPF.setText("");
-		cbCargo.setSelectedItem("");
-		txtSalario.setText("");
-		txtCNH.setText("");
-		txtTelefone.setText("");
-		txtEmail.setText("");
-		txtCEP.setText("");
-		cbEstado.setSelectedItem("");
-		txtCidade.setText("");
-		txtRua.setText("");
-		txtNumCasa.setText("");
-		txtBairro.setText("");
+
 	}
 }
