@@ -6,7 +6,7 @@ public class Produto {
     private String nome;
     private Double qtd;
     private Double preco;
-    private Fornecedores fornecedor;
+    private Fornecedor fornecedor;
     
     
 	public Produto() {
@@ -58,12 +58,12 @@ public class Produto {
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", qtd=" + qtd + ", preco=" + preco + "]";
 	}
-	public Fornecedores getFornecedores() {
+	public Fornecedor getFornecedores() {
         return fornecedores;
     }
-    public void setFornecedores(Fornecedores fornecedores) {
+    public void setFornecedores(Fornecedor fornecedores) {
         this.fornecedores = fornecedores;
     }
 
-    private Fornecedores fornecedores;
+    private Fornecedor fornecedores;
 }

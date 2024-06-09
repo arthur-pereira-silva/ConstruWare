@@ -1,14 +1,14 @@
 package model;
 
-public class Fornecedores extends Pessoa {
+public class Fornecedor extends Pessoa {
 	
 	private String cnpj;
 
-	public Fornecedores() {
+	public Fornecedor() {
 		super();
 	}
 
-	public Fornecedores(int id, String nome, String cnpj, String telefone, String email, String cep, String estado, String cidade,
+	public Fornecedor(int id, String nome, String cnpj, String telefone, String email, String cep, String estado, String cidade,
 			String rua, String bairro, int num) {
 		super(id, nome, telefone, email, cep, estado, cidade, rua, bairro, num);
 		
