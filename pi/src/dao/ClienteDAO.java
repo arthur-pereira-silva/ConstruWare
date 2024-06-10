@@ -39,7 +39,7 @@
 	
 				stmt.execute();
 				stmt.close();
-				JOptionPane.showMessageDialog(null, "Sucesso");
+				JOptionPane.showMessageDialog(null, "Cliente Cadastrado");
 	
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -118,7 +118,7 @@
 			return null;
 		}
 		
-		public Cliente pesquisarCPF(String cpf) {
+		public Cliente PesquisarCPF(String cpf) {
 			try {
 				String sql = "select * from Cliente where CPF = ?";
 				PreparedStatement stmt = conn.prepareStatement(sql);
@@ -182,6 +182,36 @@
 				String sql = "SELECT * FROM Cliente where nome like ?";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, nome);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Cliente obj = new Cliente();
+		  			obj.setId(rs.getInt("IdCliente"));
+	   			 	obj.setNome(rs.getString("Nome"));
+	   			 	obj.setRg(rs.getString("RG"));
+	   			 	obj.setCpf(rs.getString("CPF"));
+	   			 	obj.setTelefone(rs.getString("Telefone"));
+	   			 	obj.setEmail(rs.getString("Email"));
+	   			 	obj.setCep(rs.getString("CEP"));
+	 			 	obj.setEstado(rs.getString("Estado"));
+	   			 	obj.setCidade(rs.getString("Cidade"));
+	   			 	obj.setRua(rs.getString("Rua"));
+	   			 	obj.setBairro(rs.getString("Bairro"));
+	   			 	obj.setNum(rs.getInt("numCasa"));
+					lista.add(obj);
+				}
+				rs.close();
+				stmt.close();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e);
+			}
+			return lista;
+		}
+		public List<Cliente>FiltrarCPF(String cpf) {
+			List<Cliente> lista = new ArrayList<>();
+			try {
+				String sql = "SELECT * FROM Cliente where CPF like	 ?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, cpf);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {
 					Cliente obj = new Cliente();

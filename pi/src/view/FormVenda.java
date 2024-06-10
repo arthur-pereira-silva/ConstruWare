@@ -152,7 +152,7 @@ public class FormVenda extends JFrame {
 					ClienteDAO dao = new ClienteDAO();
 					Cliente cliente = null;
 
-					cliente = dao.pesquisarCPF(cpf);
+					cliente = dao.Pesquisar(cpf);
 					
 					if (cliente != null && cliente.getCpf() != null) {
 						txtNome.setText(cliente.getNome());
@@ -190,7 +190,7 @@ public class FormVenda extends JFrame {
 				Connection conn = Conn.pegarConexao();
 				ClienteDAO dao = new ClienteDAO();
 				Cliente cliente = null;
-				cliente = dao.pesquisarCPF(cpf);
+				cliente = dao.PesquisarCPF(cpf);
 
 				if (cliente != null && cliente.getCpf() != null) {
 					txtNome.setText(cliente.getNome());

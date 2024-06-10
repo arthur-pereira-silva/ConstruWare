@@ -119,11 +119,11 @@ public class FormFornecedor extends JFrame {
 		panel.setBounds(0, 0, 714, 40);
 		contentPane.add(panel);
 		
-		JLabel lblCadastroDeClientes = new JLabel("CADASTRO DE FORNECEDORES");
-		lblCadastroDeClientes.setBackground(new Color(0, 0, 0));
-		lblCadastroDeClientes.setFont(new Font("Liberation Sans", Font.BOLD, 25));
-		lblCadastroDeClientes.setForeground(new Color(0, 0, 0));
-		panel.add(lblCadastroDeClientes);
+		JLabel lblCadastroDeFornecedor = new JLabel("CADASTRO DE FORNECEDORES");
+		lblCadastroDeFornecedor.setBackground(new Color(0, 0, 0));
+		lblCadastroDeFornecedor.setFont(new Font("Liberation Sans", Font.BOLD, 25));
+		lblCadastroDeFornecedor.setForeground(new Color(0, 0, 0));
+		panel.add(lblCadastroDeFornecedor);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setToolTipText("");
@@ -165,9 +165,9 @@ public class FormFornecedor extends JFrame {
 						txtTelefone.setText(obj.getTelefone());
 						txtCEP.setText(obj.getCep());
 						cbEstado.setSelectedItem(obj.getEstado());
-						txtCidade.setText(obj.getBairro());
+						txtCidade.setText(obj.getCidade());
 						txtRua.setText(obj.getRua());
-						txtBairro.setText(obj.getCidade());
+						txtBairro.setText(obj.getBairro());
 						txtNum.setText(String.valueOf(obj.getNum()));
 						
 						} else{
@@ -289,10 +289,10 @@ public class FormFornecedor extends JFrame {
 		btnSalvar.setIcon(new ImageIcon(FormFornecedor.class.getResource("/imagens/salvar.png")));
 		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		btnSalvar.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
 
 			 Fornecedor obj = new Fornecedor();
-			 obj.setId(Integer.valueOf(txtId.getText()));
 			 obj.setNome(txtNome.getText());
 			 obj.setCnpj(txtCNPJ.getText());
 			 obj.setEmail(txtEmail.getText());
@@ -412,9 +412,9 @@ public class FormFornecedor extends JFrame {
 					txtTelefone.setText(obj.getTelefone());
 					txtCEP.setText(obj.getCep());
 					cbEstado.setSelectedItem(obj.getEstado());
-					txtCidade.setText(obj.getBairro());
+					txtCidade.setText(obj.getCidade());
 					txtRua.setText(obj.getRua());
-					txtBairro.setText(obj.getCidade());
+					txtBairro.setText(obj.getBairro());
 					txtNum.setText(String.valueOf(obj.getNum()));
 					
 				} else{
@@ -429,18 +429,18 @@ public class FormFornecedor extends JFrame {
 		btnPesquisar_1.setBounds(522, 65, 156, 36);
 		dadosPessoais.add(btnPesquisar_1);
 		
-		JPanel consultaClientes = new JPanel();
-		consultaClientes.setBorder(null);
-		consultaClientes.setForeground(new Color(0, 0, 0));
-		consultaClientes.setBackground(new Color(119, 118, 123));
-		tabbedPane.addTab("Consulta de Fornecedores", null, consultaClientes, null);
-		consultaClientes.setLayout(null);
+		JPanel consultaFornecedor = new JPanel();
+		consultaFornecedor.setBorder(null);
+		consultaFornecedor.setForeground(new Color(0, 0, 0));
+		consultaFornecedor.setBackground(new Color(119, 118, 123));
+		tabbedPane.addTab("Consulta de Fornecedores", null, consultaFornecedor, null);
+		consultaFornecedor.setLayout(null);
 		
 		JLabel lblCpf_1_1_2 = new JLabel("NOME: ");
 		lblCpf_1_1_2.setForeground(new Color(0, 0, 0));
 		lblCpf_1_1_2.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		lblCpf_1_1_2.setBounds(138, 14, 60, 15);
-		consultaClientes.add(lblCpf_1_1_2);
+		consultaFornecedor.add(lblCpf_1_1_2);
 		
 		txtPesquisaNome = new JTextField();
 		txtPesquisaNome.addKeyListener(new KeyAdapter() {
@@ -474,7 +474,7 @@ public class FormFornecedor extends JFrame {
 		txtPesquisaNome.setText("\n");
 		txtPesquisaNome.setColumns(10);
 		txtPesquisaNome.setBounds(195, 12, 373, 19);
-		consultaClientes.add(txtPesquisaNome);
+		consultaFornecedor.add(txtPesquisaNome);
 		
 		JScrollPane painelDados = new JScrollPane();
 		tabela = new JTable();
@@ -488,11 +488,11 @@ public class FormFornecedor extends JFrame {
 		            txtEmail.setText(tabela.getValueAt(tabela.getSelectedRow(), 3).toString());
 		            txtTelefone.setText(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
 		            txtCEP.setText(tabela.getValueAt(tabela.getSelectedRow(), 5).toString());
-		            cbEstado.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
-		            txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
-		            txtRua.setText(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
-		            txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
-		            txtNum.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
+		            cbEstado.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 6).toString());
+		            txtCidade.setText(tabela.getValueAt(tabela.getSelectedRow(), 7).toString());
+		            txtRua.setText(tabela.getValueAt(tabela.getSelectedRow(), 8).toString());
+		            txtBairro.setText(tabela.getValueAt(tabela.getSelectedRow(), 9).toString());
+		            txtNum.setText(tabela.getValueAt(tabela.getSelectedRow(), 10).toString());
 		            
 		            
 		            tabbedPane.setSelectedIndex(1);
@@ -509,6 +509,6 @@ public class FormFornecedor extends JFrame {
 		));
 		painelDados.setViewportView(tabela);
 		painelDados.setBounds(0, 40, 714, 219);
-		consultaClientes.add(painelDados);
+		consultaFornecedor.add(painelDados);
 	}
 }

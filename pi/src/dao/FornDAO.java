@@ -23,11 +23,11 @@ public class FornDAO {
 
 	public void Salvar(Fornecedor obj) {
 		try {
-			String sql = "INSERT INTO Fornecedores (Nome, CNPJ, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumEstabelecimento) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Fornecedor (Nome, CNPJ, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumEstabelecimento) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(2, obj.getNome());
-			stmt.setString(3, obj.getCnpj());
+			stmt.setString(1, obj.getNome());
+			stmt.setString(2, obj.getCnpj());
 			stmt.setString(3, obj.getTelefone());
 			stmt.setString(4, obj.getEmail());
 			stmt.setString(5, obj.getCep());
@@ -37,8 +37,6 @@ public class FornDAO {
 			stmt.setString(9, obj.getBairro());
 			stmt.setInt(10, obj.getNum());
 			stmt.executeUpdate();
-
-			stmt.execute();
 			stmt.close();
 			JOptionPane.showMessageDialog(null, "Fornecedor salvo");
 
@@ -50,12 +48,11 @@ public class FornDAO {
 
 	public void Editar(Fornecedor obj) {
 		try {
-			String sql = "UPDATE Fornecedor SET  Nome = ?, Telefone = ?, Email = ?, CEP = ?, Estado = ?,Cidade = ?, Rua = ?, Bairro = ?  NumEstabelecimento = ?  WHERE IdForncedor = ?";
-
+			String sql = "UPDATE Fornecedor SET  Nome = ?, CNPJ = ?, Telefone = ?, Email = ?, CEP = ?, Estado = ?,Cidade = ?, Rua = ?, Bairro = ?,  NumEstabelecimento = ?  WHERE IdFornecedor = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, obj.getId());
-			stmt.setString(2, obj.getNome());
-			stmt.setString(3, obj.getCnpj());
+			
+			stmt.setString(1, obj.getNome());
+			stmt.setString(2, obj.getCnpj());
 			stmt.setString(3, obj.getTelefone());
 			stmt.setString(4, obj.getEmail());
 			stmt.setString(5, obj.getCep());
@@ -64,53 +61,53 @@ public class FornDAO {
 			stmt.setString(8, obj.getRua());
 			stmt.setString(9, obj.getBairro());
 			stmt.setInt(10, obj.getNum());
+			stmt.setInt(11, obj.getId());
 			stmt.executeUpdate();
 
 
 			stmt.execute();
 			stmt.close();
-			JOptionPane.showMessageDialog(null, "Fornecedores editados");
+			JOptionPane.showMessageDialog(null, "Fornecedor Editado");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Erro ao editar fornecedores: " + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Erro ao editar fornecedor: " + e.getMessage());
 		}
 	}
 
 	public void Excluir(Fornecedor obj) {
 		try {
-			String sql = "delete from Fornecedores where IdForncedor=?";
+			String sql = "DELETE FROM Fornecedor WHERE IdFornecedor=?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, obj.getId());
 			stmt.execute();
 			stmt.close();
-			JOptionPane.showMessageDialog(null, "fornecedor excluido");
+			JOptionPane.showMessageDialog(null, "Fornecedor excluido");
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "erro ao excluir");
 		}
 	}
 
+	
 	public Fornecedor Pesquisar(String nome) {
 		try {
-			String sql = "SELECT * FROM Fornecedores WHERE Nome =?";
+			String sql = "select * from Fornecedor where Nome = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, nome);
 			ResultSet rs = stmt.executeQuery();
 			Fornecedor obj = new Fornecedor();
 			if (rs.next()) {
-				stmt.setInt(1, obj.getId());
-				stmt.setString(2, obj.getNome());
-				stmt.setString(3, obj.getCnpj());
-				stmt.setString(3, obj.getTelefone());
-				stmt.setString(4, obj.getEmail());
-				stmt.setString(5, obj.getCep());
-				stmt.setString(6, obj.getEstado());
-				stmt.setString(7, obj.getCidade());
-				stmt.setString(8, obj.getRua());
-				stmt.setString(9, obj.getBairro());
-				stmt.setInt(10, obj.getNum());
-				stmt.executeUpdate();
-
+	  			obj.setId(rs.getInt("IdFornecedor"));
+   			 	obj.setNome(rs.getString("Nome"));
+   			 	obj.setCnpj(rs.getString("CNPJ"));
+   			 	obj.setTelefone(rs.getString("Telefone"));
+   			 	obj.setEmail(rs.getString("Email"));
+   			 	obj.setCep(rs.getString("CEP"));
+ 			 	obj.setEstado(rs.getString("Estado"));
+   			 	obj.setCidade(rs.getString("Cidade"));
+   			 	obj.setRua(rs.getString("Rua"));
+   			 	obj.setBairro(rs.getString("Bairro"));
+   			 	obj.setNum(rs.getInt("NumEstabelecimento"));
 			}
 			return obj;
 
@@ -153,7 +150,7 @@ public class FornDAO {
 	public List<Fornecedor>Filtrar(String nome) {
 		List<Fornecedor> lista = new ArrayList<>();
 		try {
-			String sql = "SELECT * FROM Fornecedores WHERE Nome LIKE ?";
+			String sql = "SELECT * FROM Fornecedor WHERE Nome LIKE ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, nome);
 			ResultSet rs = stmt.executeQuery();
@@ -169,7 +166,7 @@ public class FornDAO {
 				obj.setCidade(rs.getString("Cidade"));
 				obj.setRua(rs.getString("Rua"));
 				obj.setBairro(rs.getString("Bairro"));
-				obj.setNum(rs.getInt("numCasa"));
+				obj.setNum(rs.getInt("NumEstabelecimento"));
 
 
 
