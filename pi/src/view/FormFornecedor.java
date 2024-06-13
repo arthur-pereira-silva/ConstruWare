@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package view;
+=======
+	package view;
+>>>>>>> 123d23865a30c05a94b34228ba1c449b9d4633d6
 	
 	
 	import java.awt.Color;
@@ -511,4 +515,8 @@ package view;
 			painelDados.setBounds(0, 40, 714, 219);
 			consultaFornecedor.add(painelDados);
 		}
+<<<<<<< HEAD
 	}
+=======
+	}
+>>>>>>> 123d23865a30c05a94b34228ba1c449b9d4633d6
