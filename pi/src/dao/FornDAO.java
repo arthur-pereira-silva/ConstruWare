@@ -10,7 +10,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import connection.Conn;
-import model.Cliente;
 import model.Fornecedor;
 
 public class FornDAO {

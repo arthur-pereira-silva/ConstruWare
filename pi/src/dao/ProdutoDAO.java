@@ -1,93 +1,183 @@
-package dao;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import connection.Conn;
+	package dao;
+	
+	import java.sql.Connection;
+	import java.sql.PreparedStatement;
+	import java.sql.ResultSet;
+	import java.sql.SQLException;
+	import java.util.ArrayList;
+	import java.util.List;
+	
+	import javax.swing.JOptionPane;
+	
+	import connection.Conn;
+import model.Fornecedor;
 import model.Produto;
-
-public class ProdutoDAO {
-	private Connection conn;
-
-	public ProdutoDAO(Connection conn) {
-		this.conn = new Conn().pegarConexao();
-
-	}
-
-	// Method to add a product
-	public void adicionarProduto(Produto produto) throws SQLException {
-		String sql = "INSERT INTO Produto (IdProduto, Nome, QTD, Preço) VALUES (?, ?, ?, ?)";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setInt(1, produto.getId());
-			stmt.setString(2, produto.getNome());
-			stmt.setDouble(3, produto.getQtd());
-			stmt.setDouble(4, produto.getPreco());
-			stmt.executeUpdate();
+	
+	public class ProdutoDAO {
+	
+		private Connection conn;
+	
+		public ProdutoDAO() {
+			this.conn = new Conn().pegarConexao();
 		}
-	}
-
-	// Method to get a product by ID
-	public Produto buscarProdutoPorId(int id) throws SQLException {
-		String sql = "SELECT * FROM Produto WHERE IdProduto = ?";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setInt(1, id);
-			try (ResultSet rs = stmt.executeQuery()) {
-				if (rs.next()) {
-					return new Produto(
-							rs.getInt("IdProduto"),
-							rs.getString("Nome"),
-							rs.getDouble("QTD"),
-							rs.getDouble("Preço")
-							);
-				}
+	
+		public void Salvar(Produto obj) {
+			try {
+				String sql = "INSERT INTO Produto (IdFornecedor, Nome, Preco, QuantidadeEstoque) VALUES ( ?, ?, ?, ?)";
+	
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, obj.getFornecedores().getId());
+				stmt.setString(2, obj.getNome());
+				stmt.setDouble(3, obj.getPreco());
+				stmt.setDouble(4, obj.getQtd());
+	
+				stmt.execute();
+				stmt.close();
+				JOptionPane.showMessageDialog(null, "Sucesso");
+	
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Erro ao salvar produto: " + e.getMessage());
 			}
 		}
-		return null;
-	}
-
-	// Method to update a product
-	public void atualizarProduto(Produto produto) throws SQLException {
-		String sql = "UPDATE Produto SET Nome = ?, QTD = ?, Preço = ? WHERE id = ?";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setString(1, produto.getNome());
-			stmt.setDouble(2, produto.getQtd());
-			stmt.setDouble(3, produto.getPreco());
-			stmt.setInt(4, produto.getId());
-			stmt.executeUpdate();
-		}
-	}
-
-	// Method to delete a product
-	public void deletarProduto(int id) throws SQLException {
-		String sql = "DELETE FROM Produto WHERE IdProduto = ?";
-		try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
-		}
-	}
-
-	// Method to get all products
-	public List<Produto> listarProdutos() throws SQLException {
-		List<Produto> produtos = new ArrayList<>();
-		String sql = "SELECT * FROM Produto";
-		try (PreparedStatement stmt = conn.prepareStatement(sql);
-				ResultSet rs = stmt.executeQuery()) {
-
-			while (rs.next()) {
-				Produto produto = new Produto(
-						rs.getInt("IdProduto"),
-						rs.getString("Nome"),
-						rs.getDouble("QTD"),
-						rs.getDouble("Preço")
-						);
-				produtos.add(produto);
+	
+		public void Editar(Produto obj) {
+			try {
+				String sql = "UPDATE Produto SET IdFornecedor=?, Nome=?, Preco=?, QuantidadeEstoque=? WHERE IdProduto=?";
+	
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				
+				stmt.setInt(1, obj.getFornecedores().getId());
+				stmt.setString(2, obj.getNome());
+				stmt.setDouble(3, obj.getPreco());
+				stmt.setDouble(4, obj.getQtd());
+				stmt.setInt(5, obj.getId());
+	
+				stmt.execute();
+				stmt.close();
+				JOptionPane.showMessageDialog(null, "Produto editado");
+	
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Erro ao editar produto: " + e.getMessage());
 			}
 		}
-		return produtos;
-	}
-}
+	
+		public void Excluir(Produto obj) {
+			try {
+				String sql = "delete from Produto where IdProduto =?";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, obj.getId());
+				stmt.execute();
+				stmt.close();
+				JOptionPane.showMessageDialog(null, "produto excluido");
+			}catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "erro ao excluir");
+			}
+		}
+	
+		public Produto Pesquisar(String nome) {
+		    try {
+		        String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome "
+		                   + "FROM Produto AS p "
+		                   + "INNER JOIN Fornecedor AS f ON p.IdFornecedor = f.IdFornecedor "
+		                   + "WHERE p.Nome = ?";
+		        PreparedStatement stmt = conn.prepareStatement(sql);
+		        stmt.setString(1, nome);
+		        ResultSet rs = stmt.executeQuery();
+		        Produto obj = null;
+		        if (rs.next()) {
+		            obj = new Produto();
+		            obj.setId(rs.getInt("IdProduto"));
+		            obj.setNome(rs.getString("Nome"));
+		            obj.setPreco(rs.getDouble("Preco"));
+		            obj.setQtd(rs.getDouble("QuantidadeEstoque"));
+		            
+		            Fornecedor f = new Fornecedor();
+		            f.setNome(rs.getString("FornecedorNome"));
+		            obj.setFornecedores(f);
+		        }
+		        rs.close();
+		        stmt.close();
+		        return obj;
+		    } catch (SQLException erro) {
+		        JOptionPane.showMessageDialog(null, "Erro ao pesquisar: " + erro.getMessage());
+		        return null;
+		    }
+		}
 
+		
+//		public Cliente pesquisarCPF(String cpf) {
+//			try {
+//				String sql = "select * from Cliente where CPF = ?";
+//				PreparedStatement stmt = conn.prepareStatement(sql);
+//				stmt.setString(1, cpf);
+//				ResultSet rs = stmt.executeQuery();
+//				Cliente obj = new Cliente();
+//				if (rs.next()) {
+//		  			obj.setId(rs.getInt("IdCliente"));
+//	   			 	obj.setNome(rs.getString("Nome"));
+//	   			 	obj.setRg(rs.getString("RG"));
+//	   			 	obj.setCpf(rs.getString("CPF"));
+//	   			 	obj.setTelefone(rs.getString("Telefone"));
+//	   			 	obj.setEmail(rs.getString("Email"));
+//	   			 	obj.setCep(rs.getString("CEP"));
+//	 			 	obj.setEstado(rs.getString("Estado"));
+//	   			 	obj.setCidade(rs.getString("Cidade"));
+//	   			 	obj.setRua(rs.getString("Rua"));
+//	   			 	obj.setBairro(rs.getString("Bairro"));
+//	   			 	obj.setNum(rs.getInt("numCasa"));
+//				}
+//				return obj;
+//	
+//			} catch (SQLException erro) {
+//				JOptionPane.showMessageDialog(null, "erro ao pesquisar"+ erro);
+//			}
+//			return null;
+//		}
+		public List<Produto> listarProdutos() {
+		    List<Produto> lista = new ArrayList<>();
+		    String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome FROM Produto p INNER JOIN Fornecedor f ON p.IdFornecedor = f.IdFornecedor";
+		    try (PreparedStatement stmt = conn.prepareStatement(sql);
+		         ResultSet rs = stmt.executeQuery()) {
+		        while (rs.next()) {
+		            Produto obj = new Produto();
+		            Fornecedor f = new Fornecedor();
+		            obj.setId(rs.getInt("IdProduto"));
+		            obj.setNome(rs.getString("Nome"));
+		            obj.setPreco(rs.getDouble("Preco"));
+		            obj.setQtd(rs.getDouble("QuantidadeEstoque"));
+		            f.setNome(rs.getString("FornecedorNome"));
+		            obj.setFornecedores(f);
+		            lista.add(obj);
+		        }
+		    } catch (SQLException e) {
+		        JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e.getMessage());
+		    }
+		    return lista;
+		}
+	
+		public List<Produto> Filtrar(String nome) {
+		    List<Produto> lista = new ArrayList<>();
+		    String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome FROM Produto p INNER JOIN Fornecedor f ON p.IdFornecedor = f.IdFornecedor WHERE p.Nome LIKE ?";
+		    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+		        stmt.setString(1, "%" + nome + "%");
+		        try (ResultSet rs = stmt.executeQuery()) {
+		            while (rs.next()) {
+		                Produto obj = new Produto();
+		                Fornecedor f = new Fornecedor();
+		                obj.setId(rs.getInt("IdProduto"));
+		                obj.setNome(rs.getString("Nome"));
+		                obj.setPreco(rs.getDouble("Preco"));
+		                obj.setQtd(rs.getDouble("QuantidadeEstoque"));
+		                f.setNome(rs.getString("FornecedorNome"));
+		                obj.setFornecedores(f);
+		                lista.add(obj);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e.getMessage());
+		    }
+		    return lista;
+		}
+	}

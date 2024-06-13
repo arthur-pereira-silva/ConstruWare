@@ -25,7 +25,7 @@ public class Fornecedor extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Fornecedores [cnpj=" + cnpj + "]";
+		return this.getNome();
 	}
 	
 }

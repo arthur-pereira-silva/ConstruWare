@@ -59,11 +59,9 @@ public class Produto {
 		return "Produto [id=" + id + ", nome=" + nome + ", qtd=" + qtd + ", preco=" + preco + "]";
 	}
 	public Fornecedor getFornecedores() {
-        return fornecedores;
+        return fornecedor;
     }
-    public void setFornecedores(Fornecedor fornecedores) {
-        this.fornecedores = fornecedores;
+    public void setFornecedores(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
-
-    private Fornecedor fornecedores;
 }
