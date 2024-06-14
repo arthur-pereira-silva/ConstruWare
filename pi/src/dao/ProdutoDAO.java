@@ -1,4 +1,4 @@
-	package dao;
+package dao;
 	
 	import java.sql.Connection;
 	import java.sql.PreparedStatement;
@@ -84,6 +84,36 @@ import model.Produto;
 		                   + "WHERE p.Nome = ?";
 		        PreparedStatement stmt = conn.prepareStatement(sql);
 		        stmt.setString(1, nome);
+		        ResultSet rs = stmt.executeQuery();
+		        Produto obj = null;
+		        if (rs.next()) {
+		            obj = new Produto();
+		            obj.setId(rs.getInt("IdProduto"));
+		            obj.setNome(rs.getString("Nome"));
+		            obj.setPreco(rs.getDouble("Preco"));
+		            obj.setQtd(rs.getDouble("QuantidadeEstoque"));
+		            
+		            Fornecedor f = new Fornecedor();
+		            f.setNome(rs.getString("FornecedorNome"));
+		            obj.setFornecedores(f);
+		        }
+		        rs.close();
+		        stmt.close();
+		        return obj;
+		    } catch (SQLException erro) {
+		        JOptionPane.showMessageDialog(null, "Erro ao pesquisar: " + erro.getMessage());
+		        return null;
+		    }
+		}
+		
+		public Produto PesquisarCod(int id) {
+		    try {
+		        String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome "
+		                   + "FROM Produto AS p "
+		                   + "INNER JOIN Fornecedor AS f ON p.IdFornecedor = f.IdFornecedor "
+		                   + "WHERE p.IdProduto = ?";
+		        PreparedStatement stmt = conn.prepareStatement(sql);
+		        stmt.setInt(1, id);
 		        ResultSet rs = stmt.executeQuery();
 		        Produto obj = null;
 		        if (rs.next()) {

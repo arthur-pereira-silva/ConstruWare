@@ -19,9 +19,12 @@ import javax.swing.text.MaskFormatter;
 
 import connection.Conn;
 import dao.ClienteDAO;
+import dao.FornDAO;
 import dao.ProdutoDAO;
 import model.Cliente;
+import model.Fornecedor;
 import model.Produto;
+import utilitarios.Util;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.JOptionPane;
@@ -50,7 +53,7 @@ public class FormVenda extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtNome;
-	private JTable tableProduto;
+	private JTable tabelaProduto;
 	private JTextField textPesquisaProduto;
 	private JTable tableCarrinho;
 	private JTextField textTotal;
@@ -64,9 +67,9 @@ public class FormVenda extends JFrame {
 	
 	public void listarProdutos() throws SQLException {
         Connection conn = Conn.pegarConexao();
-        ProdutoDAO dao = new ProdutoDAO(conn);
+        ProdutoDAO dao = new ProdutoDAO();
         List<Produto> lista = dao.listarProdutos();
-        DefaultTableModel dados = (DefaultTableModel) tableProduto.getModel();
+        DefaultTableModel dados = (DefaultTableModel) tabelaProduto.getModel();
         dados.setNumRows(0);
         for (Produto p : lista) {
             dados.addRow(new Object[]{
@@ -74,6 +77,7 @@ public class FormVenda extends JFrame {
                 p.getNome(),
                 p.getPreco(),
                 p.getQtd(),
+                p.getFornecedores()
             });
         }
     }
@@ -94,277 +98,388 @@ public class FormVenda extends JFrame {
 	 * Create the frame.
 	 */
 	public FormVenda() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated(WindowEvent e) {
-				try {
-					listarProdutos();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+	    addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowActivated(WindowEvent e) {
+	            try {
+	                listarProdutos();
+	            } catch (SQLException e1) {
+	                e1.printStackTrace();
+	            }
+	            Date now = new Date();
+	            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	            txtData.setText(sdf.format(now));
+	        }
+	    });
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setBounds(100, 100, 833, 565);
+	    contentPane = new JPanel();
+	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	    setContentPane(contentPane);
+	    contentPane.setLayout(null);
+
+	    JPanel panel = new JPanel();
+	    panel.setBackground(new Color(0, 0, 0));
+	    panel.setBounds(0, 0, 817, 61);
+	    contentPane.add(panel);
+	    panel.setLayout(null);
+
+	    JLabel lblNewLabel = new JLabel("Ponto de Vendas");
+	    lblNewLabel.setForeground(new Color(255, 255, 255));
+	    lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblNewLabel.setBounds(0, 11, 817, 39);
+	    lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+	    panel.add(lblNewLabel);
+
+	    JPanel panel_3 = new JPanel();
+	    panel_3.setBorder(new TitledBorder(null, "CLIENTE", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	    panel_3.setBounds(0, 72, 481, 454);
+	    contentPane.add(panel_3);
+	    panel_3.setLayout(null);
+
+	    JLabel lblNewLabel_1_3 = new JLabel("CPF:");
+	    lblNewLabel_1_3.setBounds(10, 21, 46, 14);
+	    panel_3.add(lblNewLabel_1_3);
+
+	    MaskFormatter formatter = null;
+	    try {
+	        formatter = new MaskFormatter("###.###.###-##");
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	    }
+	    JFormattedTextField txtCpf = new JFormattedTextField(formatter);
+	    txtCpf.addKeyListener(new KeyAdapter() {
+	        public void keyPressed(KeyEvent e) {
+	            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+	                String cpf = txtCpf.getText();
+	                Connection conn = Conn.pegarConexao();
+	                ClienteDAO dao = new ClienteDAO();
+	                Cliente cliente = null;
+
+	                cliente = dao.PesquisarCPF(cpf);
+
+	                if (cliente != null && cliente.getCpf() != null) {
+	                    txtNome.setText(cliente.getNome());
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "CPF Inválido");
+	                }
+	                /*
+	                 * if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+	                if (txtCodigo.getText() != null && !txtCodigo.getText().isEmpty()) {
+	                    int codigo = Integer.parseInt(txtCodigo.getText());
+	                    Produto obj = new Produto();
+	                    ProdutoDAO dao = new ProdutoDAO();
+
+	                    obj = dao.PesquisarCod(codigo);
+	                    if (obj != null) {
+	                        txtCodigo.setText(String.valueOf(obj.getId()));
+	                        txtProduto.setText(String.valueOf(obj.getNome()));
+	                        txtPreco.setText(String.valueOf(obj.getPreco()));
+	                        txtEstoque.setText(String.valueOf(obj.getQtd()));
+	                    } else {
+	                        JOptionPane.showMessageDialog(null, "Codigo Invalido");
+	                    }
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Campo de Código está vazio");
+	                }
+	            }*/
+	            }
+	        }
+	    });
+	    txtCpf.setText("");
+	    txtCpf.setBounds(63, 18, 95, 20);
+	    panel_3.add(txtCpf);
+
+	    JLabel lblNewLabel_1_2_2 = new JLabel("Nome:");
+	    lblNewLabel_1_2_2.setBounds(10, 46, 46, 14);
+	    panel_3.add(lblNewLabel_1_2_2);
+
+	    txtNome = new JTextField();
+	    txtNome.setColumns(10);
+	    txtNome.setBounds(63, 43, 217, 20);
+	    panel_3.add(txtNome);
+
+	    JLabel lblNewLabel_1_3_1 = new JLabel("Data:");
+	    lblNewLabel_1_3_1.setBounds(312, 21, 33, 14);
+	    panel_3.add(lblNewLabel_1_3_1);
+
+	    txtData = new JFormattedTextField();
+	    txtData.setEnabled(false);
+	    txtData.setEditable(false);
+	    txtData.setBounds(345, 18, 112, 20);
+	    panel_3.add(txtData);
+
+	    JButton btnPesquisar = new JButton("Pesquisar");
+	    btnPesquisar.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            String cpf = txtCpf.getText();
+	            Connection conn = Conn.pegarConexao();
+	            ClienteDAO dao = new ClienteDAO();
+	            Cliente cliente = null;
+	            cliente = dao.PesquisarCPF(cpf);
+
+	            if (cliente != null && cliente.getCpf() != null) {
+	                txtNome.setText(cliente.getNome());
+	            } else {
+	                JOptionPane.showMessageDialog(null, "CPF Inválido");
+	            }
+	        }
+	    });
+	    btnPesquisar.setBounds(168, 17, 112, 23);
+	    panel_3.add(btnPesquisar);
+
+	    JScrollPane scrollPane = new JScrollPane();
+	    scrollPane.setBounds(10, 104, 463, 105);
+	    panel_3.add(scrollPane);
+
+	    tabelaProduto = new JTable();
+	    tabelaProduto.addMouseListener(new MouseAdapter() {
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	            int selectedRow = tabelaProduto.getSelectedRow();
+	            if (selectedRow != -1) {
+	                Object codigo = tabelaProduto.getValueAt(selectedRow, 0);
+	                Object produto = tabelaProduto.getValueAt(selectedRow, 1);
+	                Object preco = tabelaProduto.getValueAt(selectedRow, 2);
+	                Object estoque = tabelaProduto.getValueAt(selectedRow, 3);
+	                Object fornecedor = tabelaProduto.getValueAt(selectedRow, 4);
+
+	                if (codigo != null) {
+	                    txtCodigo.setText(codigo.toString());
+	                }
+	                if (produto != null) {
+	                    txtProduto.setText(produto.toString());
+	                }
+	                if (preco != null) {
+	                    txtPreco.setText(preco.toString());
+	                }
+	                if (estoque != null) {
+	                    txtEstoque.setText(estoque.toString());
+	                }
+	                if (fornecedor != null) {
+	                    txtEstoque.setText(fornecedor.toString());
+	                }
+	            }
+	        }
+	    });
+	    tabelaProduto.setModel(new DefaultTableModel(
+	        new Object[][] {
+	        },
+	        new String[] {
+	            "C\u00F3digo", "Nome", "Pre\u00E7o", "QTD Estoque", "Fornecedor"
+	        }
+	    ));
+	    scrollPane.setViewportView(tabelaProduto);
+
+	    JLabel lblNewLabel_1_2_2_1 = new JLabel("Pesquise o Produto aqui:");
+	    lblNewLabel_1_2_2_1.setBounds(20, 79, 155, 14);
+	    panel_3.add(lblNewLabel_1_2_2_1);
+
+	    textPesquisaProduto = new JTextField();
+	    textPesquisaProduto.addKeyListener(new KeyAdapter() {
+	    	@Override
+	    	public void keyReleased(KeyEvent e) {
+	    		String nome = "%"+textPesquisaProduto.getText()+"%";
+				ProdutoDAO dao = new ProdutoDAO();
+				List<Produto> lista = dao.Filtrar(nome);
+				DefaultTableModel modelo = (DefaultTableModel) tabelaProduto.getModel();
+				modelo.setRowCount(0); 
+				for (Produto produto : lista) {
+					modelo.addRow(new Object[]{
+							produto.getId(),
+							produto.getNome(),
+							produto.getPreco(),
+							produto.getQtd(),
+							produto.getFornecedores()
+					});
+					txtCodigo.setEnabled(false);
 				}
-				Date now = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				txtData.setText(sdf.format(now));
-			}
-		});
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 833, 565);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	    	}
+	    });
+	    textPesquisaProduto.setColumns(10);
+	    textPesquisaProduto.setBounds(173, 76, 197, 20);
+	    panel_3.add(textPesquisaProduto);
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 0, 0));
-		panel.setBounds(0, 0, 817, 61);
-		contentPane.add(panel);
-		panel.setLayout(null);
+	    JPanel painel_dadosproduto = new JPanel();
+	    painel_dadosproduto.setBorder(new TitledBorder(null, "Produto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	    painel_dadosproduto.setBounds(10, 220, 463, 223);
+	    panel_3.add(painel_dadosproduto);
+	    painel_dadosproduto.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Ponto de Vendas");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(0, 11, 817, 39);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		panel.add(lblNewLabel);
+	    JLabel lblNewLabel_1 = new JLabel("Código:");
+	    lblNewLabel_1.setBounds(10, 32, 52, 14);
+	    painel_dadosproduto.add(lblNewLabel_1);
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new TitledBorder(null, "CLIENTE", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(0, 72, 481, 454);
-		contentPane.add(panel_3);
-		panel_3.setLayout(null);
+	    txtCodigo = new JTextField();
+	    txtCodigo.addKeyListener(new KeyAdapter() {
+	        @Override
+	        public void keyPressed(KeyEvent e) {
+	            if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+	                if (txtCodigo.getText() != null && !txtCodigo.getText().isEmpty()) {
+	                    int codigo = Integer.parseInt(txtCodigo.getText());
+	                    Produto obj = new Produto();
+	                    ProdutoDAO dao = new ProdutoDAO();
 
-		JLabel lblNewLabel_1_3 = new JLabel("CPF:");
-		lblNewLabel_1_3.setBounds(10, 21, 46, 14);
-		panel_3.add(lblNewLabel_1_3);
+	                    obj = dao.PesquisarCod(codigo);
+	                    if (obj != null) {
+	                        txtCodigo.setText(String.valueOf(obj.getId()));
+	                        txtProduto.setText(String.valueOf(obj.getNome()));
+	                        txtPreco.setText(String.valueOf(obj.getPreco()));
+	                        txtEstoque.setText(String.valueOf(obj.getQtd()));
+	                        
+	                        txtCodigo.setEnabled(false);
+	                    } else {
+	                        JOptionPane.showMessageDialog(null, "Codigo Invalido");
+	                    }
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Campo de Código está vazio");
+	                }
+	            }
+	        }
+	    });
+	    txtCodigo.setColumns(10);
+	    txtCodigo.setBounds(61, 29, 46, 20);
+	    painel_dadosproduto.add(txtCodigo);
 
-		MaskFormatter formatter = null;
-		try {
-			formatter = new MaskFormatter("###.###.###-##");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		JFormattedTextField txtCpf = new JFormattedTextField(formatter);
-		txtCpf.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					String cpf = txtCpf.getText();
-					Connection conn = Conn.pegarConexao();
-					ClienteDAO dao = new ClienteDAO();
-					Cliente cliente = null;
+	    JLabel lblNewLabel_1_1 = new JLabel("Produto:");
+	    lblNewLabel_1_1.setBounds(10, 76, 52, 14);
+	    painel_dadosproduto.add(lblNewLabel_1_1);
 
-					cliente = dao.Pesquisar(cpf);
-					
-					if (cliente != null && cliente.getCpf() != null) {
-						txtNome.setText(cliente.getNome());
-					} else {
-						JOptionPane.showMessageDialog(null, "CPF Inválido");
-					}
-				}
-			}
-		});
-		txtCpf.setText("");
-		txtCpf.setBounds(63, 18, 112, 20);
-		panel_3.add(txtCpf);
+	    txtProduto = new JTextField();
+	    txtProduto.setEnabled(false);
+	    txtProduto.setEditable(false);
+	    txtProduto.setColumns(10);
+	    txtProduto.setBounds(61, 73, 215, 20);
+	    painel_dadosproduto.add(txtProduto);
 
-		JLabel lblNewLabel_1_2_2 = new JLabel("Nome:");
-		lblNewLabel_1_2_2.setBounds(10, 46, 46, 14);
-		panel_3.add(lblNewLabel_1_2_2);
+	    JLabel lblNewLabel_1_2 = new JLabel("Preço:");
+	    lblNewLabel_1_2.setBounds(10, 121, 52, 14);
+	    painel_dadosproduto.add(lblNewLabel_1_2);
 
-		txtNome = new JTextField();
-		txtNome.setColumns(10);
-		txtNome.setBounds(63, 43, 112, 20);
-		panel_3.add(txtNome);
+	    txtPreco = new JTextField();
+	    txtPreco.setEnabled(false);
+	    txtPreco.setEditable(false);
+	    txtPreco.setColumns(10);
+	    txtPreco.setBounds(61, 118, 80, 20);
+	    painel_dadosproduto.add(txtPreco);
 
-		JLabel lblNewLabel_1_3_1 = new JLabel("Data:");
-		lblNewLabel_1_3_1.setBounds(281, 18, 46, 14);
-		panel_3.add(lblNewLabel_1_3_1);
+	    JLabel lblNewLabel_1_4 = new JLabel("Estoque:");
+	    lblNewLabel_1_4.setBounds(10, 167, 52, 14);
+	    painel_dadosproduto.add(lblNewLabel_1_4);
 
-		txtData = new JFormattedTextField();
-		txtData.setBounds(322, 15, 112, 20);
-		panel_3.add(txtData);
+	    txtEstoque = new JTextField();
+	    txtEstoque.setEnabled(false);
+	    txtEstoque.setEditable(false);
+	    txtEstoque.setColumns(10);
+	    txtEstoque.setBounds(61, 164, 80, 20);
+	    painel_dadosproduto.add(txtEstoque);
 
-		JButton btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String cpf = txtCpf.getText();
-				Connection conn = Conn.pegarConexao();
-				ClienteDAO dao = new ClienteDAO();
-				Cliente cliente = null;
-				cliente = dao.PesquisarCPF(cpf);
+	    JButton btnAdicionar = new JButton("Adicionar Item");
+	    btnAdicionar.setBounds(195, 189, 119, 23);
+	    painel_dadosproduto.add(btnAdicionar);
 
-				if (cliente != null && cliente.getCpf() != null) {
-					txtNome.setText(cliente.getNome());
-				} else {
-					JOptionPane.showMessageDialog(null, "CPF Inválido");
-				}
-			}
-		});
-		btnPesquisar.setBounds(199, 42, 89, 23);
-		panel_3.add(btnPesquisar);
+	    JLabel lblNewLabel_1_5 = new JLabel("QTD:");
+	    lblNewLabel_1_5.setBounds(169, 121, 37, 14);
+	    painel_dadosproduto.add(lblNewLabel_1_5);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 104, 463, 105);
-		panel_3.add(scrollPane);
+	    txtQuantidade = new JTextField();
+	    txtQuantidade.setColumns(10);
+	    txtQuantidade.setBounds(216, 118, 60, 20);
+	    painel_dadosproduto.add(txtQuantidade);
 
-		tableProduto = new JTable();
-		tableProduto.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			    int selectedRow = tableProduto.getSelectedRow();
-			    if (selectedRow != -1) { // Verifica se alguma linha está selecionada
-			        Object codigo = tableProduto.getValueAt(selectedRow, 0);
-			        Object produto = tableProduto.getValueAt(selectedRow, 1);
-			        Object preco = tableProduto.getValueAt(selectedRow, 2);
-			        Object estoque = tableProduto.getValueAt(selectedRow, 3);
+	    JButton btnProcurar = new JButton("Pesquisar");
+	    btnProcurar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		if (txtCodigo.getText() != null && !txtCodigo.getText().isEmpty()) {
+                    int codigo = Integer.parseInt(txtCodigo.getText());
+                    Produto obj = new Produto();
+                    ProdutoDAO dao = new ProdutoDAO();
 
-			        // Verifica se os valores não são nulos antes de convertê-los para String
-			        if (codigo != null) {
-			            txtCodigo.setText(codigo.toString());
-			        }
-			        if (produto != null) {
-			            txtProduto.setText(produto.toString());
-			        }
-			        if (preco != null) {
-			            txtPreco.setText(preco.toString());
-			        }
-			        if (estoque != null) {
-			            txtEstoque.setText(estoque.toString());
-			        }
-			    }
-			}
+                    obj = dao.PesquisarCod(codigo);
+                    if (obj != null) {
+                        txtCodigo.setText(String.valueOf(obj.getId()));
+                        txtProduto.setText(String.valueOf(obj.getNome()));
+                        txtPreco.setText(String.valueOf(obj.getPreco()));
+                        txtEstoque.setText(String.valueOf(obj.getQtd()));
+                        
+                        txtCodigo.setEnabled(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Codigo Invalido");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Campo de Código está vazio");
+                }
+	    	}
+	    });
+	    btnProcurar.setBounds(117, 28, 89, 23);
+	    painel_dadosproduto.add(btnProcurar);
 
-		});
-		tableProduto.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"C\u00F3digo", "Nome", "Pre\u00E7o", "QTD Estoque", "Fornecedor"
-			}
-		));
-		scrollPane.setViewportView(tableProduto);
+	    JComboBox comboBoxDesconto = new JComboBox();
+	    comboBoxDesconto.setBounds(353, 28, 46, 22);
+	    painel_dadosproduto.add(comboBoxDesconto);
 
-		JLabel lblNewLabel_1_2_2_1 = new JLabel("Pesquise o Produto aqui:");
-		lblNewLabel_1_2_2_1.setBounds(20, 79, 155, 14);
-		panel_3.add(lblNewLabel_1_2_2_1);
+	    JLabel lblNewLabel_1_4_1 = new JLabel("Desconto:");
+	    lblNewLabel_1_4_1.setBounds(291, 32, 60, 14);
+	    painel_dadosproduto.add(lblNewLabel_1_4_1);
+	    
+	    JButton btnLimpar = new JButton("Limpar");
+	    btnLimpar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		Util util = new Util();
+	    		util.LimpaTela(painel_dadosproduto);
+	    		txtCodigo.setEnabled(true);
+	    		txtCodigo.requestFocus();
+	    	}
+	    });
+	    btnLimpar.setBounds(322, 189, 119, 23);
+	    painel_dadosproduto.add(btnLimpar);
 
-		textPesquisaProduto = new JTextField();
-		textPesquisaProduto.setColumns(10);
-		textPesquisaProduto.setBounds(173, 76, 154, 20);
-		panel_3.add(textPesquisaProduto);
+	    JPanel panel_1 = new JPanel();
+	    panel_1.setBorder(new TitledBorder(null, "Carrinho de Compras", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+	    panel_1.setBounds(493, 72, 314, 220);
+	    contentPane.add(panel_1);
+	    panel_1.setLayout(null);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Produto", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 220, 463, 223);
-		panel_3.add(panel_2);
-		panel_2.setLayout(null);
+	    JScrollPane scrollPane_1 = new JScrollPane();
+	    scrollPane_1.setBounds(10, 22, 294, 187);
+	    panel_1.add(scrollPane_1);
 
-		JLabel lblNewLabel_1 = new JLabel("Código:");
-		lblNewLabel_1.setBounds(10, 32, 52, 14);
-		panel_2.add(lblNewLabel_1);
+	    tableCarrinho = new JTable();
+	    tableCarrinho.setModel(new DefaultTableModel(
+	        new Object[][] {
+	        },
+	        new String[] {
+	            "Codigo", "Produto", "QTD", "Preco", "Subtotal"
+	        }
+	    ));
+	    tableCarrinho.getColumnModel().getColumn(2).setPreferredWidth(72);
+	    scrollPane_1.setViewportView(tableCarrinho);
 
-		txtCodigo = new JTextField();
-		txtCodigo.setColumns(10);
-		txtCodigo.setBounds(61, 29, 46, 20);
-		panel_2.add(txtCodigo);
+	    JPanel panel_4 = new JPanel();
+	    panel_4.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Total da Venda", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+	    panel_4.setBounds(491, 291, 316, 176);
+	    contentPane.add(panel_4);
+	    panel_4.setLayout(null);
 
-		JLabel lblNewLabel_1_1 = new JLabel("Produto:");
-		lblNewLabel_1_1.setBounds(10, 76, 52, 14);
-		panel_2.add(lblNewLabel_1_1);
+	    JLabel lblNewLabel_1_1_1 = new JLabel("TOTAL:");
+	    lblNewLabel_1_1_1.setBounds(39, 57, 49, 14);
+	    panel_4.add(lblNewLabel_1_1_1);
 
-		txtProduto = new JTextField();
-		txtProduto.setColumns(10);
-		txtProduto.setBounds(61, 73, 80, 20);
-		panel_2.add(txtProduto);
+	    textTotal = new JTextField();
+	    textTotal.setColumns(10);
+	    textTotal.setBounds(89, 47, 146, 34);
+	    panel_4.add(textTotal);
 
-		JLabel lblNewLabel_1_2 = new JLabel("Preço:");
-		lblNewLabel_1_2.setBounds(10, 121, 52, 14);
-		panel_2.add(lblNewLabel_1_2);
+	    JButton btnPagamento = new JButton("PAGAMENTO");
+	    btnPagamento.setBounds(39, 125, 112, 23);
+	    panel_4.add(btnPagamento);
 
-		txtPreco = new JTextField();
-		txtPreco.setColumns(10);
-		txtPreco.setBounds(61, 118, 80, 20);
-		panel_2.add(txtPreco);
-
-		JLabel lblNewLabel_1_4 = new JLabel("Estoque:");
-		lblNewLabel_1_4.setBounds(10, 167, 52, 14);
-		panel_2.add(lblNewLabel_1_4);
-
-		txtEstoque = new JTextField();
-		txtEstoque.setColumns(10);
-		txtEstoque.setBounds(61, 164, 80, 20);
-		panel_2.add(txtEstoque);
-
-		JButton btnAdicionar = new JButton("Adicionar Item");
-		btnAdicionar.setBounds(151, 163, 119, 23);
-		panel_2.add(btnAdicionar);
-
-		JLabel lblNewLabel_1_5 = new JLabel("QTD:");
-		lblNewLabel_1_5.setBounds(277, 118, 37, 14);
-		panel_2.add(lblNewLabel_1_5);
-
-		txtQuantidade = new JTextField();
-		txtQuantidade.setColumns(10);
-		txtQuantidade.setBounds(311, 115, 60, 20);
-		panel_2.add(txtQuantidade);
-
-		JButton btnProcurar = new JButton("Pesquisar");
-		btnProcurar.setBounds(352, 72, 89, 23);
-		panel_2.add(btnProcurar);
-
-		JComboBox comboBoxDesconto = new JComboBox();
-		comboBoxDesconto.setBounds(395, 24, 46, 22);
-		panel_2.add(comboBoxDesconto);
-
-		JLabel lblNewLabel_1_4_1 = new JLabel("Desconto:");
-		lblNewLabel_1_4_1.setBounds(330, 28, 60, 14);
-		panel_2.add(lblNewLabel_1_4_1);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Carrinho de Compras", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(493, 72, 314, 220);
-		contentPane.add(panel_1);
-		panel_1.setLayout(null);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 22, 294, 187);
-		panel_1.add(scrollPane_1);
-
-		tableCarrinho = new JTable();
-		tableCarrinho.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-						"C\u00F3digo", "Produto", "QTD", "Pre\u00E7o", "Subtotal"
-				}
-				));
-		tableCarrinho.getColumnModel().getColumn(2).setPreferredWidth(72);
-		scrollPane_1.setViewportView(tableCarrinho);
-
-		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Total da Venda", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_4.setBounds(491, 291, 316, 176);
-		contentPane.add(panel_4);
-		panel_4.setLayout(null);
-
-		JLabel lblNewLabel_1_1_1 = new JLabel("TOTAL:");
-		lblNewLabel_1_1_1.setBounds(39, 57, 49, 14);
-		panel_4.add(lblNewLabel_1_1_1);
-
-		textTotal = new JTextField();
-		textTotal.setColumns(10);
-		textTotal.setBounds(89, 47, 146, 34);
-		panel_4.add(textTotal);
-
-		JButton btnPagamento = new JButton("PAGAMENTO");
-		btnPagamento.setBounds(39, 125, 112, 23);
-		panel_4.add(btnPagamento);
-
-		JButton btnCancelar = new JButton("CANCELAR");
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnCancelar.setBounds(173, 125, 112, 23);
-		panel_4.add(btnCancelar);
+	    JButton btnCancelar = new JButton("CANCELAR");
+	    btnCancelar.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        }
+	    });
+	    btnCancelar.setBounds(173, 125, 112, 23);
+	    panel_4.add(btnCancelar);
 	}
 }
