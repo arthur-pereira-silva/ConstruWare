@@ -28,7 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import dao.FornDAO;
+import dao.FornecedorDAO;
 import dao.ProdutoDAO;
 import model.Fornecedor;
 import model.Produto;
@@ -143,7 +143,7 @@ public class FormProduto extends JFrame {
 					Produto obj = new Produto();
 					ProdutoDAO dao = new ProdutoDAO();
 					Fornecedor f = new Fornecedor();
-					FornDAO daof = new FornDAO();
+					FornecedorDAO daof = new FornecedorDAO();
 
 					obj = dao.Pesquisar(nome);
 					if(obj != null && obj.getNome() != null) {
@@ -297,7 +297,7 @@ public class FormProduto extends JFrame {
 		cbFornecedor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				FornDAO dao = new FornDAO();
+				FornecedorDAO dao = new FornecedorDAO();
 				List<Fornecedor> lista = dao.Listar();
 				cbFornecedor.removeAllItems();
 				for(Fornecedor f: lista) {
@@ -327,7 +327,7 @@ public class FormProduto extends JFrame {
 				Produto obj = new Produto();
 				ProdutoDAO dao = new ProdutoDAO();
 				Fornecedor f = new Fornecedor();
-				FornDAO daof = new FornDAO();
+				FornecedorDAO daof = new FornecedorDAO();
 
 				obj = dao.Pesquisar(nome);
 				if(obj != null && obj.getNome() != null) {
@@ -423,7 +423,7 @@ public class FormProduto extends JFrame {
 				//cbFornecedor.setSelectedItem(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
 
 				Fornecedor f = new Fornecedor();
-				FornDAO daof = new FornDAO();
+				FornecedorDAO daof = new FornecedorDAO();
 				f = daof.Pesquisar(tabela.getValueAt(tabela.getSelectedRow(), 4).toString());
 				cbFornecedor.removeAllItems();
 				cbFornecedor.getModel().setSelectedItem(f);

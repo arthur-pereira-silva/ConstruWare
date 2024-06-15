@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
 import connection.Conn;
 import model.Fornecedor;
 
-public class FornDAO {
+public class FornecedorDAO {
 
 	private Connection conn;
 
-	public FornDAO() {
+	public FornecedorDAO() {
 		this.conn = new Conn().pegarConexao();
 	}
 

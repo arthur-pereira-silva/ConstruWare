@@ -9,7 +9,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,9 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
-
 import dao.ClienteDAO;
-import dao.FuncDAO;
+import dao.FuncionarioDAO;
 import model.Cliente;
 import model.Funcionario;
 import utilitarios.Util;
@@ -62,7 +60,7 @@ public class FormFuncionarios extends JFrame {
 	private JTextField txtCNH;
 	private JTextField txtId;
 	private void atualizarTabela() throws SQLException {
-		FuncDAO dao = new FuncDAO();
+		FuncionarioDAO dao = new FuncionarioDAO();
 		List<Funcionario> lista = null;
 		lista = dao.Listar();
 		DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
@@ -173,7 +171,7 @@ public class FormFuncionarios extends JFrame {
 				if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 					String nome = txtNome.getText();
 					Funcionario obj = new Funcionario();
-					FuncDAO dao = new FuncDAO();
+					FuncionarioDAO dao = new FuncionarioDAO();
 
 					obj = dao.PesquisarFunc(nome);
 					if (obj.getNome() != null) {
@@ -425,7 +423,7 @@ public class FormFuncionarios extends JFrame {
 			public void mouseClicked(MouseEvent evt) {
 				int row = tabela.getSelectedRow();
 				String id = tabela.getModel().getValueAt(row, 0).toString();
-				FuncDAO dao = new FuncDAO();
+				FuncionarioDAO dao = new FuncionarioDAO();
 				Funcionario obj = dao.PesquisarFuncionario(Integer.parseInt(id));
 				if (obj != null) {
 					txtId.setText(tabela.getValueAt(row, 0) != null ? tabela.getValueAt(row, 0).toString() : "");
@@ -461,7 +459,7 @@ public class FormFuncionarios extends JFrame {
 
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				FuncDAO dao = new FuncDAO();
+				FuncionarioDAO dao = new FuncionarioDAO();
 				List<Funcionario> list = (List<Funcionario>) dao.PesquisarFunc(txtPesquisaNome.getText());
 				AtualizarTabela(list);
 			}
@@ -497,7 +495,7 @@ public class FormFuncionarios extends JFrame {
 
 
 
-			FuncDAO dao = new FuncDAO();
+			FuncionarioDAO dao = new FuncionarioDAO();
 			dao.Salvar(obj);
 			Util util = new Util();
 			util.LimpaTela(dadosPessoais);
@@ -521,7 +519,7 @@ public class FormFuncionarios extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				Funcionario obj = new Funcionario();
 				obj.setId(Integer.valueOf(txtId.getText()));
-				FuncDAO dao = new FuncDAO();
+				FuncionarioDAO dao = new FuncionarioDAO();
 				dao.Excluir(obj);
 				Util util = new Util();
 				util.LimpaTela(dadosPessoais);
@@ -548,7 +546,7 @@ public class FormFuncionarios extends JFrame {
 				obj.setSalario(salario);
 				obj.setSenha(new String(passwordFieldSenha.getPassword()));
 
-				FuncDAO dao = new FuncDAO();
+				FuncionarioDAO dao = new FuncionarioDAO();
 				dao.Editar(obj);
 				LimparCampos();
 				AtualizarTabela();
@@ -559,7 +557,7 @@ public class FormFuncionarios extends JFrame {
 	}
 
 	private void AtualizarTabela() {
-		FuncDAO dao = new FuncDAO();
+		FuncionarioDAO dao = new FuncionarioDAO();
 		List<Funcionario> list = dao.Listar();
 		AtualizarTabela(list);
 	}

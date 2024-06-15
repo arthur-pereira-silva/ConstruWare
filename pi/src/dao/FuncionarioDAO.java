@@ -12,13 +12,15 @@ import javax.swing.JOptionPane;
 import connection.Conn;
 import model.Cliente;
 import model.Funcionario;
+import view.AreaTrabalho;
+import view.FormLogin;
 
 
-public class FuncDAO {
+public class FuncionarioDAO {
 
     private Connection conn;
 
-    public FuncDAO() {
+    public FuncionarioDAO() {
         this.conn = new Conn().pegarConexao();
     }
 
@@ -242,5 +244,28 @@ public class FuncDAO {
             }
             return lista;
         }
+  
+   public void efetuarLogin(String email, String senha) {
+     	   try {
+     		   String sql = "select * from Funcionario where email=? and senha =?";
+     		   PreparedStatement stmt = conn.prepareStatement(sql);
+     		   stmt.setString(1, email);
+     		   stmt.setString(2, senha);
+     		   
+     		   ResultSet rs = stmt.executeQuery();
+     		   if(rs.next()) {
+     			   JOptionPane.showMessageDialog(null, "Seja bem vindo!");
+     			   AreaTrabalho at = new AreaTrabalho();
+     			   at.setVisible(true);
+     		   } else {
+     			   FormLogin login = new FormLogin();
+     			   JOptionPane.showMessageDialog(null, "dados inválidos!");
+     			   login.setVisible(true);
+     		   }
+     	   } catch (Exception e) {
+     		   JOptionPane.showMessageDialog(null, "erro:" + e);
+     	   }
+        }
+        
    
 }

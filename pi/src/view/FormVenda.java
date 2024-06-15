@@ -19,7 +19,7 @@ import javax.swing.text.MaskFormatter;
 
 import connection.Conn;
 import dao.ClienteDAO;
-import dao.FornDAO;
+import dao.FornecedorDAO;
 import dao.ProdutoDAO;
 import model.Cliente;
 import model.Fornecedor;
@@ -61,9 +61,13 @@ public class FormVenda extends JFrame {
 	private JTextField txtProduto;
 	private JTextField txtPreco;
 	private JTextField txtEstoque;
-	private JTextField txtQuantidade;
+	private JTextField txtQtd;
 	private JFormattedTextField txtData;
 	private Cliente cliente;
+	
+	double preco, subtotal, total;
+	Double qtd;
+	DefaultTableModel meus_produtos;
 	
 	public void listarProdutos() throws SQLException {
         Connection conn = Conn.pegarConexao();
@@ -111,7 +115,7 @@ public class FormVenda extends JFrame {
 	            txtData.setText(sdf.format(now));
 	        }
 	    });
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);;
 	    setBounds(100, 100, 833, 565);
 	    contentPane = new JPanel();
 	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -243,6 +247,7 @@ public class FormVenda extends JFrame {
 	                Object preco = tabelaProduto.getValueAt(selectedRow, 2);
 	                Object estoque = tabelaProduto.getValueAt(selectedRow, 3);
 	                Object fornecedor = tabelaProduto.getValueAt(selectedRow, 4);
+	              
 
 	                if (codigo != null) {
 	                    txtCodigo.setText(codigo.toString());
@@ -256,9 +261,6 @@ public class FormVenda extends JFrame {
 	                if (estoque != null) {
 	                    txtEstoque.setText(estoque.toString());
 	                }
-	                if (fornecedor != null) {
-	                    txtEstoque.setText(fornecedor.toString());
-	                }
 	            }
 	        }
 	    });
@@ -266,7 +268,7 @@ public class FormVenda extends JFrame {
 	        new Object[][] {
 	        },
 	        new String[] {
-	            "C\u00F3digo", "Nome", "Pre\u00E7o", "QTD Estoque", "Fornecedor"
+	            "Codigo", "Nome", "Preco", "QTD Estoque", "Fornecedor"
 	        }
 	    ));
 	    scrollPane.setViewportView(tabelaProduto);
@@ -326,7 +328,6 @@ public class FormVenda extends JFrame {
 	                        txtProduto.setText(String.valueOf(obj.getNome()));
 	                        txtPreco.setText(String.valueOf(obj.getPreco()));
 	                        txtEstoque.setText(String.valueOf(obj.getQtd()));
-	                        
 	                        txtCodigo.setEnabled(false);
 	                    } else {
 	                        JOptionPane.showMessageDialog(null, "Codigo Invalido");
@@ -375,6 +376,45 @@ public class FormVenda extends JFrame {
 	    painel_dadosproduto.add(txtEstoque);
 
 	    JButton btnAdicionar = new JButton("Adicionar Item");
+	    btnAdicionar.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            try {
+	                String nome = txtProduto.getText();
+	                ProdutoDAO daop = new ProdutoDAO();
+	                Produto obj = daop.Pesquisar(nome);
+
+	                if (obj != null && obj.getNome() != null) {
+	                    double estoque = Double.valueOf(txtEstoque.getText());
+	                    double quantidade = Integer.valueOf(txtQtd.getText());
+	                    preco = Double.valueOf(txtPreco.getText());
+	                    qtd = Double.valueOf(txtQtd.getText());
+	                    subtotal = preco * qtd;
+	                    total += subtotal;
+
+	                    if (estoque >= quantidade) {
+	                        textTotal.setText(String.valueOf(total));
+	                        meus_produtos = (DefaultTableModel) tableCarrinho.getModel();
+	                        meus_produtos.addRow(new Object[]{
+	                            txtCodigo.getText(),
+	                            txtProduto.getText(),
+	                            txtQtd.getText(),
+	                            txtPreco.getText(),
+	                            subtotal
+	                        });
+	                    } else {
+	                        JOptionPane.showMessageDialog(null, "Quantidade desejada é maior do que a do Estoque");
+	                    }
+	                } else {
+	                    JOptionPane.showMessageDialog(null, "Produto não encontrado ou faltam informações");
+	                }
+	            } catch (NumberFormatException ex) {
+	                JOptionPane.showMessageDialog(null, "Por favor, insira valores numéricos válidos para quantidade e preço");
+	            } catch (Exception ex) {
+	                ex.printStackTrace();
+	                JOptionPane.showMessageDialog(null, "Ocorreu um erro ao adicionar o item ao carrinho");
+	            }
+	        }
+	    });
 	    btnAdicionar.setBounds(195, 189, 119, 23);
 	    painel_dadosproduto.add(btnAdicionar);
 
@@ -382,10 +422,11 @@ public class FormVenda extends JFrame {
 	    lblNewLabel_1_5.setBounds(169, 121, 37, 14);
 	    painel_dadosproduto.add(lblNewLabel_1_5);
 
-	    txtQuantidade = new JTextField();
-	    txtQuantidade.setColumns(10);
-	    txtQuantidade.setBounds(216, 118, 60, 20);
-	    painel_dadosproduto.add(txtQuantidade);
+	    txtQtd = new JTextField();
+	    txtQtd.setText("1");
+	    txtQtd.setColumns(10);
+	    txtQtd.setBounds(216, 118, 60, 20);
+	    painel_dadosproduto.add(txtQtd);
 
 	    JButton btnProcurar = new JButton("Pesquisar");
 	    btnProcurar.addActionListener(new ActionListener() {
