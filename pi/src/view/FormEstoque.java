@@ -48,15 +48,18 @@ public class FormEstoque extends JFrame {
 	private JPanel contentPane;
 	private final JPanel panel = new JPanel();
 	private JTextField txtNome;
-	private JTextField txtPreco;
-	private JTextField txtId;
+	private JTextField txtCodigo;
 	private JTextField txtQtdAtual;
-	private JTable table;
+	private JTable tabelaProduto;
 	private JTextField txtQtdAdc;
+	
+	int idProduto, qtd_atualizada;
+	
 
 	private void atualizarTabela() {
 		ProdutoDAO dao = new ProdutoDAO();
 		List<Produto> lista = dao.listarProdutos();
+		DefaultTableModel modelo = (DefaultTableModel) tabelaProduto.getModel();
 		modelo.setRowCount(0); 
 		for (Produto produto : lista) {
 			modelo.addRow(new Object[]{
@@ -147,9 +150,8 @@ public class FormEstoque extends JFrame {
 
 					obj = dao.Pesquisar(nome);
 					if(obj != null && obj.getNome() != null) {
-						txtId.setText(String.valueOf(obj.getId()));
+						txtCodigo.setText(String.valueOf(obj.getId()));
 						txtNome.setText(obj.getNome());
-						txtPreco.setText(String.valueOf(obj.getPreco()));
 						txtQtdAtual.setText(String.valueOf(obj.getQtd()));
 
 						f = daof.Pesquisar(obj.getFornecedores().getNome());
@@ -174,31 +176,19 @@ public class FormEstoque extends JFrame {
 		lblNome.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		dadosProdutos.add(lblNome);
 
-		JLabel lblPreco = new JLabel("Preço:");
-		lblPreco.setBounds(43, 86, 60, 21);
-		lblPreco.setForeground(new Color(0, 0, 0));
-		lblPreco.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		dadosProdutos.add(lblPreco);
-
-		txtPreco = new JTextField();
-		txtPreco.setBounds(111, 85, 70, 23);
-		txtPreco.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		dadosProdutos.add(txtPreco);
-		txtPreco.setColumns(10);
-
 		JLabel lblCodigo = new JLabel("CÓDIGO:");
 		lblCodigo.setBounds(22, 16, 70, 15);
 		lblCodigo.setForeground(new Color(0, 0, 0));
 		lblCodigo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		dadosProdutos.add(lblCodigo);
 
-		txtId = new JTextField();
-		txtId.setBounds(111, 12, 70, 23);
-		txtId.setEnabled(false);
-		txtId.setEditable(false);
-		txtId.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		dadosProdutos.add(txtId);
-		txtId.setColumns(10);
+		txtCodigo = new JTextField();
+		txtCodigo.setBounds(111, 12, 70, 23);
+		txtCodigo.setEnabled(false);
+		txtCodigo.setEditable(false);
+		txtCodigo.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
+		dadosProdutos.add(txtCodigo);
+		txtCodigo.setColumns(10);
 
 		JButton btnPesquisar_1 = new JButton("PESQUISAR");
 		btnPesquisar_1.setBounds(518, 50, 156, 29);
@@ -212,9 +202,8 @@ public class FormEstoque extends JFrame {
 
 				obj = dao.Pesquisar(nome);
 				if(obj != null && obj.getNome() != null) {
-					txtId.setText(String.valueOf(obj.getId()));
+					txtCodigo.setText(String.valueOf(obj.getId()));
 					txtNome.setText(obj.getNome());
-					txtPreco.setText(String.valueOf(obj.getPreco()));
 					txtQtdAtual.setText(String.valueOf(obj.getQtd()));
 
 					f = daof.Pesquisar(obj.getFornecedores().getNome());
@@ -262,13 +251,26 @@ public class FormEstoque extends JFrame {
 		btnAdicionar.setIcon(new ImageIcon("C:\\PI\\ConstruWare\\pi\\src\\imagens\\add.png"));
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+				Double qtdAtual;
+				Double qtd_nova;
+				qtdAtual = Double.valueOf(txtQtdAtual.getText());
+				qtd_nova = Double.valueOf(txtQtdAdc.getText());
+				qtd_atualizada = (int) (qtdAtual + qtd_nova);
+				ProdutoDAO daop = new ProdutoDAO();
+				
+				new Util().LimpaTela(dadosProdutos);
+				daop.adicionarEstoque(idProduto, qtd_atualizada);
+				}catch(Exception  e1){
+					JOptionPane.showMessageDialog(null, "Erro:"+ e1);
+				}
 			}
 		});
 		btnAdicionar.setBounds(336, 108, 118, 30);
 		dadosProdutos.add(btnAdicionar);
 
 		JButton btnNovo = new JButton("NOVO");
-		btnNovo.setBounds(55, 353, 129, 35);
+		btnNovo.setBounds(56, 353, 129, 35);
 		contentPane.add(btnNovo);
 		btnNovo.setForeground(new Color(0, 0, 0));
 		btnNovo.setBackground(new Color(47, 45, 98));
@@ -278,7 +280,7 @@ public class FormEstoque extends JFrame {
 
 
 		JButton btnSalvar = new JButton("SALVAR");
-		btnSalvar.setBounds(204, 353, 129, 35);
+		btnSalvar.setBounds(205, 353, 129, 35);
 		contentPane.add(btnSalvar);
 		btnSalvar.setBackground(new Color(47, 45, 98));
 		btnSalvar.setForeground(new Color(0, 0, 0));
@@ -286,16 +288,14 @@ public class FormEstoque extends JFrame {
 		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 
 		JButton btnEditar = new JButton("EDITAR");
-		btnEditar.setBounds(362, 353, 129, 35);
+		btnEditar.setBounds(363, 353, 129, 35);
 		contentPane.add(btnEditar);
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Produto obj = new Produto();
-				obj.setId(Integer.valueOf(txtId.getText()));
+				obj.setId(Integer.valueOf(txtCodigo.getText()));
 				obj.setNome(txtNome.getText());
-				obj.setPreco(Double.valueOf(txtPreco.getText()));
 				obj.setQtd(Double.valueOf(txtQtdAtual.getText()));
-				//				obj.setFornecedores((Fornecedor)cbFornecedor.getSelectedItem());
 				Fornecedor f = new Fornecedor();
 				obj.setFornecedores(f);
 				ProdutoDAO daop = new ProdutoDAO();
@@ -310,12 +310,12 @@ public class FormEstoque extends JFrame {
 		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 
 		JButton btnExcluir = new JButton("EXCLUIR");
-		btnExcluir.setBounds(519, 353, 129, 35);
+		btnExcluir.setBounds(520, 353, 129, 35);
 		contentPane.add(btnExcluir);
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Produto obj = new Produto();
-				obj.setId(Integer.valueOf(txtId.getText()));
+				obj.setId(Integer.valueOf(txtCodigo.getText()));
 				ProdutoDAO dao = new ProdutoDAO();
 				dao.Excluir(obj);
 				Util util = new Util();
@@ -328,25 +328,35 @@ public class FormEstoque extends JFrame {
 		btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 
 		JScrollPane painelDados = new JScrollPane();
-		painelDados.setBounds(10, 229, 689, 119);
+		painelDados.setBounds(12, 238, 689, 113);
 		contentPane.add(painelDados);
 		
-		table = new JTable();
-		table.setBorder(UIManager.getBorder("Button.border"));
-		table.setModel(new DefaultTableModel(
+		tabelaProduto = new JTable();
+		tabelaProduto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				idProduto = Integer.parseInt(tabelaProduto.getValueAt(tabelaProduto.getSelectedRow(),0).toString());
+				txtNome.setText(tabelaProduto.getValueAt(tabelaProduto.getSelectedRow(),1).toString());
+				txtCodigo.setText(tabelaProduto.getValueAt(tabelaProduto.getSelectedRow(),2).toString());
+				txtQtdAtual.setText(tabelaProduto.getValueAt(tabelaProduto.getSelectedRow(),3).toString());
+				
+		
+			}
+		});
+		tabelaProduto.setBorder(UIManager.getBorder("Button.border"));
+		tabelaProduto.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"IdProduto", "Nome", "Pre\u00E7o", "QTD.Estoque", "Fornecedor"
+				"IdProduto", "Nome", "Preco", "QTD.Estoque", "Fornecedor"
 			}
 		));
-		painelDados.setViewportView(table);
+		painelDados.setViewportView(tabelaProduto);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				Produto obj = new Produto();
 				obj.setNome(txtNome.getText());
-				obj.setPreco(Double.valueOf(txtPreco.getText()));
 				obj.setQtd(Double.valueOf(txtQtdAtual.getText()));
 
 
@@ -365,4 +375,5 @@ public class FormEstoque extends JFrame {
 			}
 		});
 	}
+	
 }

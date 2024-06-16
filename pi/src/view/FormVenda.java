@@ -56,7 +56,7 @@ public class FormVenda extends JFrame {
 	private JTable tabelaProduto;
 	private JTextField textPesquisaProduto;
 	private JTable tableCarrinho;
-	private JTextField textTotal;
+	private JTextField txtTotal;
 	private JTextField txtCodigo;
 	private JTextField txtProduto;
 	private JTextField txtPreco;
@@ -65,6 +65,7 @@ public class FormVenda extends JFrame {
 	private JFormattedTextField txtData;
 	private Cliente cliente;
 	
+	Cliente obj = new Cliente();
 	double preco, subtotal, total;
 	Double qtd;
 	DefaultTableModel meus_produtos;
@@ -247,7 +248,7 @@ public class FormVenda extends JFrame {
 	                Object preco = tabelaProduto.getValueAt(selectedRow, 2);
 	                Object estoque = tabelaProduto.getValueAt(selectedRow, 3);
 	                Object fornecedor = tabelaProduto.getValueAt(selectedRow, 4);
-	              
+	                txtCodigo.setEnabled(false);
 
 	                if (codigo != null) {
 	                    txtCodigo.setText(codigo.toString());
@@ -392,7 +393,7 @@ public class FormVenda extends JFrame {
 	                    total += subtotal;
 
 	                    if (estoque >= quantidade) {
-	                        textTotal.setText(String.valueOf(total));
+	                        txtTotal.setText(String.valueOf(total));
 	                        meus_produtos = (DefaultTableModel) tableCarrinho.getModel();
 	                        meus_produtos.addRow(new Object[]{
 	                            txtCodigo.getText(),
@@ -506,12 +507,34 @@ public class FormVenda extends JFrame {
 	    lblNewLabel_1_1_1.setBounds(39, 57, 49, 14);
 	    panel_4.add(lblNewLabel_1_1_1);
 
-	    textTotal = new JTextField();
-	    textTotal.setColumns(10);
-	    textTotal.setBounds(89, 47, 146, 34);
-	    panel_4.add(textTotal);
+	    txtTotal = new JTextField();
+	    txtTotal.setColumns(10);
+	    txtTotal.setBounds(89, 47, 146, 34);
+	    panel_4.add(txtTotal);
 
 	    JButton btnPagamento = new JButton("PAGAMENTO");
+	    btnPagamento.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		String nome = txtNome.getText();
+	    		String cpf = txtCpf.getText();
+	    		obj = new Cliente();
+	    		ClienteDAO daoc = new ClienteDAO();
+	    		obj = daoc.Pesquisar(nome);
+	    		obj = daoc.PesquisarCPF(cpf);
+	    		if(obj.getNome()!=null && obj.getCpf()!=null) {
+	    			FormPagamento telaPag = new FormPagamento();
+	    			telaPag.clientes = obj;
+	    			telaPag.meus_produtos = meus_produtos;
+	    			telaPag.txtTotalVenda.setText(String.valueOf(total));
+	    			telaPag.setVisible(true);
+	    			
+
+	    			
+	    		}else {
+	    			JOptionPane.showMessageDialog(null, "Preencha todos os Campos");
+	    		}
+	    	}
+	    });
 	    btnPagamento.setBounds(39, 125, 112, 23);
 	    panel_4.add(btnPagamento);
 
