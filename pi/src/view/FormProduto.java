@@ -124,246 +124,246 @@ public class FormProduto extends JFrame {
 		tabbedPane.setBorder(null);
 		tabbedPane.setForeground(new Color(0, 0, 0));
 		tabbedPane.setBackground(new Color(47, 45, 98));
-		tabbedPane.setBounds(-2, 46, 730, 300);
+		tabbedPane.setBounds(-2, 46, 711, 300);
 		contentPane.add(tabbedPane);
-
-		JPanel dadosPessoais = new JPanel();
-		dadosPessoais.setBorder(null);
-		dadosPessoais.setBackground(new Color(119, 118, 123));
-		tabbedPane.addTab("Dados Pessoais", null, dadosPessoais, null);
-		tabbedPane.setEnabledAt(0, true);
-		dadosPessoais.setLayout(null);
-
-		txtNome = new JTextField();
-		txtNome.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent evt) {
-				if(evt.getKeyCode()==KeyEvent.VK_ENTER) {
-					String nome = txtNome.getText();
-					Produto obj = new Produto();
-					ProdutoDAO dao = new ProdutoDAO();
-					Fornecedor f = new Fornecedor();
-					FornecedorDAO daof = new FornecedorDAO();
-
-					obj = dao.Pesquisar(nome);
-					if(obj != null && obj.getNome() != null) {
-						txtId.setText(String.valueOf(obj.getId()));
-						txtNome.setText(obj.getNome());
-						txtPreco.setText(String.valueOf(obj.getPreco()));
-						txtQtdEstoque.setText(String.valueOf(obj.getQtd()));
-						
-						
-//						cbFornecedor.setSelectedItem(obj.getFornecedores());
-						f = daof.Pesquisar(obj.getFornecedores().getNome());
-						cbFornecedor.getModel().setSelectedItem(f);
-
-					} else{
-						JOptionPane.showMessageDialog(null, "produto não encontrado!");
-					}
-				}
-			}
-		});
-
-		txtNome.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtNome.setText("\n");
-		txtNome.setColumns(10);
-		txtNome.setBounds(111, 55, 342, 19);
-		dadosPessoais.add(txtNome);
-
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setForeground(new Color(0, 0, 0));
-		lblNome.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		lblNome.setBounds(43, 57, 60, 15);
-		dadosPessoais.add(lblNome);
-
-		JLabel lblUf = new JLabel("Fornecedor:");
-		lblUf.setForeground(new Color(0, 0, 0));
-		lblUf.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		lblUf.setBounds(43, 154, 94, 15);
-		dadosPessoais.add(lblUf);
-
-		JLabel lblPreco = new JLabel("Preco:");
-		lblPreco.setForeground(new Color(0, 0, 0));
-		lblPreco.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		lblPreco.setBounds(43, 87, 60, 15);
-		dadosPessoais.add(lblPreco);
-
-		txtPreco = new JTextField();
-		txtPreco.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtPreco.setBounds(111, 85, 342, 19);
-		dadosPessoais.add(txtPreco);
-		txtPreco.setColumns(10);
-
-		JButton btnNovo = new JButton("NOVO");
-		btnNovo.setForeground(new Color(0, 0, 0));
-		btnNovo.setBackground(new Color(47, 45, 98));
-		btnNovo.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/add.png")));
-		btnNovo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnNovo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Util util = new Util();
-				util.LimpaTela(dadosPessoais);
-			}
-		});
-		btnNovo.setBounds(57, 215, 114, 36);
-		dadosPessoais.add(btnNovo);
-
-
-
-		JButton btnSalvar = new JButton("SALVAR");
-		btnSalvar.setBackground(new Color(47, 45, 98));
-		btnSalvar.setForeground(new Color(0, 0, 0));
-		btnSalvar.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/salvar.png")));
-		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				Produto obj = new Produto();
-				obj.setNome(txtNome.getText());
-				obj.setPreco(Double.valueOf(txtPreco.getText()));
-				obj.setQtd(Double.valueOf(txtQtdEstoque.getText()));
-				obj.setFornecedores((Fornecedor)cbFornecedor.getSelectedItem()); //casting
-
-
-
-				ProdutoDAO dao = new ProdutoDAO();	
-				dao.Salvar(obj);
-				Util util = new Util();
-				util.LimpaTela(dadosPessoais);
-
-			}
-		});
-		btnSalvar.setBounds(206, 215, 124, 36);
-		dadosPessoais.add(btnSalvar);
-
-		JButton btnExcluir = new JButton("EXCLUIR");
-		btnExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Produto obj = new Produto();
-				obj.setId(Integer.valueOf(txtId.getText()));
-				ProdutoDAO dao = new ProdutoDAO();
-				dao.Excluir(obj);
-				Util util = new Util();
-				util.LimpaTela(dadosPessoais);
-			}
-		});
-		btnExcluir.setForeground(new Color(0, 0, 0));
-		btnExcluir.setBackground(new Color(47, 45, 98));
-		btnExcluir.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/excluir.png")));
-		btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnExcluir.setBounds(521, 215, 135, 36);
-		dadosPessoais.add(btnExcluir);
-
-		JButton btnEditar = new JButton("EDITAR");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Produto obj = new Produto();
-				obj.setId(Integer.valueOf(txtId.getText()));
-				obj.setNome(txtNome.getText());
-				obj.setPreco(Double.valueOf(txtPreco.getText()));
-				obj.setQtd(Double.valueOf(txtQtdEstoque.getText()));
-//				obj.setFornecedores((Fornecedor)cbFornecedor.getSelectedItem());
-				Fornecedor f = new Fornecedor();
-				f = (Fornecedor) cbFornecedor.getSelectedItem();
-				obj.setFornecedores(f);
-				ProdutoDAO daop = new ProdutoDAO();
-				daop.Editar(obj);
-				Util util = new Util();
-				util.LimpaTela(dadosPessoais);
-			}
-		});
-		btnEditar.setBackground(new Color(47, 45, 98));
-		btnEditar.setForeground(new Color(0, 0, 0));
-		btnEditar.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/editar.png")));
-		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnEditar.setBounds(364, 215, 122, 36);
-		dadosPessoais.add(btnEditar);
-
-		JLabel lblCodigo = new JLabel("CÓDIGO:");
-		lblCodigo.setForeground(new Color(0, 0, 0));
-		lblCodigo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		lblCodigo.setBounds(28, 14, 70, 15);
-		dadosPessoais.add(lblCodigo);
-
-		txtId = new JTextField();
-		txtId.setEnabled(false);
-		txtId.setEditable(false);
-		txtId.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtId.setBounds(100, 12, 70, 19);
-		dadosPessoais.add(txtId);
-		txtId.setColumns(10);
-
-		cbFornecedor = new JComboBox<>();
-		cbFornecedor.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				FornecedorDAO dao = new FornecedorDAO();
-				List<Fornecedor> lista = dao.Listar();
-				cbFornecedor.removeAllItems();
-				for(Fornecedor f: lista) {
-					cbFornecedor.addItem(f);
-					
-				}
-			}
-		});
-		cbFornecedor.addAncestorListener(new AncestorListener() {
-			public void ancestorAdded(AncestorEvent event) {
+		
+				JPanel dadosPessoais = new JPanel();
+				dadosPessoais.setBorder(null);
+				dadosPessoais.setBackground(new Color(119, 118, 123));
+				tabbedPane.addTab("Dados do Produto", null, dadosPessoais, null);
+				tabbedPane.setEnabledAt(0, true);
+				dadosPessoais.setLayout(null);
 				
-			}
-			public void ancestorMoved(AncestorEvent event) {
-			}
-			public void ancestorRemoved(AncestorEvent event) {
-			}
-		});
-		cbFornecedor.setModel(new DefaultComboBoxModel<>());
-		cbFornecedor.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		cbFornecedor.setBounds(147, 154, 183, 19);
-		dadosPessoais.add(cbFornecedor);
+						txtNome = new JTextField();
+						txtNome.addKeyListener(new KeyAdapter() {
+							@Override
+							public void keyPressed(KeyEvent evt) {
+								if(evt.getKeyCode()==KeyEvent.VK_ENTER) {
+									String nome = txtNome.getText();
+									Produto obj = new Produto();
+									ProdutoDAO dao = new ProdutoDAO();
+									Fornecedor f = new Fornecedor();
+									FornecedorDAO daof = new FornecedorDAO();
 
-		JButton btnPesquisar_1 = new JButton("PESQUISAR");
-		btnPesquisar_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String nome = txtNome.getText();
-				Produto obj = new Produto();
-				ProdutoDAO dao = new ProdutoDAO();
-				Fornecedor f = new Fornecedor();
-				FornecedorDAO daof = new FornecedorDAO();
+									obj = dao.Pesquisar(nome);
+									if(obj != null && obj.getNome() != null) {
+										txtId.setText(String.valueOf(obj.getId()));
+										txtNome.setText(obj.getNome());
+										txtPreco.setText(String.valueOf(obj.getPreco()));
+										txtQtdEstoque.setText(String.valueOf(obj.getQtd()));
+										
+										
+//						cbFornecedor.setSelectedItem(obj.getFornecedores());
+										f = daof.Pesquisar(obj.getFornecedores().getNome());
+										cbFornecedor.getModel().setSelectedItem(f);
 
-				obj = dao.Pesquisar(nome);
-				if(obj != null && obj.getNome() != null) {
-					txtId.setText(String.valueOf(obj.getId()));
-					txtNome.setText(obj.getNome());
-					txtPreco.setText(String.valueOf(obj.getPreco()));
-					txtQtdEstoque.setText(String.valueOf(obj.getQtd()));
-					
-					
+									} else{
+										JOptionPane.showMessageDialog(null, "produto não encontrado!");
+									}
+								}
+							}
+						});
+						
+								txtNome.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
+								txtNome.setText("\n");
+								txtNome.setColumns(10);
+								txtNome.setBounds(111, 55, 219, 19);
+								dadosPessoais.add(txtNome);
+								
+										JLabel lblNome = new JLabel("Nome:");
+										lblNome.setForeground(new Color(0, 0, 0));
+										lblNome.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+										lblNome.setBounds(43, 57, 60, 15);
+										dadosPessoais.add(lblNome);
+										
+												JLabel lblUf = new JLabel("Fornecedor:");
+												lblUf.setForeground(new Color(0, 0, 0));
+												lblUf.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+												lblUf.setBounds(43, 154, 94, 15);
+												dadosPessoais.add(lblUf);
+												
+														JLabel lblPreco = new JLabel("Preco:");
+														lblPreco.setForeground(new Color(0, 0, 0));
+														lblPreco.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+														lblPreco.setBounds(43, 87, 60, 15);
+														dadosPessoais.add(lblPreco);
+														
+																txtPreco = new JTextField();
+																txtPreco.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
+																txtPreco.setBounds(111, 85, 60, 19);
+																dadosPessoais.add(txtPreco);
+																txtPreco.setColumns(10);
+																
+																		JButton btnNovo = new JButton("NOVO");
+																		btnNovo.setForeground(new Color(0, 0, 0));
+																		btnNovo.setBackground(new Color(47, 45, 98));
+																		btnNovo.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/add.png")));
+																		btnNovo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																		btnNovo.addActionListener(new ActionListener() {
+																			public void actionPerformed(ActionEvent arg0) {
+																				Util util = new Util();
+																				util.LimpaTela(dadosPessoais);
+																			}
+																		});
+																		btnNovo.setBounds(57, 215, 114, 36);
+																		dadosPessoais.add(btnNovo);
+																		
+																		
+																		
+																				JButton btnSalvar = new JButton("SALVAR");
+																				btnSalvar.setBackground(new Color(47, 45, 98));
+																				btnSalvar.setForeground(new Color(0, 0, 0));
+																				btnSalvar.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/salvar.png")));
+																				btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																				btnSalvar.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent arg0) {
+
+																						Produto obj = new Produto();
+																						obj.setNome(txtNome.getText());
+																						obj.setPreco(Double.valueOf(txtPreco.getText()));
+																						obj.setQtd(Double.valueOf(txtQtdEstoque.getText()));
+																						obj.setFornecedores((Fornecedor)cbFornecedor.getSelectedItem()); //casting
+
+
+
+																						ProdutoDAO dao = new ProdutoDAO();	
+																						dao.Salvar(obj);
+																						Util util = new Util();
+																						util.LimpaTela(dadosPessoais);
+
+																					}
+																				});
+																				btnSalvar.setBounds(206, 215, 124, 36);
+																				dadosPessoais.add(btnSalvar);
+																				
+																						JButton btnExcluir = new JButton("EXCLUIR");
+																						btnExcluir.addActionListener(new ActionListener() {
+																							public void actionPerformed(ActionEvent arg0) {
+																								Produto obj = new Produto();
+																								obj.setId(Integer.valueOf(txtId.getText()));
+																								ProdutoDAO dao = new ProdutoDAO();
+																								dao.Excluir(obj);
+																								Util util = new Util();
+																								util.LimpaTela(dadosPessoais);
+																							}
+																						});
+																						btnExcluir.setForeground(new Color(0, 0, 0));
+																						btnExcluir.setBackground(new Color(47, 45, 98));
+																						btnExcluir.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/excluir.png")));
+																						btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																						btnExcluir.setBounds(521, 215, 135, 36);
+																						dadosPessoais.add(btnExcluir);
+																						
+																								JButton btnEditar = new JButton("EDITAR");
+																								btnEditar.addActionListener(new ActionListener() {
+																									public void actionPerformed(ActionEvent arg0) {
+																										Produto obj = new Produto();
+																										obj.setId(Integer.valueOf(txtId.getText()));
+																										obj.setNome(txtNome.getText());
+																										obj.setPreco(Double.valueOf(txtPreco.getText()));
+																										obj.setQtd(Double.valueOf(txtQtdEstoque.getText()));
+//				obj.setFornecedores((Fornecedor)cbFornecedor.getSelectedItem());
+																										Fornecedor f = new Fornecedor();
+																										f = (Fornecedor) cbFornecedor.getSelectedItem();
+																										obj.setFornecedores(f);
+																										ProdutoDAO daop = new ProdutoDAO();
+																										daop.Editar(obj);
+																										Util util = new Util();
+																										util.LimpaTela(dadosPessoais);
+																									}
+																								});
+																								btnEditar.setBackground(new Color(47, 45, 98));
+																								btnEditar.setForeground(new Color(0, 0, 0));
+																								btnEditar.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/editar.png")));
+																								btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																								btnEditar.setBounds(364, 215, 122, 36);
+																								dadosPessoais.add(btnEditar);
+																								
+																										JLabel lblCodigo = new JLabel("CÓDIGO:");
+																										lblCodigo.setForeground(new Color(0, 0, 0));
+																										lblCodigo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																										lblCodigo.setBounds(28, 14, 70, 15);
+																										dadosPessoais.add(lblCodigo);
+																										
+																												txtId = new JTextField();
+																												txtId.setEnabled(false);
+																												txtId.setEditable(false);
+																												txtId.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
+																												txtId.setBounds(111, 12, 60, 19);
+																												dadosPessoais.add(txtId);
+																												txtId.setColumns(10);
+																												
+																														cbFornecedor = new JComboBox<>();
+																														cbFornecedor.addMouseListener(new MouseAdapter() {
+																															@Override
+																															public void mouseClicked(MouseEvent e) {
+																																FornecedorDAO dao = new FornecedorDAO();
+																																List<Fornecedor> lista = dao.Listar();
+																																cbFornecedor.removeAllItems();
+																																for(Fornecedor f: lista) {
+																																	cbFornecedor.addItem(f);
+																																	
+																																}
+																															}
+																														});
+																														cbFornecedor.addAncestorListener(new AncestorListener() {
+																															public void ancestorAdded(AncestorEvent event) {
+																																
+																															}
+																															public void ancestorMoved(AncestorEvent event) {
+																															}
+																															public void ancestorRemoved(AncestorEvent event) {
+																															}
+																														});
+																														cbFornecedor.setModel(new DefaultComboBoxModel<>());
+																														cbFornecedor.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																														cbFornecedor.setBounds(147, 152, 183, 19);
+																														dadosPessoais.add(cbFornecedor);
+																														
+																																JButton btnPesquisar_1 = new JButton("PESQUISAR");
+																																btnPesquisar_1.addActionListener(new ActionListener() {
+																																	public void actionPerformed(ActionEvent arg0) {
+																																		String nome = txtNome.getText();
+																																		Produto obj = new Produto();
+																																		ProdutoDAO dao = new ProdutoDAO();
+																																		Fornecedor f = new Fornecedor();
+																																		FornecedorDAO daof = new FornecedorDAO();
+
+																																		obj = dao.Pesquisar(nome);
+																																		if(obj != null && obj.getNome() != null) {
+																																			txtId.setText(String.valueOf(obj.getId()));
+																																			txtNome.setText(obj.getNome());
+																																			txtPreco.setText(String.valueOf(obj.getPreco()));
+																																			txtQtdEstoque.setText(String.valueOf(obj.getQtd()));
+																																			
+																																			
 //					cbFornecedor.setSelectedItem(obj.getFornecedores());
-					f = daof.Pesquisar(obj.getFornecedores().getNome());
-					cbFornecedor.getModel().setSelectedItem(f);
+																																			f = daof.Pesquisar(obj.getFornecedores().getNome());
+																																			cbFornecedor.getModel().setSelectedItem(f);
 
-				} else{
-					JOptionPane.showMessageDialog(null, "produto não encontrado!");
-				}
-			}
-		});
-		btnPesquisar_1.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/pesquisar.png")));
-		btnPesquisar_1.setForeground(Color.BLACK);
-		btnPesquisar_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnPesquisar_1.setBackground(new Color(47, 45, 98));
-		btnPesquisar_1.setBounds(523, 69, 156, 29);
-		dadosPessoais.add(btnPesquisar_1);
-		
-		txtQtdEstoque = new JTextField();
-		txtQtdEstoque.setFont(new Font("Dialog", Font.PLAIN, 14));
-		txtQtdEstoque.setColumns(10);
-		txtQtdEstoque.setBounds(206, 115, 244, 19);
-		dadosPessoais.add(txtQtdEstoque);
-		
-		JLabel lblQtdEstoque = new JLabel("Quantidade Estoque:");
-		lblQtdEstoque.setForeground(Color.BLACK);
-		lblQtdEstoque.setFont(new Font("Dialog", Font.BOLD, 14));
-		lblQtdEstoque.setBounds(43, 115, 156, 15);
-		dadosPessoais.add(lblQtdEstoque);
+																																		} else{
+																																			JOptionPane.showMessageDialog(null, "produto não encontrado!");
+																																		}
+																																	}
+																																});
+																																btnPesquisar_1.setIcon(new ImageIcon(FormProduto.class.getResource("/imagens/pesquisar.png")));
+																																btnPesquisar_1.setForeground(Color.BLACK);
+																																btnPesquisar_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+																																btnPesquisar_1.setBackground(new Color(47, 45, 98));
+																																btnPesquisar_1.setBounds(400, 50, 156, 29);
+																																dadosPessoais.add(btnPesquisar_1);
+																																
+																																txtQtdEstoque = new JTextField();
+																																txtQtdEstoque.setFont(new Font("Dialog", Font.PLAIN, 14));
+																																txtQtdEstoque.setColumns(10);
+																																txtQtdEstoque.setBounds(111, 115, 60, 19);
+																																dadosPessoais.add(txtQtdEstoque);
+																																
+																																JLabel lblQtdEstoque = new JLabel("QTD.:");
+																																lblQtdEstoque.setForeground(Color.BLACK);
+																																lblQtdEstoque.setFont(new Font("Dialog", Font.BOLD, 14));
+																																lblQtdEstoque.setBounds(43, 117, 47, 15);
+																																dadosPessoais.add(lblQtdEstoque);
 
 		JPanel consultaProdutos = new JPanel();
 		consultaProdutos.setBorder(null);
