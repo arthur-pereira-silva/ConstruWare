@@ -55,10 +55,13 @@ It is an Integrative Project for the third semester of the Systems Analysis and 
   <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" width="100" />
 </p>
 <p float="left">
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href=""/>
+  <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
   <a href="https://www.linkedin.com/in/ellen-caroline0107/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href=""/>
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href=""/>
+  <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
+  <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
 </p>
 
-ConstruWare - Simplifying construction materials management. 🏗️📊🛠️
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Bebas+Neue&size=40&pause=1000&color=2F7FC4&random=false&width=680&height=60&lines=ConstruWare;Simplifying+construction+materials+management;%F0%9F%8F%97%EF%B8%8F%F0%9F%93%8A%F0%9F%9B%A0%EF%B8%8F)](https://git.io/typing-svg)
+
+## License
+This project operates under the MIT License. Refer to the LICENSE file for more details.
