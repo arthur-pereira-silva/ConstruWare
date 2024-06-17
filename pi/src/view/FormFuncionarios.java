@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDesktopPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import javax.swing.JFormattedTextField;
 import dao.ClienteDAO;
 import dao.FuncionarioDAO;
 import model.Cliente;
@@ -259,7 +261,7 @@ public class FormFuncionarios extends JFrame {
 		lblBairro.setBounds(238, 171, 65, 15);
 		dadosPessoais.add(lblBairro);
 
-		txtCEP = new JTextField();
+		txtCEP = new JFormattedTextField(new MaskFormatter("#####-###"));
 		txtCEP.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		txtCEP.setColumns(10);
 		txtCEP.setBounds(121, 136, 89, 19);
@@ -283,19 +285,19 @@ public class FormFuncionarios extends JFrame {
 		lblEstado.setBounds(625, 204, 68, 15);
 		dadosPessoais.add(lblEstado);
 
-		txtRG = new JTextField();
+		txtRG = new JFormattedTextField(new MaskFormatter("##.###.###-#"));
 		txtRG.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		txtRG.setColumns(10);
 		txtRG.setBounds(309, 68, 166, 19);
 		dadosPessoais.add(txtRG);
 
-		txtCPF = new JTextField();
+		txtCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 		txtCPF.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		txtCPF.setColumns(10);
 		txtCPF.setBounds(121, 70, 138, 19);
 		dadosPessoais.add(txtCPF);
 
-		txtTelefone = new JTextField();
+		txtTelefone = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
 		txtTelefone.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		txtTelefone.setColumns(10);
 		txtTelefone.setBounds(585, 70, 168, 19);
@@ -469,7 +471,7 @@ public class FormFuncionarios extends JFrame {
 		btnExcluir.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/excluir.png")));
 		btnExcluir.setForeground(Color.BLACK);
 		btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnExcluir.setBounds(570, 412, 141, 43);
+		btnExcluir.setBounds(641, 412, 141, 43);
 		contentPane.add(btnExcluir);
 
 		JButton btnSalvar = new JButton("Salvar");
@@ -504,15 +506,28 @@ public class FormFuncionarios extends JFrame {
 		btnSalvar.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/salvar.png")));
 		btnSalvar.setForeground(Color.BLACK);
 		btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnSalvar.setBounds(333, 412, 141, 43);
+		btnSalvar.setBounds(454, 412, 141, 43);
 		contentPane.add(btnSalvar);
 
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/editar.png")));
 		btnEditar.setForeground(Color.BLACK);
 		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnEditar.setBounds(96, 412, 141, 43);
+		btnEditar.setBounds(258, 412, 141, 43);
 		contentPane.add(btnEditar);
+		
+		JButton btnNovo = new JButton("Novo");
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					Util util = new Util();
+					util.LimpaTela(dadosPessoais);
+			}
+		});
+		btnNovo.setIcon(new ImageIcon(FormFuncionarios.class.getResource("/imagens/add.png")));
+		btnNovo.setForeground(Color.BLACK);
+		btnNovo.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnNovo.setBounds(63, 412, 141, 43);
+		contentPane.add(btnNovo);
 
 		
 		btnExcluir.addActionListener(new ActionListener() {

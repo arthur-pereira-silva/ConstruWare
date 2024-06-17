@@ -399,7 +399,7 @@ public class FormCliente extends JFrame {
 		txtCPF.setBounds(100, 42, 114, 19);
 		dadosPessoais.add(txtCPF);
 
-		txtRG = new JTextField();
+		txtRG = new JFormattedTextField(new MaskFormatter("##.###.###-#"));
 		txtRG.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
 		txtRG.setBounds(281, 42, 119, 19);
 		dadosPessoais.add(txtRG);
