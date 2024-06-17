@@ -229,6 +229,7 @@ public class ProdutoDAO {
 		String sql= "Update Produto set QuantidadeEstoque = ? where IdProduto =?";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			
 			stmt.setInt(1, qtd_nova);
 			stmt.setInt(2, id);
 			stmt.execute();
@@ -239,5 +240,22 @@ public class ProdutoDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao dar baixa no Estoque!"+e);			
 		}
 
+	}
+	public int retornaQtdAtual(int id) {
+		int qtd_atual_estoque = 0;
+		String sql = "select QuantidadeEstoque from Produto where IdProduto = ?";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				qtd_atual_estoque = (rs.getInt("QuantidadeEstoque"));
+				
+			}
+			return qtd_atual_estoque;
+		} catch (SQLException e) {
+			throw new RuntimeException("Erro ao retornar a quantidade atual do Estoque"+e);
+		}
+		
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -13,41 +15,44 @@ import model.Pedido;
 public class PedidoDAO {
 	private Connection conn;
 
-	public PedidoDAO(Connection conn) {
+	public PedidoDAO() {
 		this.conn = new Conn().pegarConexao();
 	}
-	public void salvar(Pedido obj) {
-		String sql = "INSERT INTO Pedido (IdCliente,IdFuncionario, DataPedido, Total)"+ "values(?,?,?,?)";
+	public void salvar(Pedido pedido) {
 		try {
+			String sql = "INSERT INTO pedido (IdCliente, DataPedido, Total) VALUES (?, ?, ?)";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			
-			stmt.setInt(1, obj.getCliente().getId());
-			stmt.setInt(2, obj.getFuncionario().getId());
-			stmt.setString(3, obj.getData());
-			stmt.setDouble(4, obj.getTotal());
-			stmt.execute();
+
+			// Exemplo de formatação da data
+			Date agora = new Date();
+			SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dataFormatada = formatador.format(agora);
+			stmt.setInt(1, pedido.getCliente().getId());
+			stmt.setString(2, dataFormatada);
+			stmt.setDouble(3, pedido.getTotal());
+			stmt.executeUpdate();
+
 			stmt.close();
-			JOptionPane.showMessageDialog(null, "Venda Realizada com Sucesso");
+			JOptionPane.showMessageDialog(null, "Venda Realizada com Sucesso!");
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao Realizar venda"+e);
+			throw new RuntimeException("Erro ao salvar pedido: " + e.getMessage(), e);
 		}
-		
 	}
 	public int retornaUltimoIdVenda() {
 		int ultimoId = 0;
-		String sql = "SELECT MAX(Id) Id from tb_vendas";
+		String sql = "SELECT MAX(IdPedido) IdPedido from Pedido";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				Pedido v =new Pedido();
-				v.setId(rs.getInt("Id"));
+				v.setId(rs.getInt("IdPedido"));
 				ultimoId = v.getId();
 			}
 			return ultimoId;
 		} catch (SQLException e) {
 			throw new RuntimeException("Erro ao retornar último Id da Venda!"+e);
 		}
-		
+
 	}
 }

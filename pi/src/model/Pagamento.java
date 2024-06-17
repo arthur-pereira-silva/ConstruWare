@@ -9,21 +9,19 @@ public class Pagamento {
     private String metodo;
     private Double valor;
     private Date data;
-    private Date hora;
-	
+    
 	public Pagamento() {
 		super();
 	}
 
 
-	public Pagamento(int id, String metodo, Double valor, Date data, Date hora) {
+	public Pagamento(int id, String metodo, Double valor, Date data) {
 		super();
 		
 		this.id = id;
 		this.metodo = metodo;
 		this.valor = valor;
 		this.data = data;
-		this.hora = hora;
 	}
 
 
@@ -67,19 +65,10 @@ public class Pagamento {
 	}
 
 
-	public Date getHora() {
-		return hora;
-	}
-
-
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
-
 
 	@Override
 	public String toString() {
-		return "Pagamento [id=" + id + ", metodo=" + metodo + ", valor=" + valor + ", data=" + data + ", hora=" + hora
+		return "Pagamento [id=" + id + ", metodo=" + metodo + ", valor=" + valor + ", data=" + data
 				+ "]";
 	}
     

@@ -8,7 +8,6 @@ public class Pedido {
     private String data;
     private Double total;
     private Cliente cliente;
-    private Funcionario funcionario;
     
 	public int getId() {
 		return id;
@@ -35,11 +34,6 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public Funcionario getFuncionario() {
-		return funcionario;
-	}
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
-	}
+
     
 }

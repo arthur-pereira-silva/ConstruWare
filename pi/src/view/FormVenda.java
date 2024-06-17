@@ -86,6 +86,7 @@ public class FormVenda extends JFrame {
             });
         }
     }
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -515,25 +516,22 @@ public class FormVenda extends JFrame {
 	    JButton btnPagamento = new JButton("PAGAMENTO");
 	    btnPagamento.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		String nome = txtNome.getText();
-	    		String cpf = txtCpf.getText();
-	    		obj = new Cliente();
-	    		ClienteDAO daoc = new ClienteDAO();
-	    		obj = daoc.Pesquisar(nome);
-	    		obj = daoc.PesquisarCPF(cpf);
-	    		if(obj.getNome()!=null && obj.getCpf()!=null) {
-	    			FormPagamento telaPag = new FormPagamento();
-	    			telaPag.clientes = obj;
-	    			telaPag.meus_produtos = meus_produtos;
-	    			telaPag.txtTotalVenda.setText(String.valueOf(total));
-	    			telaPag.setVisible(true);
-	    			
-
-	    			
-	    		}else {
-	    			JOptionPane.showMessageDialog(null, "Preencha todos os Campos");
-	    		}
-	    	}
+	            String nome = txtNome.getText();
+	            String cpf = txtCpf.getText();
+	            Cliente obj = new Cliente();
+	            ClienteDAO daoc = new ClienteDAO();
+	            obj = daoc.Pesquisar(nome);
+	            obj = daoc.PesquisarCPF(cpf);
+	            if (obj.getNome() != null && obj.getCpf() != null) {
+	                FormPagamento telaPag = new FormPagamento();
+	                telaPag.clientes = obj;
+	                telaPag.meus_produtos = meus_produtos;
+	                telaPag.txtTotalVenda.setText(String.valueOf(total));
+	                telaPag.setVisible(true);
+	            } else {
+	                JOptionPane.showMessageDialog(null, "Preencha todos os Campos");
+	            }
+	        }
 	    });
 	    btnPagamento.setBounds(39, 125, 112, 23);
 	    panel_4.add(btnPagamento);

@@ -10,13 +10,13 @@ import model.ItemPedido;
 public class ItemPedidoDAO {
 	private Connection conn;
 	
-	public ItemPedidoDAO(Connection conn) {
+	public ItemPedidoDAO() {
 		this.conn = new Conn().pegarConexao();
 		
 	}	
 	
 	public void salvar(ItemPedido obj) {
-		String sql = "insert into Item_Pedido (IdPedido, IdProduto, Quantidade, Subtotal) values (?,?,?,?)";
+		String sql = "insert into Item_Pedido (IdPedido, IdProduto, Quantidade, Subtototal) values (?,?,?,?)";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, obj.getPedido().getId());
@@ -26,7 +26,7 @@ public class ItemPedidoDAO {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new  RuntimeException("Erro ao Salvar Itens da Venda");
+			throw new RuntimeException("Erro ao Salvar Itens da Venda: " + e.getMessage(), e);
 		}
 	}
 }
