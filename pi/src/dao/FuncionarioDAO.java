@@ -18,254 +18,258 @@ import view.FormLogin;
 
 public class FuncionarioDAO {
 
-    private Connection conn;
+	private Connection conn;
 
-    public FuncionarioDAO() {
-        this.conn = new Conn().pegarConexao();
-    }
+	public FuncionarioDAO() {
+		this.conn = new Conn().pegarConexao();
+	}
 
-    public void Salvar(Funcionario obj) {
-        try {
-            String sql = "INSERT INTO Funcionario (Nome, RG, CPF, Cargo, Salario, CNH, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumCasa, Senha) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, obj.getNome());
-            stmt.setString(2, obj.getRg());
-            stmt.setString(3, obj.getCpf());
-            stmt.setString(4, obj.getCargo());
-            stmt.setDouble(5, obj.getSalario());
-            stmt.setString(6, obj.getCnh());
-            stmt.setString(7, obj.getTelefone());
-            stmt.setString(8, obj.getEmail());
-            stmt.setString(9, obj.getCep());
-            stmt.setString(10, obj.getEstado());
-            stmt.setString(11, obj.getCidade());
-            stmt.setString(12, obj.getRua());
-            stmt.setString(13, obj.getBairro());
-            stmt.setInt(14, obj.getNum());
-            stmt.setString(15, obj.getSenha());
+	public void Salvar(Funcionario obj) {
+		try {
+			String sql = "INSERT INTO Funcionario (Nome, RG, CPF, Cargo, Salario, CNH, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumCasa, Senha) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            stmt.execute();
-            stmt.close();
-            JOptionPane.showMessageDialog(null, "Funcionario salvo");
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao salvar funcionario: " + e.getMessage());
-        }
-    }
-    
-    public void Editar(Funcionario obj) {
-        try {
-            String sql = "UPDATE Funcionario SET Nome=?, RG=?, CPF=?, Cargo=?, Salario=?, CNH=?, Telefone=?, Email=?, CEP=?, Estado=?, Cidade=?, Rua=?, Bairro=?, NumCasa=?, Senha=? WHERE IdFuncionario=?";
-            
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, obj.getNome());
-            stmt.setString(2, obj.getRg());
-            stmt.setString(3, obj.getCpf());
-            stmt.setString(4, obj.getCargo());
-            stmt.setDouble(5, obj.getSalario());
-            stmt.setString(6, obj.getCnh());
-            stmt.setString(7, obj.getTelefone());
-            stmt.setString(8, obj.getEmail());
-            stmt.setString(9, obj.getCep());
-            stmt.setString(10, obj.getEstado());
-            stmt.setString(11, obj.getCidade());
-            stmt.setString(12, obj.getBairro());
-            stmt.setString(13, obj.getRua());
-            stmt.setInt(14, obj.getNum());
-            stmt.setString(15, obj.getSenha());
-            stmt.setInt(16, obj.getId());
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, obj.getNome());
+			stmt.setString(2, obj.getRg());
+			stmt.setString(3, obj.getCpf());
+			stmt.setString(4, obj.getCargo());
+			stmt.setDouble(5, obj.getSalario());
+			stmt.setString(6, obj.getCnh());
+			stmt.setString(7, obj.getTelefone());
+			stmt.setString(8, obj.getEmail());
+			stmt.setString(9, obj.getCep());
+			stmt.setString(10, obj.getEstado());
+			stmt.setString(11, obj.getCidade());
+			stmt.setString(12, obj.getRua());
+			stmt.setString(13, obj.getBairro());
+			stmt.setInt(14, obj.getNum());
+			stmt.setString(15, obj.getSenha());
 
-            stmt.execute();
-            stmt.close();
-            JOptionPane.showMessageDialog(null, "Funcionario Editado!");
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao editar funcionario: " + e.getMessage());
-        }
-    }
-    
-    public void Excluir(Funcionario obj) {
-        try {
-            String sql = "DELETE FROM Funcionario WHERE IdFuncionario=?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, obj.getId());
-            int affectedRows = stmt.executeUpdate();
-            stmt.close();
+			stmt.execute();
+			stmt.close();
+			JOptionPane.showMessageDialog(null, "Funcionario salvo");
 
-            if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Nenhum funcionário encontrado com o ID fornecido.", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }
-    
-    public Funcionario PesquisarFunc(String nome) {
-    	try {
-    		String sql = "select * from Funcionario where nome = ?";
-    		PreparedStatement stmt = conn.prepareStatement(sql);
-    		stmt.setString(1, nome);
-    		ResultSet rs = stmt.executeQuery();
-    		Funcionario obj = new Funcionario();
-    		if (rs.next()) {
-    			obj.setId(rs.getInt("IdFuncionario"));
-   			 	obj.setNome(rs.getString("Nome"));
-   			 	obj.setRg(rs.getString("RG"));
-   			 	obj.setCpf(rs.getString("CPF"));
-   			 	obj.setCargo(rs.getString("Cargo"));
-   			 	obj.setSalario(rs.getDouble("Salario"));
-   			 	obj.setCnh(rs.getString("CNH"));
-   			 	obj.setTelefone(rs.getString("Telefone"));
-   			 	obj.setEmail(rs.getString("Email"));
-   			 	obj.setCep(rs.getString("CEP"));
-   			 	obj.setEstado(rs.getString("Estado"));
-   			 	obj.setCidade(rs.getString("Cidade"));
-   			 	obj.setBairro(rs.getString("Bairro"));
-   			 	obj.setRua(rs.getString("Rua"));
-   			 	obj.setNum(rs.getInt("numCasa"));
-   			 	obj.setSenha(rs.getString("Senha"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro ao salvar funcionario: " + e.getMessage());
+		}
+	}
+
+	public void Editar(Funcionario obj) {
+		try {
+			String sql = "UPDATE Funcionario SET Nome=?, RG=?, CPF=?, Cargo=?, Salario=?, CNH=?, Telefone=?, Email=?, CEP=?, Estado=?, Cidade=?, Rua=?, Bairro=?, NumCasa=?, Senha=? WHERE IdFuncionario=?";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, obj.getNome());
+			stmt.setString(2, obj.getRg());
+			stmt.setString(3, obj.getCpf());
+			stmt.setString(4, obj.getCargo());
+			stmt.setDouble(5, obj.getSalario());
+			stmt.setString(6, obj.getCnh());
+			stmt.setString(7, obj.getTelefone());
+			stmt.setString(8, obj.getEmail());
+			stmt.setString(9, obj.getCep());
+			stmt.setString(10, obj.getEstado());
+			stmt.setString(11, obj.getCidade());
+			stmt.setString(12, obj.getBairro());
+			stmt.setString(13, obj.getRua());
+			stmt.setInt(14, obj.getNum());
+			stmt.setString(15, obj.getSenha());
+			stmt.setInt(16, obj.getId());
+
+			stmt.execute();
+			stmt.close();
+			JOptionPane.showMessageDialog(null, "Funcionario Editado!");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Erro ao editar funcionario: " + e.getMessage());
+		}
+	}
+
+	public void Excluir(Funcionario obj) {
+		try {
+			String sql = "DELETE FROM Funcionario WHERE IdFuncionario=?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, obj.getId());
+			int affectedRows = stmt.executeUpdate();
+			stmt.close();
+
+			if (affectedRows > 0) {
+				JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
+			} else {
+				JOptionPane.showMessageDialog(null, "Nenhum funcionário encontrado com o ID fornecido.", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao excluir: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	public Funcionario PesquisarFunc(String nome) {
+		try {
+			String sql = "select * from Funcionario where nome = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nome);
+			ResultSet rs = stmt.executeQuery();
+			Funcionario obj = new Funcionario();
+			if (rs.next()) {
+				obj.setId(rs.getInt("IdFuncionario"));
+				obj.setNome(rs.getString("Nome"));
+				obj.setRg(rs.getString("RG"));
+				obj.setCpf(rs.getString("CPF"));
+				obj.setCargo(rs.getString("Cargo"));
+				obj.setSalario(rs.getDouble("Salario"));
+				obj.setCnh(rs.getString("CNH"));
+				obj.setTelefone(rs.getString("Telefone"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setCep(rs.getString("CEP"));
+				obj.setEstado(rs.getString("Estado"));
+				obj.setCidade(rs.getString("Cidade"));
+				obj.setBairro(rs.getString("Bairro"));
+				obj.setRua(rs.getString("Rua"));
+				obj.setNum(rs.getInt("numCasa"));
+				obj.setSenha(rs.getString("Senha"));
 
 
-    		}
-    		return obj;
-    		
-    	} catch (SQLException erro) {
-    		JOptionPane.showMessageDialog(null, "erro ao pesquisar"+ erro);
-    	}
+			}
+			return obj;
+
+		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "erro ao pesquisar"+ erro);
+		}
 		return null;
-    }
-    public Funcionario PesquisarFuncionario(int id) {
-    	try {
-    		String sql = "select * from Funcionario where IdFuncionario =?";
-    		PreparedStatement stmt = conn.prepareStatement(sql);
-    		stmt.setInt(1, id);
-    		ResultSet rs = stmt.executeQuery();
-    		Funcionario obj = new Funcionario();
-    		if (rs.next()) {
-    			obj.setId(rs.getInt("IdFuncionario"));
-   			 	obj.setNome(rs.getString("Nome"));
-   			 	obj.setRg(rs.getString("RG"));
-   			 	obj.setCpf(rs.getString("CPF"));
-   			 	obj.setCargo(rs.getString("Cargo"));
-   			 	obj.setSalario(rs.getDouble("Salario"));
-   			 	obj.setCnh(rs.getString("CNH"));
-   			 	obj.setTelefone(rs.getString("Telefone"));
-   			 	obj.setEmail(rs.getString("Email"));
-   			 	obj.setCep(rs.getString("CEP"));
-   			 	obj.setEstado(rs.getString("Estado"));
-   			 	obj.setCidade(rs.getString("Cidade"));
-   			 	obj.setBairro(rs.getString("Bairro"));
-   			 	obj.setRua(rs.getString("Rua"));
-   			 	obj.setNum(rs.getInt("numCasa"));
-   			 	obj.setSenha(rs.getString("Senha"));
+	}
+	public Funcionario PesquisarFuncionario(int id) {
+		try {
+			String sql = "select * from Funcionario where IdFuncionario =?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+			Funcionario obj = new Funcionario();
+			if (rs.next()) {
+				obj.setId(rs.getInt("IdFuncionario"));
+				obj.setNome(rs.getString("Nome"));
+				obj.setRg(rs.getString("RG"));
+				obj.setCpf(rs.getString("CPF"));
+				obj.setCargo(rs.getString("Cargo"));
+				obj.setSalario(rs.getDouble("Salario"));
+				obj.setCnh(rs.getString("CNH"));
+				obj.setTelefone(rs.getString("Telefone"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setCep(rs.getString("CEP"));
+				obj.setEstado(rs.getString("Estado"));
+				obj.setCidade(rs.getString("Cidade"));
+				obj.setBairro(rs.getString("Bairro"));
+				obj.setRua(rs.getString("Rua"));
+				obj.setNum(rs.getInt("numCasa"));
+				obj.setSenha(rs.getString("Senha"));
 
-    		}
-    		return obj;
-    		
-    	} catch (SQLException erro) {
-    		JOptionPane.showMessageDialog(null, "erro ao pesquisar"+ erro);
-    	}
+			}
+			return obj;
+
+		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "erro ao pesquisar"+ erro);
+		}
 		return null;
-    }
-    
-    	public List<Funcionario>Listar() {
-        List<Funcionario> lista = new ArrayList<>();
-        try {
-            String sql = "SELECT * FROM Funcionario";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Funcionario obj = new Funcionario();
-    			obj.setId(rs.getInt("IdFuncionario"));
-   			 	obj.setNome(rs.getString("Nome"));
-   			 	obj.setRg(rs.getString("RG"));
-   			 	obj.setCpf(rs.getString("CPF"));
-   			 	obj.setCargo(rs.getString("Cargo"));
-   			 	obj.setSalario(rs.getDouble("Salario"));
-   			 	obj.setCnh(rs.getString("CNH"));
-   			 	obj.setTelefone(rs.getString("Telefone"));
-   			 	obj.setEmail(rs.getString("Email"));
-   			 	obj.setCep(rs.getString("CEP"));
-   			 	obj.setEstado(rs.getString("Estado"));
-   			 	obj.setCidade(rs.getString("Cidade"));
-   			 	obj.setBairro(rs.getString("Bairro"));
-   			 	obj.setRua(rs.getString("Rua"));
-   			 	obj.setNum(rs.getInt("numCasa"));
-   			 	obj.setSenha(rs.getString("Senha"));
+	}
 
-                lista.add(obj);
-            }
-            rs.close();
-            stmt.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e);
-        }
-        return lista;
-    }
-    	
-   public List<Funcionario>Filtrar(String nome) {
-            List<Funcionario> lista = new ArrayList<>();
-            try {
-                String sql = "SELECT * FROM Funcionario where nome like ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setString(1, nome);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    Funcionario obj = new Funcionario();
-        			obj.setId(rs.getInt("IdFuncionario"));
-       			 	obj.setNome(rs.getString("Nome"));
-       			 	obj.setRg(rs.getString("RG"));
-       			 	obj.setCpf(rs.getString("CPF"));
-       			 	obj.setCargo(rs.getString("Cargo"));
-       			 	obj.setSalario(rs.getDouble("Salario"));
-       			 	obj.setCnh(rs.getString("CNH"));
-       			 	obj.setTelefone(rs.getString("Telefone"));
-       			 	obj.setEmail(rs.getString("Email"));
-       			 	obj.setCep(rs.getString("CEP"));
-       			 	obj.setEstado(rs.getString("Estado"));
-       			 	obj.setCidade(rs.getString("Cidade"));
-       			 	obj.setBairro(rs.getString("Bairro"));
-       			 	obj.setRua(rs.getString("Rua"));
-       			 	obj.setNum(rs.getInt("numCasa"));
-       			 	obj.setSenha(rs.getString("Senha"));
+	public List<Funcionario>Listar() {
+		List<Funcionario> lista = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM Funcionario";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Funcionario obj = new Funcionario();
+				obj.setId(rs.getInt("IdFuncionario"));
+				obj.setNome(rs.getString("Nome"));
+				obj.setRg(rs.getString("RG"));
+				obj.setCpf(rs.getString("CPF"));
+				obj.setCargo(rs.getString("Cargo"));
+				obj.setSalario(rs.getDouble("Salario"));
+				obj.setCnh(rs.getString("CNH"));
+				obj.setTelefone(rs.getString("Telefone"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setCep(rs.getString("CEP"));
+				obj.setEstado(rs.getString("Estado"));
+				obj.setCidade(rs.getString("Cidade"));
+				obj.setBairro(rs.getString("Bairro"));
+				obj.setRua(rs.getString("Rua"));
+				obj.setNum(rs.getInt("numCasa"));
+				obj.setSenha(rs.getString("Senha"));
 
-                    lista.add(obj);
-                }
-                rs.close();
-                stmt.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e);
-            }
-            return lista;
-        }
-  
-   public void efetuarLogin(String email, String senha) {
-     	   try {
-     		   String sql = "select * from Funcionario where email=? and senha =?";
-     		   PreparedStatement stmt = conn.prepareStatement(sql);
-     		   stmt.setString(1, email);
-     		   stmt.setString(2, senha);
-     		   
-     		   ResultSet rs = stmt.executeQuery();
-     		   if(rs.next()) {
-     			   JOptionPane.showMessageDialog(null, "Seja bem vindo!");
-     			   AreaTrabalho at = new AreaTrabalho();
-     			   at.setVisible(true);
-     		   } else {
-     			   FormLogin login = new FormLogin();
-     			   JOptionPane.showMessageDialog(null, "dados inválidos!");
-     			   login.setVisible(true);
-     		   }
-     	   } catch (Exception e) {
-     		   JOptionPane.showMessageDialog(null, "erro:" + e);
-     	   }
-        }
-        
-   
+				lista.add(obj);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e);
+		}
+		return lista;
+	}
+
+	public List<Funcionario>Filtrar(String nome) {
+		List<Funcionario> lista = new ArrayList<>();
+		try {
+			String sql = "SELECT * FROM Funcionario where nome like ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, nome);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Funcionario obj = new Funcionario();
+				obj.setId(rs.getInt("IdFuncionario"));
+				obj.setNome(rs.getString("Nome"));
+				obj.setRg(rs.getString("RG"));
+				obj.setCpf(rs.getString("CPF"));
+				obj.setCargo(rs.getString("Cargo"));
+				obj.setSalario(rs.getDouble("Salario"));
+				obj.setCnh(rs.getString("CNH"));
+				obj.setTelefone(rs.getString("Telefone"));
+				obj.setEmail(rs.getString("Email"));
+				obj.setCep(rs.getString("CEP"));
+				obj.setEstado(rs.getString("Estado"));
+				obj.setCidade(rs.getString("Cidade"));
+				obj.setBairro(rs.getString("Bairro"));
+				obj.setRua(rs.getString("Rua"));
+				obj.setNum(rs.getInt("numCasa"));
+				obj.setSenha(rs.getString("Senha"));
+
+				lista.add(obj);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao criar lista: " + e);
+		}
+		return lista;
+	}
+
+	public void efetuarLogin(String email, String senha) {
+		try {
+			String sql = "select * from Funcionario where email=? and senha =?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, email);
+			stmt.setString(2, senha);
+
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				
+				AreaTrabalho at = new AreaTrabalho();
+				at.usuarioLogado = rs.getString("Nome");
+				JOptionPane.showMessageDialog(null, "Seja bem vindo ao Sistema,\n!"+at.usuarioLogado);
+				
+				at.setVisible(true);
+				
+			} else {
+				FormLogin login = new FormLogin();
+				JOptionPane.showMessageDialog(null, "dados inválidos!");
+				login.setVisible(true);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "erro:" + e);
+		}
+	}
+
+
 }

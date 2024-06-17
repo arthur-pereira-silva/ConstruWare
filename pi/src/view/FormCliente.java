@@ -134,7 +134,7 @@ public class FormCliente extends JFrame {
 		tabbedPane.setBorder(null);
 		tabbedPane.setForeground(new Color(0, 0, 0));
 		tabbedPane.setBackground(new Color(47, 45, 98));
-		tabbedPane.setBounds(-2, 46, 730, 300);
+		tabbedPane.setBounds(-2, 46, 716, 300);
 		contentPane.add(tabbedPane);
 
 		JPanel dadosPessoais = new JPanel();
@@ -406,7 +406,7 @@ public class FormCliente extends JFrame {
 
 		txtTelefone = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
 		txtTelefone.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-		txtTelefone.setBounds(552, 39, 126, 19);
+		txtTelefone.setBounds(552, 38, 126, 21);
 		dadosPessoais.add(txtTelefone);
 
 		txtCEP = new JFormattedTextField(new MaskFormatter("#####-###"));
@@ -417,7 +417,7 @@ public class FormCliente extends JFrame {
 		cbEstado = new JComboBox<>();
 		cbEstado.setModel(new DefaultComboBoxModel<>(new String[] {"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
 		cbEstado.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		cbEstado.setBounds(423, 140, 50, 17);
+		cbEstado.setBounds(423, 140, 50, 19);
 		dadosPessoais.add(cbEstado);
 
 		JButton btnPesquisar_1 = new JButton("PESQUISAR");

@@ -5,11 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import connection.Conn;
+import model.Cliente;
 import model.Pedido;
 
 public class PedidoDAO {
@@ -55,4 +59,54 @@ public class PedidoDAO {
 		}
 
 	}
+
+	public List<Pedido> historicoPedido(LocalDate data_inicio, LocalDate data_final) {
+		List<Pedido> lista = new ArrayList<>();
+		String sql = "SELECT p.IdPedido, c.Nome, CONVERT(varchar, p.DataPedido, 103) AS data_formatada, p.Total " +
+	             "FROM Pedido AS p INNER JOIN Cliente AS c ON p.IdCliente = c.IdCliente " +
+	             "WHERE p.DataPedido BETWEEN ? AND ?";
+
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setObject(1, data_inicio);
+			stmt.setObject(2, data_final);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Pedido p = new Pedido();
+				Cliente c = new Cliente();
+				p.setId(rs.getInt("IdPedido"));
+				c.setNome(rs.getString("Nome"));
+				p.setCliente(c);
+				p.setData(rs.getString("data_formatada"));
+				p.setTotal(rs.getDouble("Total"));
+				lista.add(p);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new RuntimeException("Erro ao criar Histórico de Venda", e);
+		}
+	}
+	public double posicaoDoDia(LocalDate data_venda) {
+	    double total_dia = 0;
+	    
+	    try {
+	        String sql = "SELECT SUM(Total) AS total FROM Pedido WHERE DataPedido = ?";
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        stmt.setDate(1, java.sql.Date.valueOf(data_venda));
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next()) {
+	            total_dia = rs.getDouble("total");
+	        }
+	        
+	        rs.close();
+	        stmt.close();
+	    } catch (SQLException e) {
+	        throw new RuntimeException("Erro ao retornar a Posição do Dia!", e);
+	    }
+	    
+	    return total_dia;
+	}
+
 }
+

@@ -6,15 +6,23 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JLabel;
+
+ 
 
 public class AreaTrabalho extends JFrame {
-
+	public String usuarioLogado;
     private static final long serialVersionUID = 1L;
 
     public static void main(String[] args) {
@@ -27,7 +35,7 @@ public class AreaTrabalho extends JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }	
+            }
         });
     }
 
@@ -79,7 +87,6 @@ public class AreaTrabalho extends JFrame {
                     e.printStackTrace();
                 }
             }
-
         });
         mntmFormulrioDeFuncionrios.setForeground(new Color(0, 0, 0));
         mntmFormulrioDeFuncionrios.setFont(new Font("Liberation Sans", Font.BOLD, 14));
@@ -112,8 +119,22 @@ public class AreaTrabalho extends JFrame {
         mnProdutos.setIcon(new ImageIcon(AreaTrabalho.class.getResource("/imagens/Produtos.png")));
         menuBar.add(mnProdutos);
 
-        JMenuItem mntmConsultaDeProdutos = new JMenuItem("Formulário de Produtos");
-        mntmConsultaDeProdutos.addActionListener(new ActionListener() {
+        JMenuItem mntmEstoque = new JMenuItem("Estoque");
+        mntmEstoque.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    FormEstoque fe = new FormEstoque();
+                    fe.setVisible(true);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        mntmEstoque.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+        mnProdutos.add(mntmEstoque);
+
+        JMenuItem mntmConsultaDeProdutos_1 = new JMenuItem("Formulário de Produtos");
+        mntmConsultaDeProdutos_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 try {
                     FormProduto fp = new FormProduto();
@@ -123,8 +144,8 @@ public class AreaTrabalho extends JFrame {
                 }
             }
         });
-        mntmConsultaDeProdutos.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-        mnProdutos.add(mntmConsultaDeProdutos);
+        mntmConsultaDeProdutos_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+        mnProdutos.add(mntmConsultaDeProdutos_1);
 
         JMenu mnVendas = new JMenu("Vendas");
         mnVendas.setFont(new Font("Liberation Sans", Font.BOLD, 14));
@@ -133,10 +154,20 @@ public class AreaTrabalho extends JFrame {
         menuBar.add(mnVendas);
 
         JMenuItem mntmAbrirPdv = new JMenuItem("Abrir PDV ");
-        mntmAbrirPdv.setForeground(new Color(0, 0, 0));
-        mntmAbrirPdv.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+        mntmAbrirPdv.setForeground(Color.BLACK);
+        mntmAbrirPdv.setFont(new Font("Dialog", Font.BOLD, 14));
         mnVendas.add(mntmAbrirPdv);
-        
+
+        JMenuItem mntmAbrirDetalhe = new JMenuItem("Histórico de Venda");
+        mntmAbrirDetalhe.setForeground(new Color(0, 0, 0));
+        mntmAbrirDetalhe.setFont(new Font("Liberation Sans", Font.BOLD, 14));
+        mnVendas.add(mntmAbrirDetalhe);
+
+        JMenuItem mntmTotalDia = new JMenuItem("Total Diário");
+        mntmTotalDia.setForeground(Color.BLACK);
+        mntmTotalDia.setFont(new Font("Dialog", Font.BOLD, 14));
+        mnVendas.add(mntmTotalDia);
+
         mntmAbrirPdv.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -147,6 +178,55 @@ public class AreaTrabalho extends JFrame {
                 }
             }
         });
+
+        mntmAbrirDetalhe.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FormHistorico fh = new FormHistorico();
+                    fh.setVisible(true);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        mntmTotalDia.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    FormTotalDia ft = new FormTotalDia();
+                    ft.setVisible(true);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        
+        JMenu mnConfiguraes = new JMenu("Configurações");
+        mnConfiguraes.setForeground(Color.BLACK);
+        mnConfiguraes.setFont(new Font("Dialog", Font.BOLD, 14));
+        menuBar.add(mnConfiguraes);
+        
+        JMenuItem mntmTrocarDeUsuario = new JMenuItem("Trocar de Usuário");
+        mntmTrocarDeUsuario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+         
+                dispose();
+
+                EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            FormLogin login = new FormLogin();
+                            login.setVisible(true);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+        mntmTrocarDeUsuario.setForeground(Color.BLACK);
+        mntmTrocarDeUsuario.setFont(new Font("Dialog", Font.BOLD, 14));
+        mnConfiguraes.add(mntmTrocarDeUsuario);
 
         JMenu mnSair = new JMenu("Sair");
         mnSair.setForeground(new Color(0, 0, 0));
@@ -162,5 +242,6 @@ public class AreaTrabalho extends JFrame {
             }
         });
         mnSair.add(mntmSairDoSistema);
+        getContentPane().setLayout(null);
     }
 }

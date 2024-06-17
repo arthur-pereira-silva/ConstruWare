@@ -193,7 +193,7 @@
 			JLabel lblCpf_1_1_1 = new JLabel("CELULAR: ");
 			lblCpf_1_1_1.setForeground(new Color(0, 0, 0));
 			lblCpf_1_1_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-			lblCpf_1_1_1.setBounds(467, 40, 78, 19);
+			lblCpf_1_1_1.setBounds(465, 37, 78, 19);
 			dadosPessoais.add(lblCpf_1_1_1);
 			
 			JLabel lblEndereo = new JLabel("ENDEREÇO:");
@@ -383,7 +383,7 @@
 			
 			txtTelefone = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
 			txtTelefone.setFont(new Font("Liberation Sans", Font.PLAIN, 14));
-			txtTelefone.setBounds(552, 39, 126, 21);
+			txtTelefone.setBounds(541, 34, 126, 25);
 			dadosPessoais.add(txtTelefone);
 			
 			txtCEP = new JFormattedTextField(new MaskFormatter("#####-###"));
@@ -427,7 +427,7 @@
 			btnPesquisar_1.setForeground(Color.BLACK);
 			btnPesquisar_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 			btnPesquisar_1.setBackground(new Color(47, 45, 98));
-			btnPesquisar_1.setBounds(522, 65, 156, 36);
+			btnPesquisar_1.setBounds(521, 65, 156, 36);
 			dadosPessoais.add(btnPesquisar_1);
 			
 			JPanel consultaFornecedor = new JPanel();
