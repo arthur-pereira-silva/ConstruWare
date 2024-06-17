@@ -3,6 +3,8 @@ package view;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -18,6 +20,7 @@ import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JLabel;
+import javax.swing.JDesktopPane;
 
  
 
@@ -40,9 +43,10 @@ public class AreaTrabalho extends JFrame {
     }
 
     public AreaTrabalho() {
+    	setResizable(true);
         setTitle("Área de Trabalho");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 800, 600);
+        setBounds(100, 100, 1380, 776);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -81,7 +85,7 @@ public class AreaTrabalho extends JFrame {
         mntmFormulrioDeFuncionrios.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    FormFuncionarios ff = new FormFuncionarios();
+                    FormFuncionario ff = new FormFuncionario();
                     ff.setVisible(true);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -202,6 +206,7 @@ public class AreaTrabalho extends JFrame {
         });
         
         JMenu mnConfiguraes = new JMenu("Configurações");
+        mnConfiguraes.setIcon(new ImageIcon(AreaTrabalho.class.getResource("/imagens/setting (1).png")));
         mnConfiguraes.setForeground(Color.BLACK);
         mnConfiguraes.setFont(new Font("Dialog", Font.BOLD, 14));
         menuBar.add(mnConfiguraes);
@@ -229,6 +234,7 @@ public class AreaTrabalho extends JFrame {
         mnConfiguraes.add(mntmTrocarDeUsuario);
 
         JMenu mnSair = new JMenu("Sair");
+        mnSair.setIcon(new ImageIcon(AreaTrabalho.class.getResource("/imagens/seta.png")));
         mnSair.setForeground(new Color(0, 0, 0));
         mnSair.setFont(new Font("Liberation Sans", Font.BOLD, 14));
         menuBar.add(mnSair);
@@ -243,5 +249,15 @@ public class AreaTrabalho extends JFrame {
         });
         mnSair.add(mntmSairDoSistema);
         getContentPane().setLayout(null);
+        
+        ImageIcon icon = new ImageIcon(getClass().getResource("/background.jpg"));
+        Image image = icon.getImage();
+        JDesktopPane painelDesktop = new JDesktopPane() {
+        	public void paintComponent(Graphics g) {
+        		g.drawImage(image,0,0,getWidth(), getHeight(),this);
+        	}
+        };
+        painelDesktop.setBounds(0, 0, 1364, 683);
+        getContentPane().add(painelDesktop);
     }
 }
