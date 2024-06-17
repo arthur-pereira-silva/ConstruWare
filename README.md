@@ -56,7 +56,7 @@ It is an Integrative Project for the third semester of the Systems Analysis and 
 </p>
 <p float="left">
   <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href=""/>
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href="https://www.linkedin.com/in/ellen-caroline0107/"/> 
+  <a href="https://www.linkedin.com/in/ellen-caroline0107/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
   <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href=""/>
   <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100" href=""/>
 </p>
