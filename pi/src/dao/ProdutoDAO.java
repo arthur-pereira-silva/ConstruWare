@@ -218,7 +218,7 @@ public class ProdutoDAO {
 			stmt.setInt(2, id);
 			stmt.execute();
 			stmt.close();
-			JOptionPane.showMessageDialog(null, "Adicionado com sucesso ao Estoque!");
+			JOptionPane.showMessageDialog(null, "Estoque atualizado!");
 
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao tentar adicionar ao Estoque!"+e);			}
