@@ -115,21 +115,21 @@ public class FormEstoque extends JFrame {
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBounds(12, 12, 1, 1);
 		contentPane.add(desktopPane);
-		panel.setBackground(new Color(47, 45, 98));
+		panel.setBackground(new Color(3, 52, 124));
 		panel.setBounds(0, 0, 714, 40);
 		contentPane.add(panel);
 
 		JLabel lblCadastroDeProdutos = new JLabel("ESTOQUE");
 		lblCadastroDeProdutos.setBackground(new Color(0, 0, 0));
 		lblCadastroDeProdutos.setFont(new Font("Liberation Sans", Font.BOLD, 25));
-		lblCadastroDeProdutos.setForeground(new Color(0, 0, 0));
+		lblCadastroDeProdutos.setForeground(new Color(255, 255, 255));
 		panel.add(lblCadastroDeProdutos);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setToolTipText("");
 		tabbedPane.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		tabbedPane.setForeground(new Color(0, 0, 0));
-		tabbedPane.setBackground(new Color(47, 45, 98));
+		tabbedPane.setBackground(new Color(3, 52, 124));
 		tabbedPane.setBounds(10, 39, 689, 188);
 		contentPane.add(tabbedPane);
 
@@ -193,7 +193,7 @@ public class FormEstoque extends JFrame {
 		btnPesquisar_1.setIcon(new ImageIcon(FormEstoque.class.getResource("/imagens/pesquisar.png")));
 		btnPesquisar_1.setForeground(Color.BLACK);
 		btnPesquisar_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-		btnPesquisar_1.setBackground(new Color(47, 45, 98));
+		btnPesquisar_1.setBackground(new Color(3, 52, 124));
 		GridBagConstraints gbc_btnPesquisar_1 = new GridBagConstraints();
 		gbc_btnPesquisar_1.anchor = GridBagConstraints.WEST;
 		gbc_btnPesquisar_1.fill = GridBagConstraints.VERTICAL;
@@ -314,7 +314,7 @@ public class FormEstoque extends JFrame {
 		btnLimpar.setBounds(509, 45, 165, 27);
 		btnLimpar.setForeground(Color.BLACK);
 		btnLimpar.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnLimpar.setBackground(new Color(47, 45, 98));
+		btnLimpar.setBackground(new Color(3, 52, 124));
 		GridBagConstraints gbc_btnLimpar = new GridBagConstraints();
 		gbc_btnLimpar.anchor = GridBagConstraints.SOUTH;
 		gbc_btnLimpar.fill = GridBagConstraints.HORIZONTAL;

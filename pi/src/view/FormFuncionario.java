@@ -129,7 +129,7 @@ public class FormFuncionario extends JFrame {
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBounds(12, 12, 1, 1);
 		contentPane.add(desktopPane);
-		panel.setBackground(new Color(47, 45, 98));
+		panel.setBackground(new Color(3, 52, 124));
 		panel.setBounds(0, 0, 808, 40);
 		contentPane.add(panel);
 
@@ -144,7 +144,7 @@ public class FormFuncionario extends JFrame {
 		tabbedPane.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 		tabbedPane.setBorder(null);
 		tabbedPane.setForeground(new Color(0, 0, 0));
-		tabbedPane.setBackground(new Color(47, 45, 98));
+		tabbedPane.setBackground(new Color(3, 52, 124));
 		tabbedPane.setBounds(-2, 51, 800, 350);
 		contentPane.add(tabbedPane);
 
@@ -498,6 +498,7 @@ public class FormFuncionario extends JFrame {
 		});
 
 		JButton btnExcluir = new JButton("Excluir");
+		btnExcluir.setBackground(new Color(101, 146, 201));
 		btnExcluir.setIcon(new ImageIcon(FormFuncionario.class.getResource("/imagens/excluir.png")));
 		btnExcluir.setForeground(Color.BLACK);
 		btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
@@ -505,6 +506,7 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(btnExcluir);
 
 		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setBackground(new Color(101, 146, 201));
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Funcionario obj = new Funcionario();
@@ -540,6 +542,7 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(btnSalvar);
 
 		JButton btnEditar = new JButton("Editar");
+		btnEditar.setBackground(new Color(101, 146, 201));
 		btnEditar.setIcon(new ImageIcon(FormFuncionario.class.getResource("/imagens/editar.png")));
 		btnEditar.setForeground(Color.BLACK);
 		btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
@@ -547,6 +550,7 @@ public class FormFuncionario extends JFrame {
 		contentPane.add(btnEditar);
 		
 		JButton btnNovo = new JButton("Novo");
+		btnNovo.setBackground(new Color(101, 146, 201));
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					Util util = new Util();

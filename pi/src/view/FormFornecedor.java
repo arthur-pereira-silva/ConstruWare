@@ -116,7 +116,7 @@
 			JDesktopPane desktopPane = new JDesktopPane();
 			desktopPane.setBounds(12, 12, 1, 1);
 			contentPane.add(desktopPane);
-			panel.setBackground(new Color(47, 45, 98));
+			panel.setBackground(new Color(3, 52, 124));
 			panel.setBounds(0, 0, 714, 40);
 			contentPane.add(panel);
 			
@@ -131,7 +131,7 @@
 			tabbedPane.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 			tabbedPane.setBorder(null);
 			tabbedPane.setForeground(new Color(0, 0, 0));
-			tabbedPane.setBackground(new Color(47, 45, 98));
+			tabbedPane.setBackground(new Color(3, 52, 124));
 			tabbedPane.setBounds(-2, 46, 730, 300);
 			contentPane.add(tabbedPane);
 			
@@ -270,7 +270,7 @@
 			
 			JButton btnNovo = new JButton("NOVO");
 			btnNovo.setForeground(new Color(0, 0, 0));
-			btnNovo.setBackground(new Color(47, 45, 98));
+			btnNovo.setBackground(new Color(101, 146, 201));
 			btnNovo.setIcon(new ImageIcon(FormFornecedor.class.getResource("/imagens/add.png")));
 			btnNovo.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 			btnNovo.addActionListener(new ActionListener() {
@@ -285,7 +285,7 @@
 			
 	
 			JButton btnSalvar = new JButton("SALVAR");
-			btnSalvar.setBackground(new Color(47, 45, 98));
+			btnSalvar.setBackground(new Color(101, 146, 201));
 			btnSalvar.setForeground(new Color(0, 0, 0));
 			btnSalvar.setIcon(new ImageIcon(FormFornecedor.class.getResource("/imagens/salvar.png")));
 			btnSalvar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
@@ -327,7 +327,7 @@
 				}
 			});
 			btnExcluir.setForeground(new Color(0, 0, 0));
-			btnExcluir.setBackground(new Color(47, 45, 98));
+			btnExcluir.setBackground(new Color(101, 146, 201));
 			btnExcluir.setIcon(new ImageIcon(FormFornecedor.class.getResource("/imagens/excluir.png")));
 			btnExcluir.setFont(new Font("Liberation Sans", Font.BOLD, 14));
 			btnExcluir.setBounds(521, 215, 135, 36);
@@ -355,7 +355,7 @@
 					 util.LimpaTela(dadosPessoais);
 				}
 			});
-			btnEditar.setBackground(new Color(47, 45, 98));
+			btnEditar.setBackground(new Color(101, 146, 201));
 			btnEditar.setForeground(new Color(0, 0, 0));
 			btnEditar.setIcon(new ImageIcon(FormFornecedor.class.getResource("/imagens/editar.png")));
 			btnEditar.setFont(new Font("Liberation Sans", Font.BOLD, 14));
@@ -426,7 +426,7 @@
 			btnPesquisar_1.setIcon(new ImageIcon(FormFornecedor.class.getResource("/imagens/pesquisar.png")));
 			btnPesquisar_1.setForeground(Color.BLACK);
 			btnPesquisar_1.setFont(new Font("Liberation Sans", Font.BOLD, 14));
-			btnPesquisar_1.setBackground(new Color(47, 45, 98));
+			btnPesquisar_1.setBackground(new Color(3, 52, 124));
 			btnPesquisar_1.setBounds(521, 65, 156, 36);
 			dadosPessoais.add(btnPesquisar_1);
 			

@@ -61,7 +61,7 @@ public class FormPagamento extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 680, 55);
-		panel.setBackground(new Color(47, 45, 98));
+		panel.setBackground(new Color(3, 52, 124));
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -126,6 +126,7 @@ public class FormPagamento extends JFrame {
 		contentPane.add(txtTroco);
 
 		JButton btnPagar = new JButton("Pagar");
+		btnPagar.setBackground(new Color(101, 146, 201));
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {

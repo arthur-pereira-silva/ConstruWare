@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>sugo_pro_display</name>
+			<type>2</type>
+			<location>C:/Users/APERE/Downloads/sugo_pro_display</location>
+		</link>
+	</linkedResources>
 </projectDescription>

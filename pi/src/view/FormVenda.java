@@ -125,7 +125,7 @@ public class FormVenda extends JFrame {
 	    contentPane.setLayout(null);
 
 	    JPanel panel = new JPanel();
-	    panel.setBackground(new Color(0, 0, 0));
+	    panel.setBackground(new Color(3, 52, 124));
 	    panel.setBounds(0, 0, 817, 61);
 	    contentPane.add(panel);
 	    panel.setLayout(null);
@@ -216,6 +216,8 @@ public class FormVenda extends JFrame {
 	    panel_3.add(txtData);
 
 	    JButton btnPesquisar = new JButton("Pesquisar");
+	    btnPesquisar.setForeground(new Color(255, 255, 255));
+	    btnPesquisar.setBackground(new Color(3, 52, 124));
 	    btnPesquisar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            String cpf = txtCpf.getText();
@@ -378,6 +380,8 @@ public class FormVenda extends JFrame {
 	    painel_dadosproduto.add(txtEstoque);
 
 	    JButton btnAdicionar = new JButton("Adicionar Item");
+	    btnAdicionar.setForeground(new Color(255, 255, 255));
+	    btnAdicionar.setBackground(new Color(48, 146, 106));
 	    btnAdicionar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            try {
@@ -431,6 +435,8 @@ public class FormVenda extends JFrame {
 	    painel_dadosproduto.add(txtQtd);
 
 	    JButton btnProcurar = new JButton("Pesquisar");
+	    btnProcurar.setForeground(new Color(255, 255, 255));
+	    btnProcurar.setBackground(new Color(3, 52, 124));
 	    btnProcurar.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		if (txtCodigo.getText() != null && !txtCodigo.getText().isEmpty()) {
@@ -456,16 +462,10 @@ public class FormVenda extends JFrame {
 	    });
 	    btnProcurar.setBounds(117, 28, 89, 23);
 	    painel_dadosproduto.add(btnProcurar);
-
-	    JComboBox comboBoxDesconto = new JComboBox();
-	    comboBoxDesconto.setBounds(353, 28, 46, 22);
-	    painel_dadosproduto.add(comboBoxDesconto);
-
-	    JLabel lblNewLabel_1_4_1 = new JLabel("Desconto:");
-	    lblNewLabel_1_4_1.setBounds(291, 32, 60, 14);
-	    painel_dadosproduto.add(lblNewLabel_1_4_1);
 	    
 	    JButton btnLimpar = new JButton("Limpar");
+	    btnLimpar.setForeground(new Color(255, 255, 255));
+	    btnLimpar.setBackground(new Color(3, 52, 124));
 	    btnLimpar.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		Util util = new Util();
@@ -514,6 +514,8 @@ public class FormVenda extends JFrame {
 	    panel_4.add(txtTotal);
 
 	    JButton btnPagamento = new JButton("PAGAMENTO");
+	    btnPagamento.setForeground(new Color(255, 255, 255));
+	    btnPagamento.setBackground(new Color(3, 52, 124));
 	    btnPagamento.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	            String nome = txtNome.getText();
@@ -537,6 +539,8 @@ public class FormVenda extends JFrame {
 	    panel_4.add(btnPagamento);
 
 	    JButton btnCancelar = new JButton("CANCELAR");
+	    btnCancelar.setBackground(new Color(191, 53, 53));
+	    btnCancelar.setForeground(new Color(255, 255, 255));
 	    btnCancelar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        }

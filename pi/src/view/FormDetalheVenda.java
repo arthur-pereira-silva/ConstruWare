@@ -63,7 +63,7 @@ public class FormDetalheVenda extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 623, 71);
-		panel.setBackground(Color.BLACK);
+		panel.setBackground(new Color(3, 52, 124));
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -119,6 +119,7 @@ public class FormDetalheVenda extends JFrame {
 		panel_1.add(txtTotalVenda);
 		
 		JButton btnImprimir = new JButton("Imprimir");
+		btnImprimir.setBackground(new Color(101, 146, 201));
 		btnImprimir.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnImprimir.setBounds(245, 170, 133, 45);
 		panel_1.add(btnImprimir);

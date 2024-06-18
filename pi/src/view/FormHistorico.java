@@ -63,7 +63,7 @@ public class FormHistorico extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 0, 0));
+		panel.setBackground(new Color(3, 52, 124));
 		panel.setBounds(0, 0, 697, 77);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -111,6 +111,7 @@ public class FormHistorico extends JFrame {
 		}
 		
 		JButton btnPesquisarVenda = new JButton("Pesquisar");
+		btnPesquisarVenda.setBackground(new Color(3, 52, 124));
 		btnPesquisarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
