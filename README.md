@@ -49,16 +49,16 @@ It is an Integrative Project for the third semester of the Systems Analysis and 
 
 ## Team
 <p float="left">
-  <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" width="100" />
+  <img src="https://media.licdn.com/dms/image/D4E03AQE5G5I_ebYPvA/profile-displayphoto-shrink_800_800/0/1707865613539?e=1724284800&v=beta&t=MkJhfCvVNbhaDcjNN6zS2LDhguuflqZAVzWOAI75P-w" width="100" />
   <img src="https://media.licdn.com/dms/image/D4D03AQFULMRKbfs5cw/profile-displayphoto-shrink_800_800/0/1716859104984?e=1724284800&v=beta&t=MVG90yGP7bzaMcsMVViytTbWFJaCsraI6aPoEVWiV98" width="100" /> 
-  <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" width="100" />
-  <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" width="100" />
+  <img src="https://media.licdn.com/dms/image/D4D35AQFi10uaCqOuxg/profile-framedphoto-shrink_800_800/0/1705686988044?e=1719284400&v=beta&t=lKeLTJdt1CkZePq6thQUwhRrp1-0TVRNfv3nu5dTeyk" width="100" />
+  <img src="https://media.licdn.com/dms/image/D5603AQH0oflksT_fkQ/profile-displayphoto-shrink_800_800/0/1709664338772?e=1724284800&v=beta&t=D5FwHiGfP8A2HdhzVrXPRaUYavZ8GNRbZwoWZrGOMQA" width="100" />
 </p>
 <p float="left">
-  <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
+  <a href="https://www.linkedin.com/in/pedro-mendes-5b133b20a/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
   <a href="https://www.linkedin.com/in/ellen-caroline0107/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
-  <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
-  <a href=""><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
+  <a href="https://www.linkedin.com/in/arthur-pereira-silva/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
+  <a href="https://www.linkedin.com/in/joãovitorcaetanoo/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100"/></a>
 </p>
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Bebas+Neue&size=40&pause=1000&color=2F7FC4&random=false&width=680&height=60&lines=ConstruWare;Simplifying+construction+materials+management;%F0%9F%8F%97%EF%B8%8F%F0%9F%93%8A%F0%9F%9B%A0%EF%B8%8F)](https://git.io/typing-svg)
