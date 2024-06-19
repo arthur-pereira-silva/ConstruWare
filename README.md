@@ -108,7 +108,7 @@ This topic will show the main screens of the system and its functionalities.
  ### 5.1. Login
 Initially, the system starts at the login screen where the employee will enter their authentication data.
 
-<img src=""
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/bfcc670b-374e-4881-a844-b7d91ca72d2a"
 alt="Login Screen" title="click to view larger">
   <p align="center">
   </p>
@@ -118,7 +118,7 @@ alt="Login Screen" title="click to view larger">
 ### 5.2 Home
 System home screen, which redirects to all other screens
 
-<img src=""
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/ac4e9c08-78f3-4583-97fb-78df3b8d25cd"
  alt="home" title="click to view larger">
   <p align="center">
   </p>
@@ -128,7 +128,7 @@ System home screen, which redirects to all other screens
  ### 5.3 Customer Registration
 We can perform operations, search, add, save, edit and delete. There is also a module for customer consultation, which searches the database and filters the information
 
-<img src="" alt="Customer Registration" title="click to view larger">
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/a2ac2fea-20ca-4569-b612-8e8d4aa15b4d" alt="Customer Registration" title="click to view larger">
   <p align="center">
   </p>
 </img>
@@ -137,7 +137,7 @@ We can perform operations, search, add, save, edit and delete. There is also a m
 ### 5.4 Employee Registration
 We can perform operations, search, add, save, edit and delete. There is also a module for employee consultation, which searches the database and filters the information
 
-<img src="" alt="Employee Registration" title="click to view larger">
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/1b375293-e62e-4d2a-a24c-ad5c81e953c3" alt="Employee Registration" title="click to view larger">
   <p align="center">
   </p>
 </img>
@@ -146,7 +146,7 @@ We can perform operations, search, add, save, edit and delete. There is also a m
 ### 5.5 Product Registration
 We can perform operations, search, add, save, edit and delete. There is also a module for product consultation, which searches the database and filters the information
 
-<img src="" alt="Product Registration" title="click to view larger">
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/f1144774-3dcc-4c9b-ba83-9fdb74cfd015" alt="Product Registration" title="click to view larger">
   <p align="center">
   </p>
 </img>
@@ -156,7 +156,7 @@ We can perform operations, search, add, save, edit and delete. There is also a m
 ### 5.6 Inventory 
 The “search” button is for querying purposes based on the name, it checks whether a product is in stock and can add or remove it.
 
-<img src="" alt="Inventory" title="click to view larger">
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/00606c4a-167a-467a-9868-c65067e7b2af" alt="Inventory" title="click to view larger">
   <p align="center">
   </p>
 </img>
@@ -165,7 +165,7 @@ The “search” button is for querying purposes based on the name, it checks wh
 ### 5.7 Sales
 This screen is responsible for selling products. The Employee chooses a customer already registered by CPF in the system, the corresponding product by code or by clicking on the table, and the quantity in cubic meters, and can add it to the cart. If the product code is wrong, there is a clear button, which clears the fields and enables the product choice again.
 
-<img src="" alt="Sales" title="click to view larger">
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/479c316c-f284-42ee-9f77-ae7e28db9dc8" alt="Sales" title="click to view larger">
   <p align="center">
   </p>
 </img>
@@ -174,7 +174,7 @@ This screen is responsible for selling products. The Employee chooses a customer
 ### 5.8  Payment
 It shows the payment methods, and as soon as the payment is entered, it is confirmed to complete the sale.
 
-<img src="" alt="payment" title="click to view larger">
+<img src="https://github.com/arthur-pereira-silva/ConstruWare/assets/95577389/5450507d-d864-47af-a64c-09cdc0780219" alt="payment" title="click to view larger">
   <p align="center">
   </p>
 </img>
