@@ -12,14 +12,27 @@
 	import connection.Conn;
 	import model.Cliente;
 	
+	// TODO: Auto-generated Javadoc
+/**
+	 * The Class ClienteDAO.
+	 */
 	public class ClienteDAO {
 	
+		/** The conn. */
 		private Connection conn;
 	
+		/**
+		 * Instantiates a new cliente DAO.
+		 */
 		public ClienteDAO() {
 			this.conn = new Conn().pegarConexao();
 		}
 	
+		/**
+		 * Salvar.
+		 *
+		 * @param obj the obj
+		 */
 		public void Salvar(Cliente obj) {
 			try {
 				String sql = "INSERT INTO Cliente (Nome, RG, CPF, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumCasa) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -47,6 +60,11 @@
 			}
 		}
 	
+		/**
+		 * Editar.
+		 *
+		 * @param obj the obj
+		 */
 		public void Editar(Cliente obj) {
 			try {
 				String sql = "UPDATE Cliente SET Nome=?, RG=?, CPF=?, Telefone=?, Email=?, CEP=?, Estado=?, Cidade=?, Rua=?, Bairro=?, NumCasa=?  WHERE IdCliente=?";
@@ -76,6 +94,11 @@
 			}
 		}
 	
+		/**
+		 * Excluir.
+		 *
+		 * @param obj the obj
+		 */
 		public void Excluir(Cliente obj) {
 			try {
 				String sql = "delete from Cliente where IdCliente =?";
@@ -89,6 +112,12 @@
 			}
 		}
 	
+		/**
+		 * Pesquisar.
+		 *
+		 * @param nome the nome
+		 * @return the cliente
+		 */
 		public Cliente Pesquisar(String nome) {
 			try {
 				String sql = "select * from Cliente where Nome = ?";
@@ -118,6 +147,12 @@
 			return null;
 		}
 		
+		/**
+		 * Pesquisar CPF.
+		 *
+		 * @param cpf the cpf
+		 * @return the cliente
+		 */
 		public Cliente PesquisarCPF(String cpf) {
 			try {
 				String sql = "select * from Cliente where CPF = ?";
@@ -146,6 +181,12 @@
 			}
 			return null;
 		}
+		
+		/**
+		 * Listar.
+		 *
+		 * @return the list
+		 */
 		public List<Cliente>Listar() {
 			List<Cliente> lista = new ArrayList<>();
 			try {
@@ -176,6 +217,12 @@
 			return lista;
 		}
 	
+		/**
+		 * Filtrar.
+		 *
+		 * @param nome the nome
+		 * @return the list
+		 */
 		public List<Cliente>Filtrar(String nome) {
 			List<Cliente> lista = new ArrayList<>();
 			try {
@@ -206,6 +253,13 @@
 			}
 			return lista;
 		}
+		
+		/**
+		 * Filtrar CPF.
+		 *
+		 * @param cpf the cpf
+		 * @return the list
+		 */
 		public List<Cliente>FiltrarCPF(String cpf) {
 			List<Cliente> lista = new ArrayList<>();
 			try {
@@ -237,3 +291,4 @@
 			return lista;
 		}
 	}
+	

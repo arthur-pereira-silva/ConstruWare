@@ -12,14 +12,27 @@ import javax.swing.JOptionPane;
 import connection.Conn;
 import model.Fornecedor;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FornecedorDAO.
+ */
 public class FornecedorDAO {
 
+	/** The conn. */
 	private Connection conn;
 
+	/**
+	 * Instantiates a new fornecedor DAO.
+	 */
 	public FornecedorDAO() {
 		this.conn = new Conn().pegarConexao();
 	}
 
+	/**
+	 * Salvar.
+	 *
+	 * @param obj the obj
+	 */
 	public void Salvar(Fornecedor obj) {
 		try {
 			String sql = "INSERT INTO Fornecedor (Nome, CNPJ, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumEstabelecimento) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -45,6 +58,11 @@ public class FornecedorDAO {
 		}
 	}
 
+	/**
+	 * Editar.
+	 *
+	 * @param obj the obj
+	 */
 	public void Editar(Fornecedor obj) {
 		try {
 			String sql = "UPDATE Fornecedor SET  Nome = ?, CNPJ = ?, Telefone = ?, Email = ?, CEP = ?, Estado = ?,Cidade = ?, Rua = ?, Bairro = ?,  NumEstabelecimento = ?  WHERE IdFornecedor = ?";
@@ -74,6 +92,11 @@ public class FornecedorDAO {
 		}
 	}
 
+	/**
+	 * Excluir.
+	 *
+	 * @param obj the obj
+	 */
 	public void Excluir(Fornecedor obj) {
 		try {
 			String sql = "DELETE FROM Fornecedor WHERE IdFornecedor=?";
@@ -88,6 +111,12 @@ public class FornecedorDAO {
 	}
 
 	
+	/**
+	 * Pesquisar.
+	 *
+	 * @param nome the nome
+	 * @return the fornecedor
+	 */
 	public Fornecedor Pesquisar(String nome) {
 		try {
 			String sql = "select * from Fornecedor where Nome = ?";
@@ -116,6 +145,11 @@ public class FornecedorDAO {
 		return null;
 	}
 
+	/**
+	 * Listar.
+	 *
+	 * @return the list
+	 */
 	public List<Fornecedor> Listar() {
 		List<Fornecedor> lista = new ArrayList<>();
 		try {
@@ -146,6 +180,12 @@ public class FornecedorDAO {
 	}
 
 
+	/**
+	 * Filtrar.
+	 *
+	 * @param nome the nome
+	 * @return the list
+	 */
 	public List<Fornecedor>Filtrar(String nome) {
 		List<Fornecedor> lista = new ArrayList<>();
 		try {

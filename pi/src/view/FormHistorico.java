@@ -111,6 +111,7 @@ public class FormHistorico extends JFrame {
 		}
 		
 		JButton btnPesquisarVenda = new JButton("Pesquisar");
+		btnPesquisarVenda.setForeground(new Color(255, 255, 255));
 		btnPesquisarVenda.setBackground(new Color(3, 52, 124));
 		btnPesquisarVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

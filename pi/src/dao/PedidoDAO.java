@@ -16,12 +16,27 @@ import connection.Conn;
 import model.Cliente;
 import model.Pedido;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PedidoDAO.
+ */
 public class PedidoDAO {
+	
+	/** The conn. */
 	private Connection conn;
 
+	/**
+	 * Instantiates a new pedido DAO.
+	 */
 	public PedidoDAO() {
 		this.conn = new Conn().pegarConexao();
 	}
+	
+	/**
+	 * Salvar.
+	 *
+	 * @param pedido the pedido
+	 */
 	public void salvar(Pedido pedido) {
 		try {
 			String sql = "INSERT INTO pedido (IdCliente, DataPedido, Total) VALUES (?, ?, ?)";
@@ -42,6 +57,12 @@ public class PedidoDAO {
 			throw new RuntimeException("Erro ao salvar pedido: " + e.getMessage(), e);
 		}
 	}
+	
+	/**
+	 * Retorna ultimo id venda.
+	 *
+	 * @return the int
+	 */
 	public int retornaUltimoIdVenda() {
 		int ultimoId = 0;
 		String sql = "SELECT MAX(IdPedido) IdPedido from Pedido";
@@ -60,6 +81,13 @@ public class PedidoDAO {
 
 	}
 
+	/**
+	 * Historico pedido.
+	 *
+	 * @param data_inicio the data inicio
+	 * @param data_final the data final
+	 * @return the list
+	 */
 	public List<Pedido> historicoPedido(LocalDate data_inicio, LocalDate data_final) {
 		List<Pedido> lista = new ArrayList<>();
 		String sql = "SELECT p.IdPedido, c.Nome, CONVERT(varchar, p.DataPedido, 103) AS data_formatada, p.Total " +
@@ -86,6 +114,13 @@ public class PedidoDAO {
 			throw new RuntimeException("Erro ao criar Histórico de Venda", e);
 		}
 	}
+	
+	/**
+	 * Posicao do dia.
+	 *
+	 * @param data_venda the data venda
+	 * @return the double
+	 */
 	public double posicaoDoDia(LocalDate data_venda) {
 	    double total_dia = 0;
 	    

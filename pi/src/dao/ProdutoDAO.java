@@ -13,14 +13,27 @@ import connection.Conn;
 import model.Fornecedor;
 import model.Produto;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProdutoDAO.
+ */
 public class ProdutoDAO {
 
+	/** The conn. */
 	private Connection conn;
 
+	/**
+	 * Instantiates a new produto DAO.
+	 */
 	public ProdutoDAO() {
 		this.conn = new Conn().pegarConexao();
 	}
 
+	/**
+	 * Salvar.
+	 *
+	 * @param obj the obj
+	 */
 	public void Salvar(Produto obj) {
 		try {
 			String sql = "INSERT INTO Produto (IdFornecedor, Nome, Preco, QuantidadeEstoque) VALUES ( ?, ?, ?, ?)";
@@ -41,6 +54,11 @@ public class ProdutoDAO {
 		}
 	}
 
+	/**
+	 * Editar.
+	 *
+	 * @param obj the obj
+	 */
 	public void Editar(Produto obj) {
 		try {
 			String sql = "UPDATE Produto SET IdFornecedor=?, Nome=?, Preco=?, QuantidadeEstoque=? WHERE IdProduto=?";
@@ -63,6 +81,11 @@ public class ProdutoDAO {
 		}
 	}
 
+	/**
+	 * Excluir.
+	 *
+	 * @param obj the obj
+	 */
 	public void Excluir(Produto obj) {
 		try {
 			String sql = "delete from Produto where IdProduto =?";
@@ -76,6 +99,12 @@ public class ProdutoDAO {
 		}
 	}
 
+	/**
+	 * Pesquisar.
+	 *
+	 * @param nome the nome
+	 * @return the produto
+	 */
 	public Produto Pesquisar(String nome) {
 		try {
 			String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome "
@@ -106,6 +135,12 @@ public class ProdutoDAO {
 		}
 	}
 
+	/**
+	 * Pesquisar cod.
+	 *
+	 * @param id the id
+	 * @return the produto
+	 */
 	public Produto PesquisarCod(int id) {
 		try {
 			String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome "
@@ -164,6 +199,11 @@ public class ProdutoDAO {
 	//				JOptionPane.showMessageDialog(null, "erro ao pesquisar"+ erro);
 	//			}
 	//			return null;
+	/**
+	 * Listar produtos.
+	 *
+	 * @return the list
+	 */
 	//		}
 	public List<Produto> listarProdutos() {
 		List<Produto> lista = new ArrayList<>();
@@ -187,6 +227,12 @@ public class ProdutoDAO {
 		return lista;
 	}
 
+	/**
+	 * Filtrar.
+	 *
+	 * @param nome the nome
+	 * @return the list
+	 */
 	public List<Produto> Filtrar(String nome) {
 		List<Produto> lista = new ArrayList<>();
 		String sql = "SELECT p.IdProduto, p.Nome, p.Preco, p.QuantidadeEstoque, f.Nome as FornecedorNome FROM Produto p INNER JOIN Fornecedor f ON p.IdFornecedor = f.IdFornecedor WHERE p.Nome LIKE ?";
@@ -210,6 +256,13 @@ public class ProdutoDAO {
 		}
 		return lista;
 	}
+	
+	/**
+	 * Adicionar estoque.
+	 *
+	 * @param id the id
+	 * @param qtd_nova the qtd nova
+	 */
 	public void adicionarEstoque( int id, int qtd_nova) {
 		String sql= "Update Produto set QuantidadeEstoque = ? where IdProduto =?";
 		try {
@@ -225,6 +278,12 @@ public class ProdutoDAO {
 
 	}
 
+	/**
+	 * Baixa estoque.
+	 *
+	 * @param id the id
+	 * @param qtd_nova the qtd nova
+	 */
 	public void baixaEstoque(int id, int qtd_nova) {
 		String sql= "Update Produto set QuantidadeEstoque = ? where IdProduto =?";
 		try {
@@ -241,6 +300,13 @@ public class ProdutoDAO {
 		}
 
 	}
+	
+	/**
+	 * Retorna qtd atual.
+	 *
+	 * @param id the id
+	 * @return the int
+	 */
 	public int retornaQtdAtual(int id) {
 		int qtd_atual_estoque = 0;
 		String sql = "select QuantidadeEstoque from Produto where IdProduto = ?";

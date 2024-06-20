@@ -11,14 +11,28 @@ import connection.Conn;
 import model.ItemPedido;
 import model.Produto;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ItemPedidoDAO.
+ */
 public class ItemPedidoDAO {
+	
+	/** The conn. */
 	private Connection conn;
 	
+	/**
+	 * Instantiates a new item pedido DAO.
+	 */
 	public ItemPedidoDAO() {
 		this.conn = new Conn().pegarConexao();
 		
 	}	
 	
+	/**
+	 * Salvar.
+	 *
+	 * @param obj the obj
+	 */
 	public void salvar(ItemPedido obj) {
 		String sql = "insert into Item_Pedido (IdPedido, IdProduto, Quantidade, Subtotal) values (?,?,?,?)";
 		try {
@@ -34,6 +48,12 @@ public class ItemPedidoDAO {
 		}
 	}
 	
+	/**
+	 * Lista itens.
+	 *
+	 * @param idPedido the id pedido
+	 * @return the list
+	 */
 	public List<ItemPedido> listaItens(int idPedido) {
 	    List<ItemPedido> lista = new ArrayList<>();
 	    String sql = "SELECT p.IdProduto, p.Nome, i.Quantidade, p.Preco, i.Subtotal " +

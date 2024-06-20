@@ -16,14 +16,27 @@ import view.AreaTrabalho;
 import view.FormLogin;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FuncionarioDAO.
+ */
 public class FuncionarioDAO {
 
+	/** The conn. */
 	private Connection conn;
 
+	/**
+	 * Instantiates a new funcionario DAO.
+	 */
 	public FuncionarioDAO() {
 		this.conn = new Conn().pegarConexao();
 	}
 
+	/**
+	 * Salvar.
+	 *
+	 * @param obj the obj
+	 */
 	public void Salvar(Funcionario obj) {
 		try {
 			String sql = "INSERT INTO Funcionario (Nome, RG, CPF, Cargo, Salario, CNH, Telefone, Email, CEP, Estado, Cidade, Rua, Bairro, NumCasa, Senha) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -55,6 +68,11 @@ public class FuncionarioDAO {
 		}
 	}
 
+	/**
+	 * Editar.
+	 *
+	 * @param obj the obj
+	 */
 	public void Editar(Funcionario obj) {
 		try {
 			String sql = "UPDATE Funcionario SET Nome=?, RG=?, CPF=?, Cargo=?, Salario=?, CNH=?, Telefone=?, Email=?, CEP=?, Estado=?, Cidade=?, Rua=?, Bairro=?, NumCasa=?, Senha=? WHERE IdFuncionario=?";
@@ -87,6 +105,11 @@ public class FuncionarioDAO {
 		}
 	}
 
+	/**
+	 * Excluir.
+	 *
+	 * @param obj the obj
+	 */
 	public void Excluir(Funcionario obj) {
 		try {
 			String sql = "DELETE FROM Funcionario WHERE IdFuncionario=?";
@@ -106,6 +129,12 @@ public class FuncionarioDAO {
 		}
 	}
 
+	/**
+	 * Pesquisar func.
+	 *
+	 * @param nome the nome
+	 * @return the funcionario
+	 */
 	public Funcionario PesquisarFunc(String nome) {
 		try {
 			String sql = "select * from Funcionario where nome = ?";
@@ -140,6 +169,13 @@ public class FuncionarioDAO {
 		}
 		return null;
 	}
+	
+	/**
+	 * Pesquisar funcionario.
+	 *
+	 * @param id the id
+	 * @return the funcionario
+	 */
 	public Funcionario PesquisarFuncionario(int id) {
 		try {
 			String sql = "select * from Funcionario where IdFuncionario =?";
@@ -174,6 +210,11 @@ public class FuncionarioDAO {
 		return null;
 	}
 
+	/**
+	 * Listar.
+	 *
+	 * @return the list
+	 */
 	public List<Funcionario>Listar() {
 		List<Funcionario> lista = new ArrayList<>();
 		try {
@@ -209,6 +250,12 @@ public class FuncionarioDAO {
 		return lista;
 	}
 
+	/**
+	 * Filtrar.
+	 *
+	 * @param nome the nome
+	 * @return the list
+	 */
 	public List<Funcionario>Filtrar(String nome) {
 		List<Funcionario> lista = new ArrayList<>();
 		try {
@@ -245,6 +292,12 @@ public class FuncionarioDAO {
 		return lista;
 	}
 
+	/**
+	 * Efetuar login.
+	 *
+	 * @param email the email
+	 * @param senha the senha
+	 */
 	public void efetuarLogin(String email, String senha) {
 		try {
 			String sql = "select * from Funcionario where email=? and senha =?";
